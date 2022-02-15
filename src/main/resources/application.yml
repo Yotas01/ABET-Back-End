@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: javauser
+    password: psw123
+    url: jdbc:mysql://localhost:3306/abet
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
