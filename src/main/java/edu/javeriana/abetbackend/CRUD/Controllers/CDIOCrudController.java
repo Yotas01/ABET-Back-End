@@ -3,23 +3,16 @@ package edu.javeriana.abetbackend.CRUD.Controllers;
 import edu.javeriana.abetbackend.CRUD.Services.CRUD.CDIOCRUD;
 import edu.javeriana.abetbackend.CRUD.Services.Find.CDIOFinder;
 import edu.javeriana.abetbackend.Entities.CDIO;
-import edu.javeriana.abetbackend.Entities.Course;
-import edu.javeriana.abetbackend.Entities.Outcome;
-import edu.javeriana.abetbackend.Entities.RAE;
 import edu.javeriana.abetbackend.Entities.ResponseEntities.ResponseCDIO;
 import edu.javeriana.abetbackend.Exceptions.CDIOAlreadyExists;
 import edu.javeriana.abetbackend.Exceptions.CDIONotFoundById;
 import edu.javeriana.abetbackend.Exceptions.CDIONotFoundByNumber;
 import io.swagger.v3.oas.annotations.Operation;
-import org.apache.tomcat.util.net.jsse.JSSEUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Basic;
-import javax.persistence.ManyToMany;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
