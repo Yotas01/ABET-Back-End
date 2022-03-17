@@ -1,8 +1,8 @@
 package edu.javeriana.abetbackend.CRUD.Services.Find;
 
 import edu.javeriana.abetbackend.Entities.Course;
-import edu.javeriana.abetbackend.Exceptions.CourseNotFoundById;
-import edu.javeriana.abetbackend.Exceptions.CourseNotFoundByName;
+import edu.javeriana.abetbackend.Exceptions.NotFound.CourseNotFoundById;
+import edu.javeriana.abetbackend.Exceptions.NotFound.CourseNotFoundByName;
 import edu.javeriana.abetbackend.Repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

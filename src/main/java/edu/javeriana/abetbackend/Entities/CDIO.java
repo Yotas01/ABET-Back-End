@@ -1,6 +1,7 @@
 package edu.javeriana.abetbackend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.base.Objects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +18,14 @@ public class CDIO {
     private String description;
     @Basic
     private Float number;
-    @ManyToMany(mappedBy = "cdioList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "cdioList", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Outcome> outcomes;
-    @ManyToMany(mappedBy = "cdioList")
+    @ManyToMany(mappedBy = "cdioList", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<RAE> RAEs;
-    @ManyToMany(mappedBy = "cdioList")
+    @ManyToMany(mappedBy = "cdioList", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Course> courses;
 
     public CDIO(Long CDIOId, String description, Float number) {
@@ -132,5 +134,18 @@ public class CDIO {
                 ", RAEs=" + RAEs +
                 ", courses=" + courses +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CDIO cdio = (CDIO) o;
+        return Objects.equal(CDIOId, cdio.CDIOId) && Objects.equal(description, cdio.description) && Objects.equal(number, cdio.number) && Objects.equal(outcomes, cdio.outcomes) && Objects.equal(RAEs, cdio.RAEs) && Objects.equal(courses, cdio.courses);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(CDIOId, description, number);
     }
 }

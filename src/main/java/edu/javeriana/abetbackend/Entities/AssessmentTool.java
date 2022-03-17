@@ -1,6 +1,7 @@
 package edu.javeriana.abetbackend.Entities;
 
 import com.google.common.base.Objects;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,8 @@ import javax.persistence.*;
 public class AssessmentTool {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "idAssessmentTool")
     private Long AssessmentToolId;
     @Basic
@@ -22,7 +24,7 @@ public class AssessmentTool {
     @ManyToOne
     @JoinColumn(name = "idRAE")
     private RAE rae;
-    @OneToMany(mappedBy = "assessmentTool")
+    @OneToMany(mappedBy = "assessmentTool", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PerformanceIndicator> performanceIndicators;
 
     public AssessmentTool() {
@@ -107,6 +109,6 @@ public class AssessmentTool {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(AssessmentToolId, description, value, totalStudents, rae, performanceIndicators);
+        return Objects.hashCode(AssessmentToolId, description, value, totalStudents, rae);
     }
 }

@@ -3,8 +3,9 @@ package edu.javeriana.abetbackend.CRUD.Controllers;
 import edu.javeriana.abetbackend.CRUD.Services.CRUD.OutcomeCRUD;
 import edu.javeriana.abetbackend.CRUD.Services.Find.OutcomeFinder;
 import edu.javeriana.abetbackend.Entities.Outcome;
-import edu.javeriana.abetbackend.Entities.ResponseEntities.ResponseOutcome;
-import edu.javeriana.abetbackend.Exceptions.OutcomeNotFoundById;
+import edu.javeriana.abetbackend.Entities.DTOs.OutcomeDTO;
+import edu.javeriana.abetbackend.Exceptions.AlreadyExists.OutcomeAlreadyExists;
+import edu.javeriana.abetbackend.Exceptions.NotFound.OutcomeNotFoundById;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,49 +26,56 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Create a new ABET outcome")
     @PostMapping("/outcome")
-    public ResponseEntity<ResponseOutcome> addCompetence(@RequestBody Outcome outcome){
+    public ResponseEntity<OutcomeDTO> addCompetence(@RequestBody Outcome outcome){
+        System.out.println(outcome.toString());
         crudService.saveOutcome(outcome);
-        ResponseOutcome responseOutcome = new ResponseOutcome(outcome);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseOutcome);
+        OutcomeDTO outcomeDTO = new OutcomeDTO(outcome);
+        return ResponseEntity.status(HttpStatus.CREATED).body(outcomeDTO);
     }
 
     @Operation(summary = "Find the ABET outcome with idOutcome")
     @GetMapping("/outcome/{idOutcome}")
-    public ResponseEntity<ResponseOutcome> findCompetence(@PathVariable(value = "idOutcome") Long id){
+    public ResponseEntity<OutcomeDTO> findCompetence(@PathVariable(value = "idOutcome") Integer id){
         Outcome outcome = finder.findOutcomeById(id);
-        ResponseOutcome responseOutcome = new ResponseOutcome(outcome);
-        return ResponseEntity.status(HttpStatus.OK).body(responseOutcome);
+        OutcomeDTO outcomeDTO = new OutcomeDTO(outcome);
+        return ResponseEntity.status(HttpStatus.OK).body(outcomeDTO);
     }
 
     @Operation(summary = "Get all the ABET outcomes")
     @GetMapping("/outcome")
-    public ResponseEntity<List<ResponseOutcome>> getAllCompetences(){
+    public ResponseEntity<List<OutcomeDTO>> getAllCompetences(){
         List<Outcome> outcomes = finder.getAllOutcomes();
-        List<ResponseOutcome> responseOutcomes = new ArrayList<>();
-        outcomes.forEach(outcome -> responseOutcomes.add(new ResponseOutcome(outcome)));
-        return ResponseEntity.status(HttpStatus.OK).body(responseOutcomes);
+        List<OutcomeDTO> outcomeDTOS = new ArrayList<>();
+        outcomes.forEach(outcome -> outcomeDTOS.add(new OutcomeDTO(outcome)));
+        return ResponseEntity.status(HttpStatus.OK).body(outcomeDTOS);
     }
 
     @Operation(summary = "Update an ABET outcome that matches the outcome's id")
-    @PutMapping("/outcome")
-    public ResponseEntity<ResponseOutcome> updateCompetence(@RequestBody Outcome outcome){
-        Outcome updatedOutcome = crudService.updateOutcome(outcome);
-        ResponseOutcome responseOutcome = new ResponseOutcome(outcome);
-        return ResponseEntity.status(HttpStatus.OK).body(responseOutcome);
+    @PutMapping("/outcome/{outcomeId}")
+    public ResponseEntity<OutcomeDTO> updateCompetence(@RequestBody Outcome outcome,
+                                                       @PathVariable(name = "outcomeId") Integer outcomeId){
+        Outcome updatedOutcome = crudService.updateOutcome(outcome, outcomeId);
+        OutcomeDTO outcomeDTO = new OutcomeDTO(updatedOutcome);
+        return ResponseEntity.status(HttpStatus.OK).body(outcomeDTO);
     }
 
     @Operation(summary = "Delete the ABET outcome that matches the id")
     @DeleteMapping("/outcome/{idOutcome}")
-    public ResponseEntity<ResponseOutcome> deleteCompetence(@PathVariable(value = "idOutcome") Long id){
+    public ResponseEntity<OutcomeDTO> deleteCompetence(@PathVariable(value = "idOutcome") Integer id){
         Outcome outcomeToDelete = finder.findOutcomeById(id);
         crudService.deleteOutcome(outcomeToDelete);
-        ResponseOutcome responseOutcome = new ResponseOutcome(outcomeToDelete);
-        return ResponseEntity.status(HttpStatus.OK).body(responseOutcome);
+        OutcomeDTO outcomeDTO = new OutcomeDTO(outcomeToDelete);
+        return ResponseEntity.status(HttpStatus.OK).body(outcomeDTO);
     }
 
     @ExceptionHandler(OutcomeNotFoundById.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public String notFoundError(Exception exception){
+        return exception.getMessage();
+    }
+    @ExceptionHandler(OutcomeAlreadyExists.class)
+    @ResponseStatus(value = HttpStatus.CONFLICT)
+    public String conflictError(Exception exception){
         return exception.getMessage();
     }
 }

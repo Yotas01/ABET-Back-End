@@ -2,8 +2,8 @@ package edu.javeriana.abetbackend.CRUD.Services.CRUD;
 
 import edu.javeriana.abetbackend.CRUD.Services.Find.CDIOFinder;
 import edu.javeriana.abetbackend.Entities.CDIO;
-import edu.javeriana.abetbackend.Exceptions.CDIOAlreadyExists;
-import edu.javeriana.abetbackend.Exceptions.CDIONotFoundByNumber;
+import edu.javeriana.abetbackend.Exceptions.AlreadyExists.CDIOAlreadyExists;
+import edu.javeriana.abetbackend.Exceptions.NotFound.CDIONotFoundByNumber;
 import edu.javeriana.abetbackend.Repositories.CDIORepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,8 +39,8 @@ public class CDIOCRUD {
         return updatedCDIO;
     }
 
-    public CDIO deleteCDIO(CDIO cdio){
-        CDIO cdioToDelete = finder.findCDIOByNumber(cdio.getNumber());
+    public CDIO deleteCDIO(Float cdioNumber){
+        CDIO cdioToDelete = finder.findCDIOByNumber(cdioNumber);
         repository.delete(cdioToDelete);
         return cdioToDelete;
     }

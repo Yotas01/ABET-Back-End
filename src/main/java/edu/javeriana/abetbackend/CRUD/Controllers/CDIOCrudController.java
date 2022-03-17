@@ -3,10 +3,10 @@ package edu.javeriana.abetbackend.CRUD.Controllers;
 import edu.javeriana.abetbackend.CRUD.Services.CRUD.CDIOCRUD;
 import edu.javeriana.abetbackend.CRUD.Services.Find.CDIOFinder;
 import edu.javeriana.abetbackend.Entities.CDIO;
-import edu.javeriana.abetbackend.Entities.ResponseEntities.ResponseCDIO;
-import edu.javeriana.abetbackend.Exceptions.CDIOAlreadyExists;
-import edu.javeriana.abetbackend.Exceptions.CDIONotFoundById;
-import edu.javeriana.abetbackend.Exceptions.CDIONotFoundByNumber;
+import edu.javeriana.abetbackend.Entities.DTOs.CDIODTO;
+import edu.javeriana.abetbackend.Exceptions.AlreadyExists.CDIOAlreadyExists;
+import edu.javeriana.abetbackend.Exceptions.NotFound.CDIONotFoundById;
+import edu.javeriana.abetbackend.Exceptions.NotFound.CDIONotFoundByNumber;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,44 +27,43 @@ public class CDIOCrudController {
 
     @Operation(summary = "Create a new CDIO competence")
     @PostMapping("/cdio")
-    public ResponseEntity<ResponseCDIO> addCDIO(@RequestBody CDIO cdio){
+    public ResponseEntity<CDIODTO> addCDIO(@RequestBody CDIO cdio){
         crudService.saveCDIO(cdio);
-        ResponseCDIO responseCDIO = new ResponseCDIO(cdio);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseCDIO);
+        CDIODTO CDIODTO = new CDIODTO(cdio);
+        return ResponseEntity.status(HttpStatus.CREATED).body(CDIODTO);
     }
 
     @Operation(summary = "Find the CDIO competence with cdioNumber")
     @GetMapping("/cdio/{cdioNumber}")
-    public ResponseEntity<ResponseCDIO> findCDIO(@PathVariable(value = "cdioNumber") Float id){
+    public ResponseEntity<CDIODTO> findCDIO(@PathVariable(value = "cdioNumber") Float id){
         CDIO cdio = finder.findCDIOByNumber(id);
-        ResponseCDIO responseCDIO = new ResponseCDIO(cdio);
-        return ResponseEntity.status(HttpStatus.OK).body(responseCDIO);
+        CDIODTO CDIODTO = new CDIODTO(cdio);
+        return ResponseEntity.status(HttpStatus.OK).body(CDIODTO);
     }
 
     @Operation(summary = "Get all the CDIO competences")
     @GetMapping("/cdio")
-    public ResponseEntity<List<ResponseCDIO>> getAllCDIOs(){
+    public ResponseEntity<List<CDIODTO>> getAllCDIOs(){
         List<CDIO> cdios = finder.getAllCDIOs();
-        List<ResponseCDIO> responseCDIOS= new ArrayList<>();
-        cdios.forEach(cdio -> responseCDIOS.add(new ResponseCDIO(cdio)));
-        return ResponseEntity.status(HttpStatus.OK).body(responseCDIOS);
+        List<CDIODTO> CDIODTOs = new ArrayList<>();
+        cdios.forEach(cdio -> CDIODTOs.add(new CDIODTO(cdio)));
+        return ResponseEntity.status(HttpStatus.OK).body(CDIODTOs);
     }
 
     @Operation(summary = "Update a CDIO competence that matches the cdio's number")
     @PutMapping("/cdio")
-    public ResponseEntity<ResponseCDIO> updateCompetence(@RequestBody CDIO cdio){
+    public ResponseEntity<CDIODTO> updateCompetence(@RequestBody CDIO cdio){
         CDIO updatedCODIO = crudService.updateCDIO(cdio);
-        ResponseCDIO responseCDIO = new ResponseCDIO(updatedCODIO);
-        return ResponseEntity.status(HttpStatus.OK).body(responseCDIO);
+        CDIODTO CDIODTO = new CDIODTO(updatedCODIO);
+        return ResponseEntity.status(HttpStatus.OK).body(CDIODTO);
     }
 
     @Operation(summary = "Delete the CDIO competence that matches the number")
     @DeleteMapping("/cdio/{cdioNumber}")
-    public ResponseEntity<ResponseCDIO> deleteCompetence(@PathVariable(value = "cdioNumber") Float number){
-        CDIO cdioToDelete = finder.findCDIOByNumber(number);
-        CDIO deletedCDIO = crudService.deleteCDIO(cdioToDelete);
-        ResponseCDIO responseCDIO = new ResponseCDIO(deletedCDIO);
-        return ResponseEntity.status(HttpStatus.OK).body(responseCDIO);
+    public ResponseEntity<CDIODTO> deleteCompetence(@PathVariable(value = "cdioNumber") Float cdioNumber){
+        CDIO deletedCDIO = crudService.deleteCDIO(cdioNumber);
+        CDIODTO CDIODTO = new CDIODTO(deletedCDIO);
+        return ResponseEntity.status(HttpStatus.OK).body(CDIODTO);
     }
 
     @ExceptionHandler({CDIONotFoundById.class, CDIONotFoundByNumber.class})

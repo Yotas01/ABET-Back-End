@@ -10,18 +10,18 @@ import javax.persistence.*;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idCourse")
     private Long CourseId;
     @Basic
     private Integer number;
     @Basic
     private String name;
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Section> sections;
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<RAE> RAEs;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "course_has_cdio",
             joinColumns = @JoinColumn(name = "idCourse"),
@@ -137,6 +137,15 @@ public class Course {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(CourseId, number, name, sections, RAEs, cdioList);
+        return Objects.hashCode(CourseId, number, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "CourseId=" + CourseId +
+                ", number=" + number +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

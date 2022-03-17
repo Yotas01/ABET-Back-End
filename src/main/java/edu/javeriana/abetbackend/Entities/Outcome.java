@@ -12,13 +12,11 @@ import java.util.List;
 public class Outcome {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "idOutcome")
-    private Long OutcomeId;
+    private Integer OutcomeId;
     @Basic
     private String description;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "outcome_has_cdio",
             joinColumns = @JoinColumn(name = "idOutcome"),
@@ -27,7 +25,7 @@ public class Outcome {
     @JsonIgnore
     private List<CDIO> cdioList;
 
-    public Outcome(Long outcomeId, String description) {
+    public Outcome(Integer outcomeId, String description) {
         OutcomeId = outcomeId;
         this.description = description;
         this.cdioList = new ArrayList<>();
@@ -37,11 +35,11 @@ public class Outcome {
         this.cdioList = new ArrayList<>();
     }
 
-    public Long getOutcomeId() {
+    public Integer getOutcomeId() {
         return OutcomeId;
     }
 
-    public void setOutcomeId(Long OutcomeId) {
+    public void setOutcomeId(Integer OutcomeId) {
         this.OutcomeId = OutcomeId;
     }
 
@@ -82,7 +80,7 @@ public class Outcome {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(OutcomeId, description, cdioList);
+        return Objects.hashCode(OutcomeId, description);
     }
 
     @Override

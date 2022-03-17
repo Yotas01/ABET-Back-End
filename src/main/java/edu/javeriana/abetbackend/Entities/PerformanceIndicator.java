@@ -1,6 +1,7 @@
 package edu.javeriana.abetbackend.Entities;
 
 import com.google.common.base.Objects;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -8,7 +9,8 @@ import javax.persistence.*;
 public class PerformanceIndicator {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "idPerformanceIndicator")
     private Long PerformanceIndicatorId;
     @Basic
@@ -104,6 +106,6 @@ public class PerformanceIndicator {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(PerformanceIndicatorId, description, percentage, exemplary, competent, below, assessmentTool);
+        return Objects.hashCode(PerformanceIndicatorId, description, percentage, exemplary, competent, below);
     }
 }

@@ -1,6 +1,7 @@
 package edu.javeriana.abetbackend.Entities;
 
 import com.google.common.base.Objects;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,8 @@ import javax.persistence.*;
 public class RAE {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "idRAE")
     private Long RAEId;
     @Basic
@@ -18,9 +20,9 @@ public class RAE {
     @ManyToOne
     @JoinColumn(name = "idCourse")
     private Course course;
-    @OneToMany(mappedBy = "rae")
+    @OneToMany(mappedBy = "rae", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AssessmentTool> assessmentTools;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "rae_has_cdio",
             joinColumns = @JoinColumn(name = "idRAE"),
@@ -115,6 +117,13 @@ public class RAE {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(RAEId, description, course, assessmentTools, cdioList);
+        return Objects.hashCode(RAEId, description);
+    }
+
+    @Override
+    public String toString() {
+        return "RAEId=" + RAEId +
+                ", description='" + description + '\'' +
+                ", course=" + course.getNumber() + "-" + course.getName();
     }
 }

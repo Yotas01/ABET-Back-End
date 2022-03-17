@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Section {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idSection")
     private Long SectionId;
     @Basic
@@ -93,6 +93,6 @@ public class Section {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(SectionId, number, professor, totalStudents, semester, course);
+        return Objects.hashCode(SectionId,professor);
     }
 }
