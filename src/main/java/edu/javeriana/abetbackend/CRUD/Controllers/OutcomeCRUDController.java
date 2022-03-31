@@ -4,8 +4,7 @@ import edu.javeriana.abetbackend.CRUD.Services.CRUD.OutcomeCRUD;
 import edu.javeriana.abetbackend.CRUD.Services.Find.OutcomeFinder;
 import edu.javeriana.abetbackend.Entities.Outcome;
 import edu.javeriana.abetbackend.Entities.DTOs.OutcomeDTO;
-import edu.javeriana.abetbackend.Exceptions.AlreadyExists.OutcomeAlreadyExists;
-import edu.javeriana.abetbackend.Exceptions.NotFound.OutcomeNotFoundById;
+import edu.javeriana.abetbackend.Exceptions.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,14 +67,15 @@ public class OutcomeCRUDController {
         return ResponseEntity.status(HttpStatus.OK).body(outcomeDTO);
     }
 
-    @ExceptionHandler(OutcomeNotFoundById.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public String notFoundError(Exception exception){
-        return exception.getMessage();
-    }
-    @ExceptionHandler(OutcomeAlreadyExists.class)
-    @ResponseStatus(value = HttpStatus.CONFLICT)
-    public String conflictError(Exception exception){
-        return exception.getMessage();
-    }
+    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badRequestError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler(NotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String notFoundError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String conflictError(Exception e){ return  e.getMessage();}
 }

@@ -13,14 +13,14 @@ public class Course_has_CDIO {
     private Course_has_CdioId id;
 
     @Basic
-    private Integer value;
+    private Integer bloomValue;
 
     public Course_has_CDIO() {
     }
 
-    public Course_has_CDIO(Course_has_CdioId id, Integer value) {
+    public Course_has_CDIO(Course_has_CdioId id, Integer bloomValue) {
         this.id = id;
-        this.value = value;
+        this.bloomValue = bloomValue;
     }
 
     public Course_has_CdioId getId() {
@@ -31,12 +31,12 @@ public class Course_has_CDIO {
         this.id = id;
     }
 
-    public Integer getValue() {
-        return value;
+    public Integer getBloomValue() {
+        return bloomValue;
     }
 
-    public void setValue(Integer value) {
-        this.value = value;
+    public void setBloomValue(Integer bloomValue) {
+        this.bloomValue = bloomValue;
     }
 
     @Override
@@ -44,11 +44,11 @@ public class Course_has_CDIO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course_has_CDIO that = (Course_has_CDIO) o;
-        return Objects.equal(id, that.id) && Objects.equal(value, that.value);
+        return Objects.equal(id, that.id) && Objects.equal(bloomValue, that.bloomValue);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, value);
+        return Objects.hashCode(id, bloomValue);
     }
 }

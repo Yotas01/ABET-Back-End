@@ -18,24 +18,23 @@ public class AssessmentTool {
     @Basic
     private String description;
     @Basic
-    private Integer value;
-    @Basic
-    private Integer totalStudents;
+    private Double value;
     @ManyToOne
     @JoinColumn(name = "idRAE")
     private RAE rae;
     @OneToMany(mappedBy = "assessmentTool", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PerformanceIndicator> performanceIndicators;
+    @OneToOne(mappedBy = "assessmentTool")
+    private SectionAssessmentTool sectionAssessmentTool;
 
     public AssessmentTool() {
         this.performanceIndicators = new ArrayList<>();
     }
 
-    public AssessmentTool(Long assessmentToolId, String description, Integer value, Integer totalStudents, RAE rae) {
+    public AssessmentTool(Long assessmentToolId, String description, Double value, RAE rae) {
         AssessmentToolId = assessmentToolId;
         this.description = description;
         this.value = value;
-        this.totalStudents = totalStudents;
         this.rae = rae;
         this.performanceIndicators = new ArrayList<>();
     }
@@ -64,20 +63,12 @@ public class AssessmentTool {
         this.description = description;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
-    }
-
-    public Integer getTotalStudents() {
-        return totalStudents;
-    }
-
-    public void setTotalStudents(Integer totalStudents) {
-        this.totalStudents = totalStudents;
     }
 
     public List<PerformanceIndicator> getPerformanceIndicators() {
@@ -104,11 +95,11 @@ public class AssessmentTool {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AssessmentTool that = (AssessmentTool) o;
-        return Objects.equal(AssessmentToolId, that.AssessmentToolId) && Objects.equal(description, that.description) && Objects.equal(value, that.value) && Objects.equal(totalStudents, that.totalStudents) && Objects.equal(rae, that.rae) && Objects.equal(performanceIndicators, that.performanceIndicators);
+        return Objects.equal(AssessmentToolId, that.AssessmentToolId) && Objects.equal(description, that.description) && Objects.equal(value, that.value) && Objects.equal(rae, that.rae) && Objects.equal(performanceIndicators, that.performanceIndicators);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(AssessmentToolId, description, value, totalStudents, rae);
+        return Objects.hashCode(AssessmentToolId, description, value, rae);
     }
 }

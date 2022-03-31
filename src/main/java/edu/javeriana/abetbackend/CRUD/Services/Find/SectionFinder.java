@@ -2,10 +2,7 @@ package edu.javeriana.abetbackend.CRUD.Services.Find;
 
 import edu.javeriana.abetbackend.Entities.Course;
 import edu.javeriana.abetbackend.Entities.Section;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CourseNotFoundById;
-import edu.javeriana.abetbackend.Exceptions.NotFound.SectionNotFound;
-import edu.javeriana.abetbackend.Exceptions.NotFound.SectionNotFoundByProfessor;
-import edu.javeriana.abetbackend.Repositories.CourseRepository;
+import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +21,7 @@ public class SectionFinder {
     public Section findSectionById(Long sectionId){
         Optional<Section> optionalSection = sectionRepository.findById(sectionId);
         if(optionalSection.isEmpty())
-            throw new SectionNotFound("The section with id " + sectionId + " was not found");
+            throw new NotFound("The section with id " + sectionId + " was not found");
         return optionalSection.get();
     }
 
@@ -32,24 +29,33 @@ public class SectionFinder {
         Course course = courseFinder.findCourseByNumber(courseNumber);
         Optional<Section> optionalSection = sectionRepository.findSectionByNumberAndCourse(sectionNumber, course);
         if(optionalSection.isEmpty())
-            throw new SectionNotFound("The section with number " + sectionNumber + " for the course " + courseNumber
+            throw new NotFound("The section with number " + sectionNumber + " for the course " + courseNumber
                     + " was not found");
         return optionalSection.get();
     }
 
-    public List<Section> findSectionsFromCourseNumber(Integer courseNumber){
-        Course optionalCourse = courseFinder.findCourseByNumber(courseNumber);
-        return optionalCourse.getSections();
+    public Section findSectionByNumberAndSemester(Integer courseNumber, Integer sectionNumber, Integer semester){
+        Course course = courseFinder.findCourseByNumber(courseNumber);
+        Optional<Section> optionalSection = sectionRepository.findSectionByNumberAndCourseAndSemester(sectionNumber, course, semester);
+        if(optionalSection.isEmpty())
+            throw new NotFound("The section with number " + sectionNumber + " for the course " + courseNumber
+                    + " and the semester " + semester + " was not found");
+        return optionalSection.get();
     }
 
-    public List<Section> getAllSections(){
-        return (List<Section>) sectionRepository.findAll();
+    public List<Section> findSectionsFromCourseNumberAndSemester(Integer courseNumber, Integer semester){
+        Course course = courseFinder.findCourseByNumber(courseNumber);
+        Optional<List<Section>> sections = sectionRepository.findSectionByCourseAndSemester(course, semester);
+        if (sections.isEmpty() || sections.get().isEmpty())
+            throw new NotFound("There were no sections found for the course " + courseNumber
+                    + " and the semester " + semester);
+        return sections.get();
     }
 
     public List<Section> findByProfessor(String professor){
         Optional<List<Section>> optionalSections = sectionRepository.findAllByProfessor(professor);
         if(optionalSections.isEmpty())
-            throw new SectionNotFoundByProfessor("The section with the professor " + professor + " was not found");
+            throw new NotFound("The section with the professor " + professor + " was not found");
         return optionalSections.get();
     }
 }

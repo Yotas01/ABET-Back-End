@@ -1,5 +1,6 @@
 package edu.javeriana.abetbackend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
 
 import java.util.ArrayList;
@@ -25,8 +26,9 @@ public class Course {
     @JoinTable(
             name = "course_has_cdio",
             joinColumns = @JoinColumn(name = "idCourse"),
-            inverseJoinColumns = @JoinColumn(name = "idCDIO")
+            inverseJoinColumns = @JoinColumn(name = "cdioNumber")
     )
+    @JsonIgnore
     private List<CDIO> cdioList;
 
     public Course(Long courseId, Integer number, String name) {

@@ -20,15 +20,15 @@ public class RAE {
     @ManyToOne
     @JoinColumn(name = "idCourse")
     private Course course;
-    @OneToMany(mappedBy = "rae", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AssessmentTool> assessmentTools;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "rae_has_cdio",
             joinColumns = @JoinColumn(name = "idRAE"),
-            inverseJoinColumns = @JoinColumn(name = "IdCDIO")
+            inverseJoinColumns = @JoinColumn(name = "cdioNumber")
     )
     private List<CDIO> cdioList;
+    @OneToMany(mappedBy = "rae", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<AssessmentTool> assessmentTools;
 
     public RAE(Long RAEId, String description, Course course) {
         this.RAEId = RAEId;

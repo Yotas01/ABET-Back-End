@@ -2,10 +2,7 @@ package edu.javeriana.abetbackend.CRUD.Controllers.Relations;
 
 import edu.javeriana.abetbackend.CRUD.Services.Relations.Outcome_CDIORelationsService;
 import edu.javeriana.abetbackend.Entities.DTOs.OutcomeDTO;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CDIONotFoundByNumber;
-import edu.javeriana.abetbackend.Exceptions.AlreadyContains.OutcomeAlreadyContainsCDIO;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.OutcomeDoesNotContainCDIO;
-import edu.javeriana.abetbackend.Exceptions.NotFound.OutcomeNotFoundById;
+import edu.javeriana.abetbackend.Exceptions.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,15 +32,15 @@ public class Outcome_CDIORelationsController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @ExceptionHandler(OutcomeAlreadyContainsCDIO.class)
+    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badRequestError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler(NotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String notFoundError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String conflictOutcomeAlreadyContainsCDIO(Exception exception){return exception.getMessage();}
-    @ExceptionHandler(OutcomeDoesNotContainCDIO.class)
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public String conflictOutcomeDoesNotContainCDIO(Exception exception){return exception.getMessage();}
-    @ExceptionHandler({OutcomeNotFoundById.class, CDIONotFoundByNumber.class})
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public String notFoundError(Exception exception){
-        return exception.getMessage();
-    }
+    public String conflictError(Exception e){ return  e.getMessage();}
 }

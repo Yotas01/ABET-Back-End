@@ -2,16 +2,9 @@ package edu.javeriana.abetbackend.CRUD.Controllers;
 
 import edu.javeriana.abetbackend.CRUD.Services.CRUD.PerformanceIndicatorCRUD;
 import edu.javeriana.abetbackend.CRUD.Services.Find.PerformanceIndicatorFinder;
-import edu.javeriana.abetbackend.Entities.AssessmentTool;
-import edu.javeriana.abetbackend.Entities.DTOs.AssessmentToolDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.PerformanceIndicatorDTO;
 import edu.javeriana.abetbackend.Entities.PerformanceIndicator;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.FoundAssessmentToolDoesNotContainFoundPerformanceIndicator;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.FoundCourseDoesNotContainFoundRae;
-import edu.javeriana.abetbackend.Exceptions.NotFound.PerformanceIndicatorNotFoundById;
-import edu.javeriana.abetbackend.Exceptions.NotFound.PerformanceIndicatorsNotFoundByAssessmentTool;
-import edu.javeriana.abetbackend.Exceptions.NotFound.RAENotFoundByCourse;
-import edu.javeriana.abetbackend.Exceptions.NotFound.RAENotFoundById;
+import edu.javeriana.abetbackend.Exceptions.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/course/{courseNumber}/rae/{raeId}/assessmentTool/{assessmentToolId}")
+@RequestMapping("/admin/course/{courseNumber}/rae/{raeId}/assessmentTool/{assessmentToolId}/performanceIndicator")
 public class PerformanceIndicatorCRUDController {
 
     @Autowired
@@ -31,7 +24,7 @@ public class PerformanceIndicatorCRUDController {
     private PerformanceIndicatorFinder performanceIndicatorFinder;
 
     @Operation(summary = "Create a performance indicator")
-    @PostMapping("/performanceIndicator")
+    @PostMapping()
     public ResponseEntity<PerformanceIndicatorDTO> addPerformanceIndicator(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                      @PathVariable(name = "raeId") Long raeId,
                                                                      @PathVariable(name = "assessmentToolId") Long assessmentToolId,
@@ -42,7 +35,7 @@ public class PerformanceIndicatorCRUDController {
     }
 
     @Operation(summary = "Update a performance indicator")
-    @PutMapping("/performanceIndicator/{performanceIndicatorId}")
+    @PutMapping("/{performanceIndicatorId}")
     public ResponseEntity<PerformanceIndicatorDTO> updatePerformanceIndicator(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                   @PathVariable(name = "raeId") Long raeId,
                                                                   @PathVariable(name = "assessmentToolId") Long assessmentToolId,
@@ -55,7 +48,7 @@ public class PerformanceIndicatorCRUDController {
     }
 
     @Operation(summary = "Delete a performance indicator")
-    @DeleteMapping("/performanceIndicator/{performanceIndicatorId}")
+    @DeleteMapping("/{performanceIndicatorId}")
     public ResponseEntity<PerformanceIndicatorDTO> deletePerformanceIndicator(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                               @PathVariable(name = "raeId") Long raeId,
                                                                               @PathVariable(name = "performanceIndicatorId") Long performanceIndicatorId,
@@ -77,7 +70,7 @@ public class PerformanceIndicatorCRUDController {
     }
 
     @Operation(summary = "Get a performance indicator")
-    @GetMapping("/performanceIndicator/{performanceIndicatorId}")
+    @GetMapping("/{performanceIndicatorId}")
     public ResponseEntity<PerformanceIndicatorDTO> getPerformanceIndicator(@PathVariable(name = "performanceIndicatorId") Long performanceIndicatorId){
         PerformanceIndicator pi = performanceIndicatorFinder.findPerformanceIndicatorById(performanceIndicatorId);
         PerformanceIndicatorDTO dto = new PerformanceIndicatorDTO(pi);
@@ -85,7 +78,7 @@ public class PerformanceIndicatorCRUDController {
     }
 
     @Operation(summary = "Get all performance indicator by Assessment tool id")
-    @GetMapping("/performanceIndicator")
+    @GetMapping("")
     public ResponseEntity<List<PerformanceIndicatorDTO>> getPerformanceIndicatorByAssessmentToolId(@PathVariable(name = "assessmentToolId") Long assessmentToolId){
         List<PerformanceIndicator> pis = performanceIndicatorFinder.getPerformanceIndicatorsFromAssessmentTool(assessmentToolId);
         List<PerformanceIndicatorDTO> dto = new ArrayList<>();
@@ -93,15 +86,15 @@ public class PerformanceIndicatorCRUDController {
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
-    @ExceptionHandler({RAENotFoundById.class, RAENotFoundByCourse.class, PerformanceIndicatorNotFoundById.class ,
-            PerformanceIndicatorsNotFoundByAssessmentTool.class, FoundAssessmentToolDoesNotContainFoundPerformanceIndicator.class})
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public String notFoundError(Exception exception){
-        return exception.getMessage();
-    }
-    @ExceptionHandler({FoundAssessmentToolDoesNotContainFoundPerformanceIndicator.class})
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public String doesNotContainError(Exception exception){
-        return exception.getMessage();
-    }
+    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badRequestError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler(NotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String notFoundError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String conflictError(Exception e){ return  e.getMessage();}
 }

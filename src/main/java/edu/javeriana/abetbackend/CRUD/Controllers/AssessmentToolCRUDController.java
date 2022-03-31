@@ -4,12 +4,7 @@ import edu.javeriana.abetbackend.CRUD.Services.CRUD.AssessmentToolCRUD;
 import edu.javeriana.abetbackend.CRUD.Services.Find.AssessmentToolFinder;
 import edu.javeriana.abetbackend.Entities.AssessmentTool;
 import edu.javeriana.abetbackend.Entities.DTOs.AssessmentToolDTO;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.FoundCourseDoesNotContainFoundRae;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.FoundRAEDoesNotContainFoundAssessmentTool;
-import edu.javeriana.abetbackend.Exceptions.NotFound.AssessmentToolNotFoundById;
-import edu.javeriana.abetbackend.Exceptions.NotFound.AssessmentToolsNotFoundByRAE;
-import edu.javeriana.abetbackend.Exceptions.NotFound.RAENotFoundByCourse;
-import edu.javeriana.abetbackend.Exceptions.NotFound.RAENotFoundById;
+import edu.javeriana.abetbackend.Exceptions.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,21 +65,21 @@ public class AssessmentToolCRUDController {
     @Operation(summary = "Get all Assessment tool by Rae id")
     @GetMapping("/assessmentTool")
     public ResponseEntity<List<AssessmentToolDTO>> getAssessmentToolByRAEId(@PathVariable(name = "raeId") Long raeId){
-        List<AssessmentTool> assessmentTools = assessmentToolFinder.getAssessmentToolsByRAEId(raeId);
+        List<AssessmentTool> assessmentTools = assessmentToolFinder.findAssessmentToolsByRAEId(raeId);
         List<AssessmentToolDTO> dto = new ArrayList<>();
         assessmentTools.forEach(at -> dto.add(new AssessmentToolDTO(at)));
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
-    @ExceptionHandler({RAENotFoundById.class, RAENotFoundByCourse.class, AssessmentToolNotFoundById.class ,
-            AssessmentToolsNotFoundByRAE.class})
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public String notFoundError(Exception exception){
-        return exception.getMessage();
-    }
-    @ExceptionHandler({FoundRAEDoesNotContainFoundAssessmentTool.class})
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public String doesNotContainError(Exception exception){
-        return exception.getMessage();
-    }
+    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badRequestError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler(NotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String notFoundError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String conflictError(Exception e){ return  e.getMessage();}
 }

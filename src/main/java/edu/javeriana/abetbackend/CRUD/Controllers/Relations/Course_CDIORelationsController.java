@@ -5,12 +5,7 @@ import edu.javeriana.abetbackend.Entities.Course_has_CDIO;
 import edu.javeriana.abetbackend.Entities.DTOs.CourseDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.Course_has_CDIODTO;
 import edu.javeriana.abetbackend.Entities.DTOs.ValueDTO;
-import edu.javeriana.abetbackend.Exceptions.AlreadyContains.CourseAlreadyContainsCDIO;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.CourseDoesNotContainCDIO;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CDIONotFoundById;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CDIONotFoundByNumber;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CourseHasCDIONotFoundById;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CourseNotFoundById;
+import edu.javeriana.abetbackend.Exceptions.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +30,15 @@ public class Course_CDIORelationsController {
     }
 
     @Operation(summary = "Make a relation between a Course and a CDIO competence")
+    @PutMapping()
+    public ResponseEntity<Course_has_CDIODTO> updateCDIOHasCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
+                                                     @PathVariable(name = "cdioNumber") Float cdioNumber,
+                                                     @RequestBody(required = false) ValueDTO value){
+        Course_has_CDIO course_has_cdio = relationService.updateCDIOHasCourse(courseNumber,cdioNumber, value.getValue());
+        return ResponseEntity.status(HttpStatus.OK).body(new Course_has_CDIODTO(course_has_cdio));
+    }
+
+    @Operation(summary = "Make a relation between a Course and a CDIO competence")
     @GetMapping()
     public ResponseEntity<Course_has_CDIODTO> getCourseHasCDIO(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                @PathVariable(name = "cdioNumber") Float cdioNumber){
@@ -51,11 +55,15 @@ public class Course_CDIORelationsController {
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
-    @ExceptionHandler({CDIONotFoundByNumber.class, CDIONotFoundById.class, CourseNotFoundById.class,
-            CourseHasCDIONotFoundById.class})
+    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badRequestError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler(NotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String notFoundError(Exception exception){return exception.getMessage();}
-    @ExceptionHandler({CourseAlreadyContainsCDIO.class, CourseDoesNotContainCDIO.class})
+    public String notFoundError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String conflictError(Exception exception){return exception.getMessage();}
+    public String conflictError(Exception e){ return  e.getMessage();}
 }

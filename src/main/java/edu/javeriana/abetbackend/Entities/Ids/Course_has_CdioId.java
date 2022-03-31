@@ -16,7 +16,7 @@ public class Course_has_CdioId implements Serializable {
     @JoinColumn(name = "idCourse")
     private Course course;
     @ManyToOne
-    @JoinColumn(name = "idCDIO")
+    @JoinColumn(name = "cdioNumber")
     private CDIO cdio;
 
     @Override

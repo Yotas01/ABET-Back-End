@@ -8,16 +8,13 @@ import edu.javeriana.abetbackend.Entities.AssessmentTool;
 import edu.javeriana.abetbackend.Entities.Course;
 import edu.javeriana.abetbackend.Entities.PerformanceIndicator;
 import edu.javeriana.abetbackend.Entities.RAE;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.FoundAssessmentToolDoesNotContainFoundPerformanceIndicator;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.FoundCourseDoesNotContainFoundRae;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.FoundRAEDoesNotContainFoundAssessmentTool;
+import edu.javeriana.abetbackend.Exceptions.DoesNotContain;
 import edu.javeriana.abetbackend.Repositories.AssessmentToolRepository;
 import edu.javeriana.abetbackend.Repositories.PerformanceIndicatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 @Transactional
@@ -45,15 +42,12 @@ public class PerformanceIndicatorCRUD {
     }
 
     public PerformanceIndicator updatePerformanceIndicator(PerformanceIndicator performanceIndicator, Integer courseNumber, Long raeId,
-                                           Long assessmentToolId, Long performanceIndicatorId){
+                                                           Long assessmentToolId, Long performanceIndicatorId){
         AssessmentTool assessmentTool = findCourseRaeAndAssessmentTool(courseNumber, raeId, assessmentToolId);
         PerformanceIndicator performanceIndicatorToUpdate = performanceIndicatorFinder
                 .findPerformanceIndicatorById(performanceIndicatorId);
         performanceIndicatorToUpdate.setDescription(performanceIndicator.getDescription());
         performanceIndicatorToUpdate.setPercentage(performanceIndicator.getPercentage());
-        performanceIndicatorToUpdate.setBelow(performanceIndicator.getBelow());
-        performanceIndicatorToUpdate.setCompetent(performanceIndicator.getCompetent());
-        performanceIndicatorToUpdate.setExemplary(performanceIndicator.getExemplary());
         performanceIndicatorToUpdate.setAssessmentTool(assessmentTool);
         performanceIndicatorRepository.save(performanceIndicatorToUpdate);
         return performanceIndicatorToUpdate;
@@ -63,17 +57,17 @@ public class PerformanceIndicatorCRUD {
         AssessmentTool assessmentTool = findCourseRaeAndAssessmentTool(courseNumber,raeId,assessmentToolId);
         PerformanceIndicator performanceIndicator = performanceIndicatorFinder.findPerformanceIndicatorById(performanceIndicatorId);
         if(!performanceIndicator.getAssessmentTool().equals(assessmentTool))
-            throw new FoundAssessmentToolDoesNotContainFoundPerformanceIndicator("The assessment tool with id "
+            throw new DoesNotContain("The assessment tool with id "
                     + assessmentToolId + "does not contain the performance indicator " + performanceIndicatorId);
         assessmentTool.removePerformanceIndicator(performanceIndicator);
         performanceIndicatorRepository.delete(performanceIndicator);
-        return  performanceIndicator;
+        return performanceIndicator;
     }
 
     public void deleteAllPerformanceIndicatorsFromAssessmentTool(Integer courseNumber, Long raeId, Long assessmentToolId) {
         AssessmentTool assessmentTool = findCourseRaeAndAssessmentTool(courseNumber, raeId, assessmentToolId);
         if(assessmentTool.getPerformanceIndicators().isEmpty())
-            throw new FoundAssessmentToolDoesNotContainFoundPerformanceIndicator("The assessment tool with id "
+            throw new DoesNotContain("The assessment tool with id "
                     + assessmentToolId + " has no performance indicators");
         performanceIndicatorRepository.deleteAllByAssessmentTool(assessmentTool);
         assessmentTool.getPerformanceIndicators().clear();
@@ -84,11 +78,11 @@ public class PerformanceIndicatorCRUD {
         Course course = courseFinder.findCourseByNumber(courseNumber);
         RAE rae = raeFinder.findRAEById(raeId);
         if(!rae.getCourse().equals(course))
-            throw new FoundCourseDoesNotContainFoundRae("The course " + course.getName() + " does not contain the" +
+            throw new DoesNotContain("The course " + course.getName() + " does not contain the" +
                     " found RAE" + raeId);
         AssessmentTool assessmentTool = assessmentToolFinder.findById(assessmentToolId);
         if (!assessmentTool.getRae().equals(rae))
-            throw new FoundRAEDoesNotContainFoundAssessmentTool("The rae " + raeId + " does not contain the" +
+            throw new DoesNotContain("The rae " + raeId + " does not contain the" +
                     " found assessment tool" + assessmentToolId);
         return assessmentTool;
     }
