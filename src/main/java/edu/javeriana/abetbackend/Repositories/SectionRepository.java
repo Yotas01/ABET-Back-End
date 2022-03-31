@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface SectionRepository extends CrudRepository<Section, Long> {
     Optional<List<Section>> findAllByProfessor(String professor);
     Optional<Section> findSectionByNumberAndCourse(Integer number, Course course);
+    Optional<Section> findSectionByNumberAndCourseAndSemester(Integer number, Course course, Integer semester);
+    Optional<List<Section>> findSectionByCourseAndSemester(Course course, Integer semester);
 }

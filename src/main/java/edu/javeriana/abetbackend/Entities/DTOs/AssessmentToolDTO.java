@@ -10,8 +10,7 @@ public class AssessmentToolDTO {
 
     private Long AssessmentToolId;
     private String description;
-    private Integer value;
-    private Integer totalStudents;
+    private Double value;
     private String rae;
     private List<PerformanceIndicatorDTO> performanceIndicators;
 
@@ -23,7 +22,6 @@ public class AssessmentToolDTO {
         this.AssessmentToolId = assessmentTool.getAssessmentToolId();
         this.description = assessmentTool.getDescription();
         this.value = assessmentTool.getValue();
-        this.totalStudents = assessmentTool.getTotalStudents();
         this.rae = assessmentTool.getRae().getDescription();
         this.performanceIndicators = new ArrayList<>();
         assessmentTool.getPerformanceIndicators().forEach(pi -> this.performanceIndicators.add(new PerformanceIndicatorDTO(pi)));
@@ -45,20 +43,12 @@ public class AssessmentToolDTO {
         this.description = description;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
-    }
-
-    public Integer getTotalStudents() {
-        return totalStudents;
-    }
-
-    public void setTotalStudents(Integer totalStudents) {
-        this.totalStudents = totalStudents;
     }
 
     public String getRae() {

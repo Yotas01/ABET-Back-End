@@ -5,10 +5,7 @@ import edu.javeriana.abetbackend.CRUD.Services.Find.SectionFinder;
 import edu.javeriana.abetbackend.Entities.DTOs.NameDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.SectionDTO;
 import edu.javeriana.abetbackend.Entities.Section;
-import edu.javeriana.abetbackend.Exceptions.AlreadyExists.SectionAlreadyExists;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CourseNotFoundById;
-import edu.javeriana.abetbackend.Exceptions.NotFound.SectionNotFound;
-import edu.javeriana.abetbackend.Exceptions.NotFound.SectionNotFoundByProfessor;
+import edu.javeriana.abetbackend.Exceptions.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,11 +33,12 @@ public class SectionCRUDController {
         return ResponseEntity.status(HttpStatus.CREATED).body(sectionDTO);
     }
 
-    @Operation(summary = "Find the section with sectionNumber")
-    @GetMapping("/{courseNumber}/section/{sectionNumber}")
-    public ResponseEntity<SectionDTO> findSectionByNumber(@PathVariable(value = "sectionNumber") Integer sectionNumber,
-                                                          @PathVariable(value = "courseNumber") Integer courseNumber){
-        Section section = sectionFinder.findSectionByNumber(courseNumber, sectionNumber);
+    @Operation(summary = "Find the section with sectionNumber and the semester")
+    @GetMapping("/{courseNumber}/section/{sectionNumber}/semester/{semester}")
+    public ResponseEntity<SectionDTO> findSectionByNumberAndSemester(@PathVariable(value = "sectionNumber") Integer sectionNumber,
+                                                                     @PathVariable(value = "courseNumber") Integer courseNumber,
+                                                                     @PathVariable(value = "semester") Integer semester){
+        Section section = sectionFinder.findSectionByNumberAndSemester(courseNumber, sectionNumber, semester);
         SectionDTO sectionDTO = new SectionDTO(section);
         return ResponseEntity.status(HttpStatus.OK).body(sectionDTO);
     }
@@ -54,19 +52,11 @@ public class SectionCRUDController {
         return ResponseEntity.status(HttpStatus.OK).body(sectionDTOs);
     }
 
-    @Operation(summary = "Find the sections from a Course")
-    @GetMapping("/{courseNumber}/sections")
-    public ResponseEntity<List<SectionDTO>> findCourseSections(@PathVariable(value = "courseNumber") Integer courseNumber){
-        List<Section> sections = sectionFinder.findSectionsFromCourseNumber(courseNumber);
-        List<SectionDTO> sectionDTOs = new ArrayList<>();
-        sections.forEach(section -> sectionDTOs.add(new SectionDTO(section)));
-        return ResponseEntity.status(HttpStatus.OK).body(sectionDTOs);
-    }
-
-    @Operation(summary = "Get all the sections")
-    @GetMapping("/section")
-    public ResponseEntity<List<SectionDTO>> getAllCourses(){
-        List<Section> sections = sectionFinder.getAllSections();
+    @Operation(summary = "Find the sections from a Course and semester")
+    @GetMapping("/{courseNumber}/sections/semester/{semester}")
+    public ResponseEntity<List<SectionDTO>> findCourseSectionsBySemester(@PathVariable(value = "courseNumber") Integer courseNumber,
+                                                                         @PathVariable(value = "semester") Integer semester){
+        List<Section> sections = sectionFinder.findSectionsFromCourseNumberAndSemester(courseNumber, semester);
         List<SectionDTO> sectionDTOs = new ArrayList<>();
         sections.forEach(section -> sectionDTOs.add(new SectionDTO(section)));
         return ResponseEntity.status(HttpStatus.OK).body(sectionDTOs);
@@ -91,15 +81,15 @@ public class SectionCRUDController {
         return ResponseEntity.status(HttpStatus.OK).body(responseCourse);
     }
 
-    @ExceptionHandler({CourseNotFoundById.class , SectionNotFound.class, SectionNotFoundByProfessor.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String notFoundError(Exception exception){
-        return exception.getMessage();
-    }
+    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badRequestError(Exception e){ return  e.getMessage();}
 
-    @ExceptionHandler(SectionAlreadyExists.class)
+    @ExceptionHandler(NotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String notFoundError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String alreadyExistsError(Exception exception){
-        return exception.getMessage();
-    }
+    public String conflictError(Exception e){ return  e.getMessage();}
 }

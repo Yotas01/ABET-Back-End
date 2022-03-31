@@ -2,8 +2,8 @@ package edu.javeriana.abetbackend.CRUD.Services.CRUD;
 
 import edu.javeriana.abetbackend.CRUD.Services.Find.CourseFinder;
 import edu.javeriana.abetbackend.Entities.Course;
-import edu.javeriana.abetbackend.Exceptions.AlreadyExists.CourseAlreadyExists;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CourseNotFoundById;
+import edu.javeriana.abetbackend.Exceptions.AlreadyExists;
+import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +21,11 @@ public class CourseCRUD {
     public void saveCourse(Course course){
         try{
             Course foundCourse = finder.findCourseByNumber(course.getNumber());
-        }catch (CourseNotFoundById exception){
+        }catch (NotFound exception){
             repository.save(course);
             return;
         }
-        throw new CourseAlreadyExists("The course with number " + course.getNumber() + " already exists");
+        throw new AlreadyExists("The course with number " + course.getNumber() + " already exists");
     }
 
     public Course updateCourse(Course course, Integer courseNumber){

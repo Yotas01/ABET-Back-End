@@ -2,8 +2,8 @@ package edu.javeriana.abetbackend.CRUD.Services.CRUD;
 
 import edu.javeriana.abetbackend.CRUD.Services.Find.CDIOFinder;
 import edu.javeriana.abetbackend.Entities.CDIO;
-import edu.javeriana.abetbackend.Exceptions.AlreadyExists.CDIOAlreadyExists;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CDIONotFoundByNumber;
+import edu.javeriana.abetbackend.Exceptions.AlreadyExists;
+import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.CDIORepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,16 +20,16 @@ public class CDIOCRUD {
 
     public void saveCDIO(CDIO cdio) {
         try {
-            CDIO existingCDIO =  finder.findCDIOByNumber(cdio.getNumber());
-        }catch (CDIONotFoundByNumber exception){
+            CDIO existingCDIO =  finder.findCDIOById(cdio.getNumber());
+        }catch (NotFound exception){
             repository.save(cdio);
             return;
         }
-        throw new CDIOAlreadyExists("The CDIO with number " + cdio.getNumber() + " already exists");
+        throw new AlreadyExists("The CDIO with number " + cdio.getNumber() + " already exists");
     }
 
     public CDIO updateCDIO(CDIO cdio){
-        CDIO updatedCDIO = finder.findCDIOByNumber(cdio.getNumber());
+        CDIO updatedCDIO = finder.findCDIOById(cdio.getNumber());
         updatedCDIO.setDescription(cdio.getDescription());
         updatedCDIO.setNumber(cdio.getNumber());
         updatedCDIO.setOutcomes(new ArrayList<>(cdio.getOutcomes()));
@@ -40,7 +40,7 @@ public class CDIOCRUD {
     }
 
     public CDIO deleteCDIO(Float cdioNumber){
-        CDIO cdioToDelete = finder.findCDIOByNumber(cdioNumber);
+        CDIO cdioToDelete = finder.findCDIOById(cdioNumber);
         repository.delete(cdioToDelete);
         return cdioToDelete;
     }

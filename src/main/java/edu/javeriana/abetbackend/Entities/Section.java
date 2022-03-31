@@ -3,6 +3,8 @@ package edu.javeriana.abetbackend.Entities;
 import com.google.common.base.Objects;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Section {
@@ -11,19 +13,22 @@ public class Section {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idSection")
     private Long SectionId;
+    @ManyToOne
+    @JoinColumn(name = "idCourse")
+    private Course course;
+    @Basic
+    private Integer semester;
     @Basic
     private Integer number;
     @Basic
     private String professor;
     @Basic
     private Integer totalStudents;
-    @Basic
-    private Integer semester;
-    @ManyToOne
-    @JoinColumn(name = "idCourse")
-    private Course course;
+    @OneToMany(mappedBy = "section")
+    private List<SectionAssessmentTool> sectionAssessmentTool;
 
     public Section() {
+        this.sectionAssessmentTool = new ArrayList<>();
     }
 
     public Section(Long sectionId, Integer number, String professor, Integer totalStudents, Integer semester, Course course) {
@@ -33,6 +38,23 @@ public class Section {
         this.totalStudents = totalStudents;
         this.semester = semester;
         this.course = course;
+        this.sectionAssessmentTool = new ArrayList<>();
+    }
+
+    public void addSectionAssessmentTool(SectionAssessmentTool sectionAssessmentTool){
+        this.sectionAssessmentTool.add(sectionAssessmentTool);
+    }
+
+    public void removeSectionAssessmentTool(SectionAssessmentTool sectionAssessmentTool){
+        this.sectionAssessmentTool.remove(sectionAssessmentTool);
+    }
+
+    public List<SectionAssessmentTool> getSectionAssessmentTool() {
+        return sectionAssessmentTool;
+    }
+
+    public void setSectionAssessmentTool(List<SectionAssessmentTool> sectionAssessmentTool) {
+        this.sectionAssessmentTool = sectionAssessmentTool;
     }
 
     public Course getCourse() {

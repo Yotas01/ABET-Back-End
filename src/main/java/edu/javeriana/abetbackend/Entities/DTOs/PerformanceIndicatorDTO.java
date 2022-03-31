@@ -7,10 +7,7 @@ public class PerformanceIndicatorDTO {
 
     private Long PerformanceIndicatorId;
     private String description;
-    private Integer percentage;
-    private Integer exemplary;
-    private Integer competent;
-    private Integer below;
+    private Double percentage;
     private Long assessmentTool;
 
     public PerformanceIndicatorDTO() {
@@ -20,9 +17,6 @@ public class PerformanceIndicatorDTO {
         this.PerformanceIndicatorId = pi.getPerformanceIndicatorId();
         this.description = pi.getDescription();
         this.percentage = pi.getPercentage();
-        this.exemplary = pi.getExemplary();
-        this.competent = pi.getCompetent();
-        this.below = pi.getBelow();
         this.assessmentTool = pi.getAssessmentTool().getAssessmentToolId();
     }
 
@@ -42,36 +36,12 @@ public class PerformanceIndicatorDTO {
         this.description = description;
     }
 
-    public Integer getPercentage() {
+    public Double getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Integer percentage) {
+    public void setPercentage(Double percentage) {
         this.percentage = percentage;
-    }
-
-    public Integer getExemplary() {
-        return exemplary;
-    }
-
-    public void setExemplary(Integer exemplary) {
-        this.exemplary = exemplary;
-    }
-
-    public Integer getCompetent() {
-        return competent;
-    }
-
-    public void setCompetent(Integer competent) {
-        this.competent = competent;
-    }
-
-    public Integer getBelow() {
-        return below;
-    }
-
-    public void setBelow(Integer below) {
-        this.below = below;
     }
 
     public Long getAssessmentTool() {

@@ -1,13 +1,8 @@
 package edu.javeriana.abetbackend.CRUD.Controllers.Relations;
 
 import edu.javeriana.abetbackend.CRUD.Services.Relations.RAE_CDIORelationsService;
-import edu.javeriana.abetbackend.Entities.DTOs.DescriptionDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.RAEDTO;
-import edu.javeriana.abetbackend.Exceptions.AlreadyContains.RAEAlreadyContainsCDIO;
-import edu.javeriana.abetbackend.Exceptions.DoesNotContain.RAEDoesNotContainCDIO;
-import edu.javeriana.abetbackend.Exceptions.NotFound.CDIONotFoundByNumber;
-import edu.javeriana.abetbackend.Exceptions.NotFound.RAENotFoundByCourseAndDescription;
-import edu.javeriana.abetbackend.Exceptions.NotFound.RAENotFoundById;
+import edu.javeriana.abetbackend.Exceptions.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,15 +33,15 @@ public class RAE_CDIORelationsController {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @ExceptionHandler(RAEAlreadyContainsCDIO.class)
+    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String badRequestError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler(NotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String notFoundError(Exception e){ return  e.getMessage();}
+
+    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String conflictRAEAlreadyContainsCDIO(Exception exception){return exception.getMessage();}
-    @ExceptionHandler(RAEDoesNotContainCDIO.class)
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public String conflictRAEDoesNotContainCDIO(Exception exception){return exception.getMessage();}
-    @ExceptionHandler({RAENotFoundByCourseAndDescription.class, CDIONotFoundByNumber.class, RAENotFoundById.class})
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public String notFoundError(Exception exception){
-        return exception.getMessage();
-    }
+    public String conflictError(Exception e){ return  e.getMessage();}
 }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CDIODTO {
-    private Long CDIOId;
     private String description;
     private Float number;
     private List<Integer> outcomes;
@@ -14,7 +13,6 @@ public class CDIODTO {
     private List<String> courses;
 
     public CDIODTO(CDIO cdio) {
-        this.CDIOId = cdio.getCDIOId();
         this.description = cdio.getDescription();
         this.number = cdio.getNumber();
         this.outcomes = new ArrayList<>();
@@ -28,12 +26,12 @@ public class CDIODTO {
     public CDIODTO() {
     }
 
-    public Long getCDIOId() {
-        return CDIOId;
+    public Float getNumber() {
+        return number;
     }
 
-    public void setCDIOId(Long CDIOId) {
-        this.CDIOId = CDIOId;
+    public void setNumber(Float number) {
+        this.number = number;
     }
 
     public String getDescription() {
@@ -42,14 +40,6 @@ public class CDIODTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Float getNumber() {
-        return number;
-    }
-
-    public void setNumber(Float number) {
-        this.number = number;
     }
 
     public List<Integer> getOutcomes() {

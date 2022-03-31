@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "performanceindicator")
 public class PerformanceIndicator {
 
     @Id
@@ -16,27 +17,20 @@ public class PerformanceIndicator {
     @Basic
     private String description;
     @Basic
-    private Integer percentage;
-    @Basic
-    private Integer exemplary;
-    @Basic
-    private Integer competent;
-    @Basic
-    private Integer below;
+    private Double percentage;
     @ManyToOne
     @JoinColumn(name = "idAssessmentTool")
     private AssessmentTool assessmentTool;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "performanceIndicator")
+    private SectionPerformanceIndicator sectionPerformanceIndicator;
 
     public PerformanceIndicator() {
     }
 
-    public PerformanceIndicator(Long performanceIndicatorId, String description, Integer percentage, Integer exemplary, Integer competent, Integer below, AssessmentTool assessmentTool) {
+    public PerformanceIndicator(Long performanceIndicatorId, String description, Double percentage, AssessmentTool assessmentTool) {
         PerformanceIndicatorId = performanceIndicatorId;
         this.description = description;
         this.percentage = percentage;
-        this.exemplary = exemplary;
-        this.competent = competent;
-        this.below = below;
         this.assessmentTool = assessmentTool;
     }
 
@@ -64,36 +58,12 @@ public class PerformanceIndicator {
         this.description = description;
     }
 
-    public Integer getPercentage() {
+    public Double getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(Integer percentage) {
+    public void setPercentage(Double percentage) {
         this.percentage = percentage;
-    }
-
-    public Integer getExemplary() {
-        return exemplary;
-    }
-
-    public void setExemplary(Integer exemplary) {
-        this.exemplary = exemplary;
-    }
-
-    public Integer getCompetent() {
-        return competent;
-    }
-
-    public void setCompetent(Integer competent) {
-        this.competent = competent;
-    }
-
-    public Integer getBelow() {
-        return below;
-    }
-
-    public void setBelow(Integer below) {
-        this.below = below;
     }
 
     @Override
@@ -101,11 +71,11 @@ public class PerformanceIndicator {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PerformanceIndicator that = (PerformanceIndicator) o;
-        return Objects.equal(PerformanceIndicatorId, that.PerformanceIndicatorId) && Objects.equal(description, that.description) && Objects.equal(percentage, that.percentage) && Objects.equal(exemplary, that.exemplary) && Objects.equal(competent, that.competent) && Objects.equal(below, that.below) && Objects.equal(assessmentTool, that.assessmentTool);
+        return Objects.equal(PerformanceIndicatorId, that.PerformanceIndicatorId) && Objects.equal(description, that.description) && Objects.equal(percentage, that.percentage) && Objects.equal(assessmentTool, that.assessmentTool);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(PerformanceIndicatorId, description, percentage, exemplary, competent, below);
+        return Objects.hashCode(PerformanceIndicatorId, description, percentage);
     }
 }

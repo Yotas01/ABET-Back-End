@@ -2,8 +2,8 @@ package edu.javeriana.abetbackend.CRUD.Services.CRUD;
 
 import edu.javeriana.abetbackend.CRUD.Services.Find.OutcomeFinder;
 import edu.javeriana.abetbackend.Entities.Outcome;
-import edu.javeriana.abetbackend.Exceptions.AlreadyExists.OutcomeAlreadyExists;
-import edu.javeriana.abetbackend.Exceptions.NotFound.OutcomeNotFoundById;
+import edu.javeriana.abetbackend.Exceptions.AlreadyExists;
+import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.OutcomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +21,11 @@ public class OutcomeCRUD {
     public void saveOutcome(Outcome outcome) {
         try{
             Outcome existingOutcome = finder.findOutcomeById(outcome.getOutcomeId());
-        }catch (OutcomeNotFoundById exception){
+        }catch (NotFound exception){
             repository.save(outcome);
             return;
         }
-        throw new OutcomeAlreadyExists("The outcome with the id " + outcome.getOutcomeId() + " already exists");
+        throw new AlreadyExists("The outcome with the id " + outcome.getOutcomeId() + " already exists");
     }
 
     public Outcome updateOutcome(Outcome outcome, Integer outcomeId){

@@ -12,11 +12,11 @@ public class RAEDTO {
     private Long RAEId;
     private String description;
     private Long courseId;
-    private Map<Long, String> assessmentTools;
+    private List<AssessmentToolDTO> assessmentTools;
     private List<Float> cdioList;
 
     public RAEDTO() {
-        this.assessmentTools = new HashMap<>();
+        this.assessmentTools = new ArrayList<>();
         this.cdioList = new ArrayList<>();
     }
 
@@ -24,17 +24,17 @@ public class RAEDTO {
         this.RAEId = rae.getRAEId();
         this.description = rae.getDescription();
         this.courseId = rae.getCourse().getCourseId();
-        this.assessmentTools = new HashMap<>();
-        rae.getAssessmentTools().forEach(at -> assessmentTools.put(at.getAssessmentToolId(), at.getDescription()));
+        this.assessmentTools = new ArrayList<>();
+        rae.getAssessmentTools().forEach(at -> assessmentTools.add(new AssessmentToolDTO(at)));
         this.cdioList = new ArrayList<>();
         rae.getCdioList().forEach(cdio -> cdioList.add(cdio.getNumber()));
     }
 
-    public Map<Long, String> getAssessmentTools() {
+    public List<AssessmentToolDTO> getAssessmentTools() {
         return assessmentTools;
     }
 
-    public void setAssessmentTools(Map<Long, String> assessmentTools) {
+    public void setAssessmentTools(List<AssessmentToolDTO> assessmentTools) {
         this.assessmentTools = assessmentTools;
     }
 

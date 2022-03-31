@@ -4,8 +4,8 @@ import edu.javeriana.abetbackend.CRUD.Services.Find.CourseFinder;
 import edu.javeriana.abetbackend.CRUD.Services.Find.SectionFinder;
 import edu.javeriana.abetbackend.Entities.Course;
 import edu.javeriana.abetbackend.Entities.Section;
-import edu.javeriana.abetbackend.Exceptions.AlreadyExists.SectionAlreadyExists;
-import edu.javeriana.abetbackend.Exceptions.NotFound.SectionNotFound;
+import edu.javeriana.abetbackend.Exceptions.AlreadyExists;
+import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.CourseRepository;
 import edu.javeriana.abetbackend.Repositories.SectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +26,15 @@ public class SectionCRUD {
     public void saveSection(Section section, Integer courseNumber){
         Course course = courseFinder.findCourseByNumber(courseNumber);
         try {
-            Section sectionToCreate = sectionFinder.findSectionByNumber(courseNumber,section.getNumber());
-        }catch (SectionNotFound exception){
+            Section sectionToCreate = sectionFinder.findSectionByNumberAndSemester(courseNumber,section.getNumber(), section.getSemester());
+        }catch (NotFound exception){
             course.addSection(section);
             section.setCourse(course);
             sectionRepository.save(section);
             courseRepository.save(course);
             return;
         }
-        throw new SectionAlreadyExists("The section with the number " + section.getNumber() +
+        throw new AlreadyExists("The section with the number " + section.getNumber() +
                 " for the course " + course.getName() + "-" + course.getNumber() +  " already exists");
     }
 
