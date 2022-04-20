@@ -25,6 +25,7 @@ public class CDIOCrudController {
 
     @Operation(summary = "Create a new CDIO competence")
     @PostMapping("/cdio")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CDIODTO> addCDIO(@RequestBody CDIO cdio){
         crudService.saveCDIO(cdio);
         CDIODTO CDIODTO = new CDIODTO(cdio);
@@ -33,6 +34,7 @@ public class CDIOCrudController {
 
     @Operation(summary = "Find the CDIO competence with cdioNumber")
     @GetMapping("/cdio/{cdioNumber}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CDIODTO> findCDIO(@PathVariable(value = "cdioNumber") Float id){
         CDIO cdio = finder.findCDIOById(id);
         CDIODTO CDIODTO = new CDIODTO(cdio);
@@ -41,6 +43,7 @@ public class CDIOCrudController {
 
     @Operation(summary = "Get all the CDIO competences")
     @GetMapping("/cdio")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<CDIODTO>> getAllCDIOs(){
         List<CDIO> cdios = finder.getAllCDIOs();
         List<CDIODTO> CDIODTOs = new ArrayList<>();
@@ -50,6 +53,7 @@ public class CDIOCrudController {
 
     @Operation(summary = "Update a CDIO competence that matches the cdio's number")
     @PutMapping("/cdio")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CDIODTO> updateCompetence(@RequestBody CDIO cdio){
         CDIO updatedCODIO = crudService.updateCDIO(cdio);
         CDIODTO CDIODTO = new CDIODTO(updatedCODIO);
@@ -58,6 +62,7 @@ public class CDIOCrudController {
 
     @Operation(summary = "Delete the CDIO competence that matches the number")
     @DeleteMapping("/cdio/{cdioNumber}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CDIODTO> deleteCompetence(@PathVariable(value = "cdioNumber") Float cdioNumber){
         CDIO deletedCDIO = crudService.deleteCDIO(cdioNumber);
         CDIODTO CDIODTO = new CDIODTO(deletedCDIO);

@@ -26,6 +26,7 @@ public class RAECRUDController {
 
     @Operation(summary = "Create a new RAE")
     @PostMapping("/rae")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<RAEDTO> addRAE(@PathVariable(value = "courseNumber") Integer courseNumber,
                                          @RequestBody RAE rae){
         raeCRUDService.saveRAE(rae, courseNumber);
@@ -35,6 +36,7 @@ public class RAECRUDController {
 
     @Operation(summary = "Find the RAEs from the Course with the corresponding courseNumber")
     @GetMapping("/rae")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<RAEDTO>> getRAEsFromCourse(@PathVariable(value = "courseNumber") Integer courseNumber){
         List<RAE> raes = raeFinder.findRAEsFromCourseNumber(courseNumber);
         List<RAEDTO> responseRAEs = new ArrayList<>();
@@ -44,6 +46,7 @@ public class RAECRUDController {
 
     @Operation(summary = "Update a RAE description that matches the description and courseNumber")
     @PatchMapping("/rae/{raeId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity updateRAEDescription(@RequestBody DescriptionDTO descriptionDTO,
                                                @PathVariable(value = "raeId") Long raeId,
                                                @PathVariable(value = "courseNumber") Integer courseNumber){
@@ -53,6 +56,7 @@ public class RAECRUDController {
 
     @Operation(summary = "Delete the RAE that matches the id")
     @DeleteMapping("/rae/{raeId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity deleteRAE(@PathVariable(value = "raeId") Long raeId,
                                             @PathVariable(value = "courseNumber") Integer courseNumber){
         raeCRUDService.deleteRAE(courseNumber, raeId);

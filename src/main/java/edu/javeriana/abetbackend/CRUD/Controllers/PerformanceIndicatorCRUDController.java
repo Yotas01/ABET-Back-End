@@ -25,6 +25,7 @@ public class PerformanceIndicatorCRUDController {
 
     @Operation(summary = "Create a performance indicator")
     @PostMapping()
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<PerformanceIndicatorDTO> addPerformanceIndicator(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                      @PathVariable(name = "raeId") Long raeId,
                                                                      @PathVariable(name = "assessmentToolId") Long assessmentToolId,
@@ -36,6 +37,7 @@ public class PerformanceIndicatorCRUDController {
 
     @Operation(summary = "Update a performance indicator")
     @PutMapping("/{performanceIndicatorId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<PerformanceIndicatorDTO> updatePerformanceIndicator(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                   @PathVariable(name = "raeId") Long raeId,
                                                                   @PathVariable(name = "assessmentToolId") Long assessmentToolId,
@@ -49,6 +51,7 @@ public class PerformanceIndicatorCRUDController {
 
     @Operation(summary = "Delete a performance indicator")
     @DeleteMapping("/{performanceIndicatorId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<PerformanceIndicatorDTO> deletePerformanceIndicator(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                               @PathVariable(name = "raeId") Long raeId,
                                                                               @PathVariable(name = "performanceIndicatorId") Long performanceIndicatorId,
@@ -61,6 +64,7 @@ public class PerformanceIndicatorCRUDController {
 
     @Operation(summary = "Delete a performance indicator")
     @DeleteMapping("/performanceIndicator")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<PerformanceIndicatorDTO> deletePerformanceIndicatorsFromAssessmentTool(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                               @PathVariable(name = "raeId") Long raeId,
                                                                               @PathVariable(name = "assessmentToolId") Long assessmentToolId){
@@ -71,6 +75,7 @@ public class PerformanceIndicatorCRUDController {
 
     @Operation(summary = "Get a performance indicator")
     @GetMapping("/{performanceIndicatorId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<PerformanceIndicatorDTO> getPerformanceIndicator(@PathVariable(name = "performanceIndicatorId") Long performanceIndicatorId){
         PerformanceIndicator pi = performanceIndicatorFinder.findPerformanceIndicatorById(performanceIndicatorId);
         PerformanceIndicatorDTO dto = new PerformanceIndicatorDTO(pi);
@@ -79,6 +84,7 @@ public class PerformanceIndicatorCRUDController {
 
     @Operation(summary = "Get all performance indicator by Assessment tool id")
     @GetMapping("")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<PerformanceIndicatorDTO>> getPerformanceIndicatorByAssessmentToolId(@PathVariable(name = "assessmentToolId") Long assessmentToolId){
         List<PerformanceIndicator> pis = performanceIndicatorFinder.getPerformanceIndicatorsFromAssessmentTool(assessmentToolId);
         List<PerformanceIndicatorDTO> dto = new ArrayList<>();

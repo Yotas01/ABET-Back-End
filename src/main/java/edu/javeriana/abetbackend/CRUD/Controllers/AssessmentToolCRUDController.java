@@ -25,6 +25,7 @@ public class AssessmentToolCRUDController {
 
     @Operation(summary = "Create an assessment tool")
     @PostMapping("/assessmentTool")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<AssessmentToolDTO> addAssessmentTool(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                @PathVariable(name = "raeId") Long raeId,
                                                                @RequestBody AssessmentTool assessmentTool){
@@ -35,6 +36,7 @@ public class AssessmentToolCRUDController {
 
     @Operation(summary = "update an assessment tool")
     @PutMapping("/assessmentTool/{assessmentToolId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<AssessmentToolDTO> updateAssessmentTool(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                   @PathVariable(name = "raeId") Long raeId,
                                                                   @PathVariable(name = "assessmentToolId") Long assessmentToolId,
@@ -46,6 +48,7 @@ public class AssessmentToolCRUDController {
 
     @Operation(summary = "Delete an assessment tool")
     @DeleteMapping("/assessmentTool/{assessmentToolId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<AssessmentToolDTO> deleteAssessmentTool(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                   @PathVariable(name = "raeId") Long raeId,
                                                                   @PathVariable(name = "assessmentToolId") Long assessmentToolId){
@@ -56,6 +59,7 @@ public class AssessmentToolCRUDController {
 
     @Operation(summary = "Get an Assessment tool by id")
     @GetMapping("/assessmentTool/{assessmentToolId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<AssessmentToolDTO> getAssessmentTool(@PathVariable(name = "assessmentToolId") Long assessmentToolId){
         AssessmentTool at = assessmentToolFinder.findById(assessmentToolId);
         AssessmentToolDTO dto = new AssessmentToolDTO(at);
@@ -64,6 +68,7 @@ public class AssessmentToolCRUDController {
 
     @Operation(summary = "Get all Assessment tool by Rae id")
     @GetMapping("/assessmentTool")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<AssessmentToolDTO>> getAssessmentToolByRAEId(@PathVariable(name = "raeId") Long raeId){
         List<AssessmentTool> assessmentTools = assessmentToolFinder.findAssessmentToolsByRAEId(raeId);
         List<AssessmentToolDTO> dto = new ArrayList<>();

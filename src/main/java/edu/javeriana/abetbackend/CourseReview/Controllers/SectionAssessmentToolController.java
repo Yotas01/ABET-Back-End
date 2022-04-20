@@ -25,6 +25,7 @@ public class SectionAssessmentToolController {
 
     @Operation(description = "Add a section assessment tool to a section")
     @PostMapping("/rae/{raeId}/assessmentTool/{assessmentToolId}/sectionAT")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<SectionAssessmentToolDTO> addSectionAssessmentTool(@PathVariable Integer courseNumber,
                                                                              @PathVariable Integer sectionNumber,
                                                                              @PathVariable Integer semester,
@@ -38,6 +39,7 @@ public class SectionAssessmentToolController {
 
     @Operation(description = "Get all the sectionAT from a section")
     @GetMapping("/sectionAT")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<SectionAssessmentToolDTO>> getAllSectionATFromSection(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                                      @PathVariable(name = "sectionNumber") Integer sectionNumber,
                                                                                      @PathVariable Integer semester){
@@ -50,6 +52,7 @@ public class SectionAssessmentToolController {
 
     @Operation(description = "Update a section assessment tool")
     @PutMapping("/rae/{raeId}/assessmentTool/{assessmentToolId}/sectionAT/{sectionATId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<SectionAssessmentToolDTO> updateSectionAssessmentTool(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                                 @PathVariable(name = "sectionNumber") Integer sectionNumber,
                                                                                 @PathVariable(name = "raeId") Long raeId,
@@ -64,6 +67,7 @@ public class SectionAssessmentToolController {
 
     @Operation(description = "Delete a section assessment tool to a section")
     @DeleteMapping("/rae/{raeId}/assessmentTool/{assessmentToolId}/sectionAT/{sectionATId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity deleteSectionAssessmentTool(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                       @PathVariable(name = "sectionNumber") Integer sectionNumber,
                                                       @PathVariable(name = "raeId") Long raeId,

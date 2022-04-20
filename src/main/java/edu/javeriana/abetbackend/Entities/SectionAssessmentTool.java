@@ -1,6 +1,8 @@
 package edu.javeriana.abetbackend.Entities;
 
 import com.google.common.base.Objects;
+import edu.javeriana.abetbackend.Entities.DTOs.AssessmentToolDTO;
+import edu.javeriana.abetbackend.Entities.DTOs.SectionAssessmentToolDTO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -33,6 +35,16 @@ public class SectionAssessmentTool {
 
     public SectionAssessmentTool() {
         this.sectionPerformanceIndicators = new ArrayList<>();
+    }
+
+    public SectionAssessmentTool(SectionAssessmentToolDTO dto){
+        this.totalStudents = dto.getTotalStudents();
+        this.semester = dto.getSemester();
+        this.sectionPerformanceIndicators = new ArrayList<>();
+        if(dto.isDraft())
+            this.draft = 1;
+        else
+            this.draft = 0;
     }
 
     public void addSectionPerformanceIndicator(SectionPerformanceIndicator pi){

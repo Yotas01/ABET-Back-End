@@ -5,7 +5,7 @@ import edu.javeriana.abetbackend.Entities.SectionPerformanceIndicator;
 public class SectionPerformanceIndicatorDTO {
     private Long id;
     private Long sectionAssessmentToolId;
-    private PerformanceIndicatorDTO performanceIndicator;
+    private Long performanceIndicatorId;
     private Integer exemplary;
     private Integer competent;
     private Integer below;
@@ -14,7 +14,7 @@ public class SectionPerformanceIndicatorDTO {
     public SectionPerformanceIndicatorDTO(SectionPerformanceIndicator pi) {
         this.id = pi.getSectionPerformanceIndicatorId();
         this.sectionAssessmentToolId = pi.getSectionAssessmentTool().getSectionAssessmentToolId();
-        this.performanceIndicator = new PerformanceIndicatorDTO(pi.getPerformanceIndicator());
+        this.performanceIndicatorId = pi.getPerformanceIndicator().getPerformanceIndicatorId();
         this.exemplary = pi.getExemplary();
         this.competent = pi.getCompetent();
         this.below = pi.getBelow();
@@ -40,12 +40,12 @@ public class SectionPerformanceIndicatorDTO {
         this.sectionAssessmentToolId = sectionAssessmentToolId;
     }
 
-    public PerformanceIndicatorDTO getPerformanceIndicator() {
-        return performanceIndicator;
+    public Long getPerformanceIndicatorId() {
+        return performanceIndicatorId;
     }
 
-    public void setPerformanceIndicator(PerformanceIndicatorDTO performanceIndicator) {
-        this.performanceIndicator = performanceIndicator;
+    public void setPerformanceIndicatorId(Long performanceIndicatorId) {
+        this.performanceIndicatorId = performanceIndicatorId;
     }
 
     public Integer getExemplary() {

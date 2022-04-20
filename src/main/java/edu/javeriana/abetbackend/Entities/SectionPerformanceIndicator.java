@@ -1,6 +1,7 @@
 package edu.javeriana.abetbackend.Entities;
 
 import com.google.common.base.Objects;
+import edu.javeriana.abetbackend.Entities.DTOs.SectionPerformanceIndicatorDTO;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -30,6 +31,16 @@ public class SectionPerformanceIndicator {
     private int draft;
 
     public SectionPerformanceIndicator() {
+    }
+
+    public SectionPerformanceIndicator(SectionPerformanceIndicatorDTO sectionPerformanceIndicator) {
+        this.exemplary = sectionPerformanceIndicator.getExemplary();
+        this.competent = sectionPerformanceIndicator.getCompetent();
+        this.below = sectionPerformanceIndicator.getBelow();
+        if(sectionPerformanceIndicator.isDraft())
+            this.draft = 1;
+        else
+            this.draft = 0;
     }
 
     public Long getSectionPerformanceIndicatorId() {
