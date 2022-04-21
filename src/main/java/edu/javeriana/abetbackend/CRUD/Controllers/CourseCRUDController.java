@@ -26,6 +26,7 @@ public class CourseCRUDController {
 
     @Operation(summary = "Create a new Course")
     @PostMapping("/course")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CourseDTO> addCourse(@RequestBody Course course){
         courseCRUDService.saveCourse(course);
         CourseDTO courseDTO = new CourseDTO(course);
@@ -34,6 +35,7 @@ public class CourseCRUDController {
 
     @Operation(summary = "Find the course with courseNumber")
     @GetMapping("/course/{courseNumber}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CourseDTO> findCourse(@PathVariable(value = "courseNumber") Integer number){
         Course course = courseFinder.findCourseByNumber(number);
         CourseDTO courseDTO = new CourseDTO(course);
@@ -42,6 +44,7 @@ public class CourseCRUDController {
 
     @Operation(summary = "Get all the courses")
     @GetMapping("/course")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<CourseDTO>> getAllCourses(){
         List<Course> courses = courseFinder.getAllCourses();
         List<CourseDTO> courseDTOs = new ArrayList<>();
@@ -51,6 +54,7 @@ public class CourseCRUDController {
 
     @Operation(summary = "Update a course that matches the course's id")
     @PutMapping("/course/{courseNumber}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CourseDTO> updateCourse(@RequestBody Course course,
                                                   @PathVariable(name = "courseNumber")Integer courseNumber){
         Course updatedCourse = courseCRUDService.updateCourse(course, courseNumber);
@@ -60,6 +64,7 @@ public class CourseCRUDController {
 
     @Operation(summary = "Delete the course that matches the course number")
     @DeleteMapping("/course/{courseNumber}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CourseDTO> deleteCourseByNumber(@PathVariable(value = "courseNumber") Integer number){
         Course courseToDelete = courseFinder.findCourseByNumber(number);
         Course deletedCourse = courseCRUDService.deleteCourse(courseToDelete);

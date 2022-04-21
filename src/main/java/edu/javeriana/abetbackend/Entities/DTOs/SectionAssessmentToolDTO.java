@@ -9,12 +9,13 @@ import java.util.List;
 public class SectionAssessmentToolDTO {
     private Long id;
     private Integer courseNumber;
-    private Long sectionId;
+    private Integer sectionNumber;
+    private Long raeId;
     private Long assessmentToolId;
     private Integer totalStudents;
     private Integer semester;
     private boolean draft;
-    private List<SectionPerformanceIndicator> sectionPerformanceIndicators;
+    private List<SectionPerformanceIndicatorDTO> sectionPerformanceIndicators;
 
     public SectionAssessmentToolDTO() {
     }
@@ -22,12 +23,14 @@ public class SectionAssessmentToolDTO {
     public SectionAssessmentToolDTO(SectionAssessmentTool sectionAssessmentTool) {
         this.id = sectionAssessmentTool.getSectionAssessmentToolId();
         this.courseNumber = sectionAssessmentTool.getSection().getCourse().getNumber();
-        this.sectionId = sectionAssessmentTool.getSection().getSectionId();
+        this.sectionNumber = sectionAssessmentTool.getSection().getNumber();
         this.assessmentToolId = sectionAssessmentTool.getAssessmentTool().getAssessmentToolId();
         this.totalStudents = sectionAssessmentTool.getTotalStudents();
         this.semester = sectionAssessmentTool.getSemester();
         this.draft = sectionAssessmentTool.getDraft() == 1;
-        this.sectionPerformanceIndicators = new ArrayList<>(sectionAssessmentTool.getSectionPerformanceIndicators());
+        this.sectionPerformanceIndicators = new ArrayList<>();
+        sectionAssessmentTool.getSectionPerformanceIndicators()
+                .forEach(spi -> this.sectionPerformanceIndicators.add(new SectionPerformanceIndicatorDTO(spi)));
     }
 
     public Long getId() {
@@ -46,12 +49,20 @@ public class SectionAssessmentToolDTO {
         this.courseNumber = courseNumber;
     }
 
-    public Long getSectionId() {
-        return sectionId;
+    public Long getRaeId() {
+        return raeId;
     }
 
-    public void setSectionId(Long sectionId) {
-        this.sectionId = sectionId;
+    public void setRaeId(Long raeId) {
+        this.raeId = raeId;
+    }
+
+    public Integer getSectionNumber() {
+        return sectionNumber;
+    }
+
+    public void setSectionNumber(Integer sectionNumber) {
+        this.sectionNumber = sectionNumber;
     }
 
     public Long getAssessmentToolId() {
@@ -86,11 +97,11 @@ public class SectionAssessmentToolDTO {
         this.draft = draft;
     }
 
-    public List<SectionPerformanceIndicator> getSectionPerformanceIndicators() {
+    public List<SectionPerformanceIndicatorDTO> getSectionPerformanceIndicators() {
         return sectionPerformanceIndicators;
     }
 
-    public void setSectionPerformanceIndicators(List<SectionPerformanceIndicator> sectionPerformanceIndicators) {
+    public void setSectionPerformanceIndicators(List<SectionPerformanceIndicatorDTO> sectionPerformanceIndicators) {
         this.sectionPerformanceIndicators = sectionPerformanceIndicators;
     }
 }

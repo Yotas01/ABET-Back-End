@@ -25,6 +25,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Create a new ABET outcome")
     @PostMapping("/outcome")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<OutcomeDTO> addCompetence(@RequestBody Outcome outcome){
         System.out.println(outcome.toString());
         crudService.saveOutcome(outcome);
@@ -34,6 +35,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Find the ABET outcome with idOutcome")
     @GetMapping("/outcome/{idOutcome}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<OutcomeDTO> findCompetence(@PathVariable(value = "idOutcome") Integer id){
         Outcome outcome = finder.findOutcomeById(id);
         OutcomeDTO outcomeDTO = new OutcomeDTO(outcome);
@@ -42,6 +44,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Get all the ABET outcomes")
     @GetMapping("/outcome")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<OutcomeDTO>> getAllCompetences(){
         List<Outcome> outcomes = finder.getAllOutcomes();
         List<OutcomeDTO> outcomeDTOS = new ArrayList<>();
@@ -51,6 +54,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Update an ABET outcome that matches the outcome's id")
     @PutMapping("/outcome/{outcomeId}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<OutcomeDTO> updateCompetence(@RequestBody Outcome outcome,
                                                        @PathVariable(name = "outcomeId") Integer outcomeId){
         Outcome updatedOutcome = crudService.updateOutcome(outcome, outcomeId);
@@ -60,6 +64,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Delete the ABET outcome that matches the id")
     @DeleteMapping("/outcome/{idOutcome}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<OutcomeDTO> deleteCompetence(@PathVariable(value = "idOutcome") Integer id){
         Outcome outcomeToDelete = finder.findOutcomeById(id);
         crudService.deleteOutcome(outcomeToDelete);

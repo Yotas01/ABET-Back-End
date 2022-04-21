@@ -26,6 +26,7 @@ public class SectionCRUDController {
 
     @Operation(summary = "Create a new Section")
     @PostMapping("/{courseNumber}/section")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<SectionDTO> addSection(@PathVariable(value = "courseNumber") Integer courseNumber,
                                                  @RequestBody Section section){
         sectionCRUDService.saveSection(section, courseNumber);
@@ -35,6 +36,7 @@ public class SectionCRUDController {
 
     @Operation(summary = "Find the section with sectionNumber and the semester")
     @GetMapping("/{courseNumber}/section/{sectionNumber}/semester/{semester}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<SectionDTO> findSectionByNumberAndSemester(@PathVariable(value = "sectionNumber") Integer sectionNumber,
                                                                      @PathVariable(value = "courseNumber") Integer courseNumber,
                                                                      @PathVariable(value = "semester") Integer semester){
@@ -45,6 +47,7 @@ public class SectionCRUDController {
 
     @Operation(summary = "Find the sections whose professor is the professorName")
     @GetMapping("/sectionByProfessor")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<SectionDTO>> findSectionByProfessor(@RequestBody NameDTO name){
         List<Section> sections = sectionFinder.findByProfessor(name.getName());
         List<SectionDTO> sectionDTOs = new ArrayList<>();
@@ -54,6 +57,7 @@ public class SectionCRUDController {
 
     @Operation(summary = "Find the sections from a Course and semester")
     @GetMapping("/{courseNumber}/sections/semester/{semester}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<List<SectionDTO>> findCourseSectionsBySemester(@PathVariable(value = "courseNumber") Integer courseNumber,
                                                                          @PathVariable(value = "semester") Integer semester){
         List<Section> sections = sectionFinder.findSectionsFromCourseNumberAndSemester(courseNumber, semester);
@@ -64,6 +68,7 @@ public class SectionCRUDController {
 
     @Operation(summary = "Update a section that matches the section's id")
     @PutMapping("/{courseNumber}/section/{sectionNumber}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<SectionDTO> updateCourse(@RequestBody Section section,
                                                    @PathVariable(value = "courseNumber") Integer courseNumber,
                                                    @PathVariable(value = "sectionNumber") Integer sectionNumber){
@@ -74,6 +79,7 @@ public class SectionCRUDController {
 
     @Operation(summary = "Delete the section that matches the section number")
     @DeleteMapping("/{courseNumber}/section/{sectionNumber}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<SectionDTO> deleteCourseByNumber(@PathVariable(value = "courseNumber") Integer courseNumber,
                                                            @PathVariable(value = "sectionNumber") Integer sectionNumber){
         Section sectionToDelete = sectionCRUDService.deleteSection(sectionNumber, courseNumber);
