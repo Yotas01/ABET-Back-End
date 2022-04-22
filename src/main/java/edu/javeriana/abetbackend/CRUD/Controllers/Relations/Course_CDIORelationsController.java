@@ -21,6 +21,7 @@ public class Course_CDIORelationsController {
 
     @Operation(summary = "Make a relation between a Course and a CDIO competence")
     @PostMapping()
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CourseDTO> addCDIOToCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                            @PathVariable(name = "cdioNumber") Float cdioNumber,
                                                            @RequestBody(required = false) ValueDTO value){
@@ -31,6 +32,7 @@ public class Course_CDIORelationsController {
 
     @Operation(summary = "Make a relation between a Course and a CDIO competence")
     @PutMapping()
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Course_has_CDIODTO> updateCDIOHasCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                      @PathVariable(name = "cdioNumber") Float cdioNumber,
                                                      @RequestBody(required = false) ValueDTO value){
@@ -40,6 +42,7 @@ public class Course_CDIORelationsController {
 
     @Operation(summary = "Make a relation between a Course and a CDIO competence")
     @GetMapping()
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Course_has_CDIODTO> getCourseHasCDIO(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                @PathVariable(name = "cdioNumber") Float cdioNumber){
         Course_has_CDIODTO course_has_cdio = new Course_has_CDIODTO(relationService.getCourseHasCDIO(courseNumber,cdioNumber));
@@ -48,6 +51,7 @@ public class Course_CDIORelationsController {
 
     @Operation(summary = "Delete a relation between a Course and a CDIO competence")
     @DeleteMapping()
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<CourseDTO> deleteCDIOFromCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                      @PathVariable(name = "cdioNumber") Float cdioNumber){
         Course_has_CDIO course_has_cdio = relationService.deleteCDIOFromCourse(courseNumber,cdioNumber);

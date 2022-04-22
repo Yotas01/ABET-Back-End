@@ -18,6 +18,7 @@ public class Outcome_CDIORelationsController {
 
     @Operation(summary = "Create a relationship between an ABET outcome and a CDIO competence")
     @PutMapping("/outcome/{idOutcome}/{cdioNumber}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<OutcomeDTO> addCDIOToOutcome(@PathVariable(value = "idOutcome") Integer idOutcome,
                                                        @PathVariable(value = "cdioNumber") Float idCDIO){
         relationsService.addCDIOToOutcome(idOutcome, idCDIO);
@@ -26,6 +27,7 @@ public class Outcome_CDIORelationsController {
 
     @Operation(summary = "Delete a relation between an ABET and a CDIO Competence")
     @DeleteMapping("/outcome/{idOutcome}/{cdioNumber}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<OutcomeDTO> deleteCDIOFromOutcome(@PathVariable(value = "idOutcome") Integer idOutcome,
                                                             @PathVariable(value = "cdioNumber") Float idCDIO){
         relationsService.deleteCDIOFromOutcome(idOutcome, idCDIO);
