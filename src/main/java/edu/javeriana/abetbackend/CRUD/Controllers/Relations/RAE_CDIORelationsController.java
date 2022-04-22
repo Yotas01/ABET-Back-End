@@ -19,6 +19,7 @@ public class RAE_CDIORelationsController {
 
     @Operation(summary = "Create a relation between a RAE and a CDIO competence")
     @PostMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<RAEDTO> addRAEToCDIO(@PathVariable(value = "cdioNumber") Float cdioNumber,
                                                @PathVariable(value = "raeId") Long raeId){
         relationsService.addRAEtoCDIO(cdioNumber, raeId);
@@ -27,6 +28,7 @@ public class RAE_CDIORelationsController {
 
     @Operation(summary = "Delete a relation between a RAE and a CDIO competence")
     @DeleteMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<RAEDTO> deleteRAEFromCDIO(@PathVariable(value = "cdioNumber") Float cdioNumber,
                                                @PathVariable(value = "raeId") Long raeId){
         relationsService.deleteRAEFromCDIO(cdioNumber, raeId);
