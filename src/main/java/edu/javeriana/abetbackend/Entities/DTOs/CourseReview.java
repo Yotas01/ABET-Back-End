@@ -1,9 +1,8 @@
-package edu.javeriana.abetbackend.Entities;
+package edu.javeriana.abetbackend.Entities.DTOs;
 
 import com.google.common.base.Objects;
-import edu.javeriana.abetbackend.Entities.DTOs.CDIODTO;
-import edu.javeriana.abetbackend.Entities.DTOs.RAEDTO;
-import edu.javeriana.abetbackend.Entities.DTOs.SectionDTO;
+import edu.javeriana.abetbackend.Entities.Course;
+import edu.javeriana.abetbackend.Entities.Section;
 
 import java.util.ArrayList;
 import java.util.List;

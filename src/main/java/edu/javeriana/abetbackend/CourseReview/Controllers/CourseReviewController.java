@@ -1,8 +1,8 @@
 package edu.javeriana.abetbackend.CourseReview.Controllers;
 
 import edu.javeriana.abetbackend.CourseReview.Services.CRUD.CourseReviewService;
-import edu.javeriana.abetbackend.Entities.CourseReview;
-import edu.javeriana.abetbackend.Entities.SectionReview;
+import edu.javeriana.abetbackend.Entities.DTOs.CourseReview;
+import edu.javeriana.abetbackend.Entities.DTOs.SectionReview;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

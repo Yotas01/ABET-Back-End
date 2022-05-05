@@ -1,4 +1,4 @@
-package edu.javeriana.abetbackend.Entities;
+package edu.javeriana.abetbackend.Entities.DTOs;
 
 import edu.javeriana.abetbackend.Entities.DTOs.SectionAssessmentToolDTO;
 
