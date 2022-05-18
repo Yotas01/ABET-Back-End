@@ -18,7 +18,7 @@ public class SectionPerformanceIndicator {
     @ManyToOne
     @JoinColumn(name = "section_assessmentToolId")
     private SectionAssessmentTool sectionAssessmentTool;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idPerformanceIndicator", referencedColumnName = "idPerformanceIndicator")
     private PerformanceIndicator performanceIndicator;
     @Basic

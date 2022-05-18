@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "performanceindicator")
@@ -21,8 +22,8 @@ public class PerformanceIndicator {
     @ManyToOne
     @JoinColumn(name = "idAssessmentTool")
     private AssessmentTool assessmentTool;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "performanceIndicator")
-    private SectionPerformanceIndicator sectionPerformanceIndicator;
+    @OneToMany(mappedBy = "performanceIndicator", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    private List<SectionPerformanceIndicator> sectionPerformanceIndicators;
 
     public PerformanceIndicator() {
     }

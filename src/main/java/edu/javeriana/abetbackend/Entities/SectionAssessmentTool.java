@@ -21,7 +21,7 @@ public class SectionAssessmentTool {
     @ManyToOne
     @JoinColumn(name = "idSection")
     private Section section;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idAssessmentTool", referencedColumnName = "idAssessmentTool")
     private AssessmentTool assessmentTool;
     @Basic

@@ -38,7 +38,8 @@ public class SectionAssessmentToolCRUD {
         if(!section.getSemester().equals(sectionAssessmentTool.getSemester()))
             throw new DoesNotContain("The section_AT semester " + sectionAssessmentTool.getSemester() +
                 " is not the same as the section semester " + section);
-        Optional<SectionAssessmentTool> existing = repository.findByAssessmentToolAndSemester(assessmentTool, section.getSemester());
+        Optional<SectionAssessmentTool> existing = repository
+                .findByAssessmentToolAndSemesterAndSection(assessmentTool, section.getSemester(), section);
         if(existing.isPresent())
             throw new AlreadyExists("The section_AT for the assessment tool " + assessmentToolId +
                     " and semester " + section.getSemester() + " already exists");
