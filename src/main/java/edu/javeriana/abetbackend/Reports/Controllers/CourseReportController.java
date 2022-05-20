@@ -16,11 +16,11 @@ public class CourseReportController {
     @Autowired
     private CourseReportService reportService;
 
-    @GetMapping("/course/{courseId}/semester/{semester}")
-    @Operation(description = "Get the report for the course with the coure Id for the specified semester")
+    @GetMapping("/course/{courseNumber}/semester/{semester}")
+    @Operation(description = "Get the report for the course with the course Id for the specified semester")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<CourseReport> getCourseReport(@PathVariable Long courseId, @PathVariable Integer semester){
-        CourseReport report = reportService.getCourseReportByIdAndSemester(courseId, semester);
+    public ResponseEntity<CourseReport> getCourseReport(@PathVariable Integer courseNumber, @PathVariable Integer semester){
+        CourseReport report = reportService.getCourseReportByIdAndSemester(courseNumber, semester);
         return ResponseEntity.status(HttpStatus.OK).body(report);
     }
 
