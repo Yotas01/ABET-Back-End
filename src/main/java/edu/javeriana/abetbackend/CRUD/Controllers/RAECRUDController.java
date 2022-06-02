@@ -44,6 +44,16 @@ public class RAECRUDController {
         return ResponseEntity.status(HttpStatus.OK).body(responseRAEs);
     }
 
+    @Operation(summary = "Find the RAE with id raeId")
+    @GetMapping("/rae/{raeId}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<RAEDTO> getRAEFromCourse(@PathVariable(value = "courseNumber") Integer courseNumber,
+                                                         @PathVariable Long raeId){
+        RAE rae = raeFinder.findRAEById(raeId);
+        RAEDTO responseRAE = new RAEDTO(rae);
+        return ResponseEntity.status(HttpStatus.OK).body(responseRAE);
+    }
+
     @Operation(summary = "Update a RAE description that matches the description and courseNumber")
     @PatchMapping("/rae/{raeId}")
     @CrossOrigin(origins = "http://localhost:4200")

@@ -1,13 +1,18 @@
 package edu.javeriana.abetbackend.CRUD.Services.Find;
 
+import edu.javeriana.abetbackend.CRUD.Services.Relations.Course_CDIORelationService;
 import edu.javeriana.abetbackend.Entities.Course;
+import edu.javeriana.abetbackend.Entities.DTOs.CourseDTO;
 import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseFinder {
@@ -22,10 +27,10 @@ public class CourseFinder {
         return optionalCourse.get();
     }
 
-    public Course findCourseByNumber(Integer courseId){
-        Optional<Course> optionalCourse = repository.findCourseByNumber(courseId);
+    public Course findCourseByNumber(Integer courseNumber){
+        Optional<Course> optionalCourse = repository.findCourseByNumber(courseNumber);
         if(optionalCourse.isEmpty())
-            throw new NotFound("The course with the number " + courseId + " was not found");
+            throw new NotFound("The course with the number " + courseNumber + " was not found");
         return optionalCourse.get();
     }
 

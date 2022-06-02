@@ -1,14 +1,15 @@
 package edu.javeriana.abetbackend.CRUD.Services.CRUD;
 
+import edu.javeriana.abetbackend.CRUD.Services.Find.CDIOFinder;
 import edu.javeriana.abetbackend.CRUD.Services.Find.OutcomeFinder;
+import edu.javeriana.abetbackend.Entities.CDIO;
+import edu.javeriana.abetbackend.Entities.DTOs.OutcomeDTO;
 import edu.javeriana.abetbackend.Entities.Outcome;
 import edu.javeriana.abetbackend.Exceptions.AlreadyExists;
 import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.OutcomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @Service
 public class OutcomeCRUD {
@@ -17,21 +18,32 @@ public class OutcomeCRUD {
     private OutcomeRepository repository;
     @Autowired
     private OutcomeFinder finder;
+    @Autowired
+    private CDIOFinder cdioFinder;
 
-    public void saveOutcome(Outcome outcome) {
+    public void saveOutcome(OutcomeDTO outcomeDTO) {
         try{
-            Outcome existingOutcome = finder.findOutcomeById(outcome.getOutcomeId());
+            Outcome existingOutcome = finder.findOutcomeById(outcomeDTO.getId());
         }catch (NotFound exception){
-            repository.save(outcome);
+            Outcome createdOutcome = new Outcome(outcomeDTO.getId(), outcomeDTO.getDescription());
+            for (Float cdioNumber: outcomeDTO.getCdios()) {
+                CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
+                createdOutcome.addCDIo(cdio);
+                cdio.addOutcome(createdOutcome);
+                repository.save(createdOutcome);
+            }
             return;
         }
-        throw new AlreadyExists("The outcome with the id " + outcome.getOutcomeId() + " already exists");
+        throw new AlreadyExists("The outcome with the id " + outcomeDTO.getId() + " already exists");
     }
 
-    public Outcome updateOutcome(Outcome outcome, Integer outcomeId){
+    public Outcome updateOutcome(OutcomeDTO outcomeDTO, Integer outcomeId){
         Outcome updatedOutcome = finder.findOutcomeById(outcomeId);
-        updatedOutcome.setDescription(outcome.getDescription());
-        updatedOutcome.setCDIos(new ArrayList<>(outcome.getCDIos()));
+        updatedOutcome.setDescription(outcomeDTO.getDescription());
+        updatedOutcome.getCDIos().clear();
+        for (Float cdioNumber: outcomeDTO.getCdios()) {
+            updatedOutcome.addCDIo(cdioFinder.findCDIOById(cdioNumber));
+        }
         repository.save(updatedOutcome);
         return updatedOutcome;
     }

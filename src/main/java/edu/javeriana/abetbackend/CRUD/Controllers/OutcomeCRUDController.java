@@ -26,11 +26,9 @@ public class OutcomeCRUDController {
     @Operation(summary = "Create a new ABET outcome")
     @PostMapping("/outcome")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<OutcomeDTO> addCompetence(@RequestBody Outcome outcome){
-        System.out.println(outcome.toString());
+    public ResponseEntity<OutcomeDTO> addCompetence(@RequestBody OutcomeDTO outcome){
         crudService.saveOutcome(outcome);
-        OutcomeDTO outcomeDTO = new OutcomeDTO(outcome);
-        return ResponseEntity.status(HttpStatus.CREATED).body(outcomeDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(outcome);
     }
 
     @Operation(summary = "Find the ABET outcome with idOutcome")
@@ -55,7 +53,7 @@ public class OutcomeCRUDController {
     @Operation(summary = "Update an ABET outcome that matches the outcome's id")
     @PutMapping("/outcome/{outcomeId}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<OutcomeDTO> updateCompetence(@RequestBody Outcome outcome,
+    public ResponseEntity<OutcomeDTO> updateCompetence(@RequestBody OutcomeDTO outcome,
                                                        @PathVariable(name = "outcomeId") Integer outcomeId){
         Outcome updatedOutcome = crudService.updateOutcome(outcome, outcomeId);
         OutcomeDTO outcomeDTO = new OutcomeDTO(updatedOutcome);
@@ -68,7 +66,9 @@ public class OutcomeCRUDController {
     public ResponseEntity<OutcomeDTO> deleteCompetence(@PathVariable(value = "idOutcome") Integer id){
         Outcome outcomeToDelete = finder.findOutcomeById(id);
         crudService.deleteOutcome(outcomeToDelete);
-        OutcomeDTO outcomeDTO = new OutcomeDTO(outcomeToDelete);
+        OutcomeDTO outcomeDTO = new OutcomeDTO();
+        outcomeDTO.setId(id);
+        outcomeDTO.setDescription(outcomeToDelete.getDescription());
         return ResponseEntity.status(HttpStatus.OK).body(outcomeDTO);
     }
 
