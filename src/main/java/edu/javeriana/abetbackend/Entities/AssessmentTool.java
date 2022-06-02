@@ -24,8 +24,8 @@ public class AssessmentTool {
     private RAE rae;
     @OneToMany(mappedBy = "assessmentTool", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PerformanceIndicator> performanceIndicators;
-    @OneToOne(mappedBy = "assessmentTool")
-    private SectionAssessmentTool sectionAssessmentTool;
+    @OneToMany(mappedBy = "assessmentTool", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    private List<SectionAssessmentTool> sectionAssessmentTools;
 
     public AssessmentTool() {
         this.performanceIndicators = new ArrayList<>();

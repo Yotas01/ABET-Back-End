@@ -18,11 +18,11 @@ public class CourseReportService {
     @Autowired
     private CourseFinder courseFinder;
 
-    public CourseReport getCourseReportByIdAndSemester(Long courseId, Integer semester){
-        Course course = courseFinder.findCourseById(courseId);
-        Optional<CourseReport> report = reportView.findByCourseIdAndSemester(courseId,semester);
+    public CourseReport getCourseReportByIdAndSemester(Integer courseNumber, Integer semester){
+        Course course = courseFinder.findCourseByNumber(courseNumber);
+        Optional<CourseReport> report = reportView.findByCourseIdAndSemester(course.getCourseId(),semester);
         if(report.isEmpty())
-            throw new NotFound("The report for the course with Id " + courseId + " and semester "
+            throw new NotFound("The report for the course " + courseNumber + " and semester "
                     + semester + " was not found");
         return report.get();
     }

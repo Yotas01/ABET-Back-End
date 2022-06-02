@@ -13,7 +13,8 @@ public class OutcomeDTO {
     public OutcomeDTO(Outcome outcome) {
         this.id = outcome.getOutcomeId();
         this.description = outcome.getDescription();
-        outcome.getCDIos().forEach(cdio -> this.getCdios().add(cdio.getNumber()));
+        if (!outcome.getCDIos().isEmpty())
+            outcome.getCDIos().forEach(cdio -> this.getCdios().add(cdio.getNumber()));
     }
 
     public OutcomeDTO() {

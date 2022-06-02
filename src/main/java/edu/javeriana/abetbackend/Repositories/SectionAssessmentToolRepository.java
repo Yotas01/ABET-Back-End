@@ -12,4 +12,6 @@ public interface SectionAssessmentToolRepository extends CrudRepository<SectionA
     Optional<List<SectionAssessmentTool>> findAllBySection(Section section);
     Optional<SectionAssessmentTool> findByAssessmentTool(AssessmentTool assessmentTool);
     Optional<SectionAssessmentTool> findByAssessmentToolAndSemester(AssessmentTool assessmentTool, Integer semester);
+    Optional<SectionAssessmentTool> findByAssessmentToolAndSemesterAndSection
+            (AssessmentTool assessmentTool, Integer semester, Section section);
 }
