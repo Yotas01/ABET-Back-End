@@ -1,0 +1,1538 @@
+{
+	"info": {
+		"_postman_id": "23c49692-f126-4bc6-a01f-8f4bbdd68f07",
+		"name": "BackEnd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17052578"
+	},
+	"item": [
+		{
+			"name": "AssessmentTools",
+			"item": [
+				{
+					"name": "Create Assessment Tool",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\":\"Practical exercise (workshop) and quizzes\",\r\n    \"value\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/4085/rae/8/assessmentTool",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"4085",
+								"rae",
+								"8",
+								"assessmentTool"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Assessment Tool",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\":\"This is the second assessment tool\",\r\n    \"value\":0,\r\n    \"totalStudents\":0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/123/rae/4/assessmentTool/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"123",
+								"rae",
+								"4",
+								"assessmentTool",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Assessment Tool by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/123/rae/4/assessmentTool/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"123",
+								"rae",
+								"4",
+								"assessmentTool",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Assessment Tools By Rae",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/rae/2/assessmentTool",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"rae",
+								"2",
+								"assessmentTool"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Assessment Tool",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/rae/2/assessmentTool/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"rae",
+								"2",
+								"assessmentTool",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CDIO",
+			"item": [
+				{
+					"name": "Create CDIO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\":8.5,\r\n    \"description\":\"ETHICS, EQUITY AND PERSONAL RESPONSIBILITY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/cdio",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"cdio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CDIO",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\":2.1,\r\n    \"description\":\"Analytical reasoning and problem solving\",\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/cdio",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"cdio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get CDIO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/cdio/2.0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"cdio",
+								"2.0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All CDIOs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/cdio",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"cdio"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete CDIO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/cdio/2.3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"cdio",
+								"2.3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Course",
+			"item": [
+				{
+					"name": "Create Course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\":33698,\r\n    \"name\": \"Introducción a la programación\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course By Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/4085",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"4085"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\":124,\r\n    \"name\": \"Intro to web in Java\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/123",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/123",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add CDIO to Course",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/cdio/2.1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"cdio",
+								"2.1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete CDIO from Course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/123/cdio/2.0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"123",
+								"cdio",
+								"2.0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course has CDIO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/cdio/2.5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"cdio",
+								"2.5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Bloom Value",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"value\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/cdio/2.5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"cdio",
+								"2.5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Outcomes",
+			"item": [
+				{
+					"name": "Create Outcome",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":8,\r\n    \"description\":\"Una habilidad importante\",\r\n    \"cdios\":[1]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/outcome",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"outcome"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Outcome By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/outcome/9",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"outcome",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all Outcomes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/outcome",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"outcome"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Outcome",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":8,\r\n    \"description\":\"Sigue siendo importante\",\r\n    \"cdios\":[2.1,2.2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/outcome/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"outcome",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Outcome",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/outcome/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"outcome",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Performance Indicators",
+			"item": [
+				{
+					"name": "Create Performance Indicator",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Learn about the metrics most used to measure program and system performance.\",\r\n    \"percentage\":50\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/4085/rae/8/assessmentTool/10/performanceIndicator",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"4085",
+								"rae",
+								"8",
+								"assessmentTool",
+								"10",
+								"performanceIndicator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Performance Indicator",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Identify relevant known data\",\r\n    \"percentage\":18.2,\r\n    \"exemplary\":14,\r\n    \"competent\":1,\r\n    \"below\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/rae/6/assessmentTool/6/performanceIndicator/8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"rae",
+								"6",
+								"assessmentTool",
+								"6",
+								"performanceIndicator",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Performance Indicator By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/123/rae/4/assessmentTool/4/performanceIndicator/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"123",
+								"rae",
+								"4",
+								"assessmentTool",
+								"4",
+								"performanceIndicator",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Performance Indicators by Assessment Tool",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/rae/1/assessmentTool/1/performanceIndicator",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"rae",
+								"1",
+								"assessmentTool",
+								"1",
+								"performanceIndicator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Performance Indicator",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/rae/1/assessmentTool/1/performanceIndicator/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"rae",
+								"1",
+								"assessmentTool",
+								"1",
+								"performanceIndicator",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete All Performance Indicators by Assessment Tool",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/123/rae/4/assessmentTool/4/performanceIndicator",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"123",
+								"rae",
+								"4",
+								"assessmentTool",
+								"4",
+								"performanceIndicator"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RAE",
+			"item": [
+				{
+					"name": "Create RAE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\":\"Know tools and metrics that allow evaluating the performance of programs in an operational environment\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/4085/rae",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"4085",
+								"rae"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get RAEs from Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/rae",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"rae"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update RAE Description",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\":\"Este fue el primer RAE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/123/rae/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"123",
+								"rae",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RAE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/123/rae/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"123",
+								"rae",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add CDIO to RAE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/cdio/2.5/rae/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"cdio",
+								"2.5",
+								"rae",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete RAE from CDIO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/cdio/2.0/rae/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"cdio",
+								"2.0",
+								"rae",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get RAE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/rae/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"rae",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Section",
+			"item": [
+				{
+					"name": "Create a section",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\":5670,\r\n    \"professor\":\"Daniel Monsalve\",\r\n    \"totalStudents\":15,\r\n    \"semester\":2110\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/4085/section",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"4085",
+								"section"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a section",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/33698/section/1/semester/2110",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"33698",
+								"section",
+								"1",
+								"semester",
+								"2110"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Sections of a professor",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"German Chavarro\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/sectionByProfessor",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"sectionByProfessor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sections from a course and semester",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/4085/sections/semester/2110",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"4085",
+								"sections",
+								"semester",
+								"2110"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete section",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/course/4085/section/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"4085",
+								"section",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a section",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\":5669,\r\n    \"professor\":\"Mariela Curiel\",\r\n    \"totalStudents\":29,\r\n    \"semester\":2201\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/admin/course/4085/section/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"course",
+								"4085",
+								"section",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Course-Reviews",
+					"item": [
+						{
+							"name": "Get Course for Review",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/course-review/course/33698/section/1/semester/2110",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"course-review",
+										"course",
+										"33698",
+										"section",
+										"1",
+										"semester",
+										"2110"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Review a Section",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"courseNumber\":33698,\r\n    \"sectionNumber\":1,\r\n    \"semester\":2110,\r\n    \"sectionAssessmentTools\": [\r\n        {\r\n            \"courseNumber\":33698,\r\n            \"sectionNumber\":1,\r\n            \"raeId\":1,\r\n            \"assessmentToolId\":1,\r\n            \"totalStudents\":14,\r\n            \"semester\":2110,\r\n            \"draft\":true,\r\n            \"sectionPerformanceIndicators\":[\r\n                {\r\n                    \"performanceIndicatorId\":1,\r\n                    \"exemplary\":5,\r\n                    \"competent\":5,\r\n                    \"below\":4,\r\n                    \"draft\":true\r\n                }\r\n            ]\r\n        },\r\n        {\r\n            \"courseNumber\":33698,\r\n            \"sectionNumber\":1,\r\n            \"raeId\":2,\r\n            \"assessmentToolId\":2,\r\n            \"totalStudents\":15,\r\n            \"semester\":2110,\r\n            \"draft\":true,\r\n            \"sectionPerformanceIndicators\":[\r\n                {\r\n                    \"performanceIndicatorId\":2,\r\n                    \"exemplary\":5,\r\n                    \"competent\":5,\r\n                    \"below\":5,\r\n                    \"draft\":true\r\n                },\r\n\t\t{\r\n                    \"performanceIndicatorId\":3,\r\n                    \"exemplary\":6,\r\n                    \"competent\":5,\r\n                    \"below\":4,\r\n                    \"draft\":true\r\n                }\r\n            ]\r\n        },\r\n\t{\r\n            \"courseNumber\":33698,\r\n            \"sectionNumber\":1,\r\n            \"raeId\":2,\r\n            \"assessmentToolId\":3,\r\n            \"totalStudents\":16,\r\n            \"semester\":2110,\r\n            \"draft\":true,\r\n            \"sectionPerformanceIndicators\":[\r\n                {\r\n                    \"performanceIndicatorId\":4,\r\n                    \"exemplary\":10,\r\n                    \"competent\":6,\r\n                    \"below\":0,\r\n                    \"draft\":true\r\n                },\r\n\t\t{\r\n                    \"performanceIndicatorId\":5,\r\n                    \"exemplary\":11,\r\n                    \"competent\":5,\r\n                    \"below\":0,\r\n                    \"draft\":true\r\n                },\r\n\t\t{\r\n                    \"performanceIndicatorId\":6,\r\n                    \"exemplary\":16,\r\n                    \"competent\":0,\r\n                    \"below\":0,\r\n                    \"draft\":true\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/course-review/course/33698/section/2/semester/2130",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"course-review",
+										"course",
+										"33698",
+										"section",
+										"2",
+										"semester",
+										"2130"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Section Assessment Tool",
+					"item": [
+						{
+							"name": "Add Section Assessment Tool",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"totalStudents\":16,\r\n    \"semester\":2110,\r\n    \"draft\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/admin/course/33698/section/1/semester/2110/rae/2/assessmentTool/3/sectionAT",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"course",
+										"33698",
+										"section",
+										"1",
+										"semester",
+										"2110",
+										"rae",
+										"2",
+										"assessmentTool",
+										"3",
+										"sectionAT"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Section Assessment Tools from section",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/admin/course/33698/section/1/semester/2110/sectionAT",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"course",
+										"33698",
+										"section",
+										"1",
+										"semester",
+										"2110",
+										"sectionAT"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Section Assessment Tool",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"totalStudents\":14,\r\n    \"semester\":2110,\r\n    \"draft\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/admin/course/33698/section/1/semester/2110/rae/1/assessmentTool/1/sectionAT/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"course",
+										"33698",
+										"section",
+										"1",
+										"semester",
+										"2110",
+										"rae",
+										"1",
+										"assessmentTool",
+										"1",
+										"sectionAT",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Section Assessment Tool",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/admin/course/33698/section/1/semester/2110/rae/2/assessmentTool/2/sectionAT/5",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"course",
+										"33698",
+										"section",
+										"1",
+										"semester",
+										"2110",
+										"rae",
+										"2",
+										"assessmentTool",
+										"2",
+										"sectionAT",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Section Performance Indicator",
+					"item": [
+						{
+							"name": "Add Section Performance Indicator",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"exemplary\":6,\r\n    \"competent\":5,\r\n    \"below\":4,\r\n    \"draft\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/admin/course/33698/section/1/semester/2110/rae/2/assessmentTool/2/sectionAT/4/performanceIndicator/3/sectionPI",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"course",
+										"33698",
+										"section",
+										"1",
+										"semester",
+										"2110",
+										"rae",
+										"2",
+										"assessmentTool",
+										"2",
+										"sectionAT",
+										"4",
+										"performanceIndicator",
+										"3",
+										"sectionPI"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Section Performance Indicator",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"exemplary\":5,\r\n    \"competent\":5,\r\n    \"below\":4,\r\n    \"draft\":0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/admin/course/33698/section/1/semester/2110/rae/1/assessmentTool/1/sectionAT/1/performanceIndicator/1/sectionPI/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"course",
+										"33698",
+										"section",
+										"1",
+										"semester",
+										"2110",
+										"rae",
+										"1",
+										"assessmentTool",
+										"1",
+										"sectionAT",
+										"1",
+										"performanceIndicator",
+										"1",
+										"sectionPI",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Section Performance Indicators from Section Assessment Tool",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/admin/course/33698/section/1/semester/2110/rae/1/assessmentTool/1/sectionAT/1/performanceIndicator/1/sectionPI",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"course",
+										"33698",
+										"section",
+										"1",
+										"semester",
+										"2110",
+										"rae",
+										"1",
+										"assessmentTool",
+										"1",
+										"sectionAT",
+										"1",
+										"performanceIndicator",
+										"1",
+										"sectionPI"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Course Report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/report/course/33698/semester/2110",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"report",
+								"course",
+								"33698",
+								"semester",
+								"2110"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CDIO Report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/report/cdio/2.1/semester/2110",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"report",
+								"cdio",
+								"2.1",
+								"semester",
+								"2110"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outcome Report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/admin/report/outcome/1/semester/2110",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"report",
+								"outcome",
+								"1",
+								"semester",
+								"2110"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
