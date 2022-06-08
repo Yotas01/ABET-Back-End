@@ -24,7 +24,7 @@ public class Course {
     private List<RAE> RAEs;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "course_has_cdio",
+            name = "Course_has_CDIO",
             joinColumns = @JoinColumn(name = "idCourse"),
             inverseJoinColumns = @JoinColumn(name = "cdioNumber")
     )

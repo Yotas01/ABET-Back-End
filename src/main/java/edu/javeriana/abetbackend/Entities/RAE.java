@@ -22,7 +22,7 @@ public class RAE {
     private Course course;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "rae_has_cdio",
+            name = "RAE_has_CDIO",
             joinColumns = @JoinColumn(name = "idRAE"),
             inverseJoinColumns = @JoinColumn(name = "cdioNumber")
     )

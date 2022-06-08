@@ -18,7 +18,7 @@ public class Outcome {
     private String description;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "cdio_has_outcome",
+            name = "CDIO_has_Outcome",
             joinColumns = @JoinColumn(name = "idOutcome"),
             inverseJoinColumns = @JoinColumn(name = "cdioNumber")
     )

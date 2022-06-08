@@ -4,10 +4,13 @@ import edu.javeriana.abetbackend.Entities.AssessmentTool;
 import edu.javeriana.abetbackend.Entities.Section;
 import edu.javeriana.abetbackend.Entities.SectionAssessmentTool;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface SectionAssessmentToolRepository extends CrudRepository<SectionAssessmentTool, Long> {
     Optional<List<SectionAssessmentTool>> findAllBySection(Section section);
     Optional<SectionAssessmentTool> findByAssessmentTool(AssessmentTool assessmentTool);

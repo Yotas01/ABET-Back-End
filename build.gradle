@@ -4,6 +4,10 @@ plugins {
     id 'java'
 }
 
+springBoot{
+    mainClass = 'edu.javeriana.abetbackend.AbetBackEndApplication'
+}
+
 group = 'edu.javeriana'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
