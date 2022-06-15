@@ -11,7 +11,7 @@ services:
       - MYSQL_DATABASE=mysql-DB:3306/abet
       - MYSQL_USER=javauser
       - MYSQL_PASSWORD=psw123
-      - MYSQL_ROOT_PASSWORD=D00faliciou$$
+      - MYSQL_ROOT_PASSWORD=psw
   
   #Back-end Spring Boot Application
   back_end:
