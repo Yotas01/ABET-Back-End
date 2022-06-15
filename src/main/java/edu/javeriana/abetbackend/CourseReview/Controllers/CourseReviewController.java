@@ -1,5 +1,6 @@
 package edu.javeriana.abetbackend.CourseReview.Controllers;
 
+import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.CourseReview.Services.CRUD.CourseReviewService;
 import edu.javeriana.abetbackend.Entities.DTOs.CourseReview;
 import edu.javeriana.abetbackend.Entities.DTOs.SectionReview;
@@ -19,7 +20,7 @@ public class CourseReviewController {
 
     @Operation(description = "Get a course and it's section for review")
     @GetMapping("/course/{courseNumber}/section/{sectionNumber}/semester/{semester}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<CourseReview> getCourseForReview(@PathVariable Integer courseNumber,
                                                            @PathVariable Integer sectionNumber,
                                                            @PathVariable Integer semester){
@@ -29,7 +30,7 @@ public class CourseReviewController {
 
     @Operation
     @PostMapping("/course/{courseNumber}/section/{sectionNumber}/semester/{semester}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity reviewCourseSection(@PathVariable Integer courseNumber,
                                               @PathVariable Integer sectionNumber,
                                               @PathVariable Integer semester,

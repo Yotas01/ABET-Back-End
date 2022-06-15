@@ -2,6 +2,7 @@ package edu.javeriana.abetbackend.CRUD.Controllers;
 
 import edu.javeriana.abetbackend.CRUD.Services.CRUD.RAECRUD;
 import edu.javeriana.abetbackend.CRUD.Services.Find.RAEFinder;
+import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.DTOs.DescriptionDTO;
 import edu.javeriana.abetbackend.Entities.RAE;
 import edu.javeriana.abetbackend.Entities.DTOs.RAEDTO;
@@ -26,7 +27,7 @@ public class RAECRUDController {
 
     @Operation(summary = "Create a new RAE")
     @PostMapping("/rae")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<RAEDTO> addRAE(@PathVariable(value = "courseNumber") Integer courseNumber,
                                          @RequestBody RAE rae){
         raeCRUDService.saveRAE(rae, courseNumber);
@@ -36,7 +37,7 @@ public class RAECRUDController {
 
     @Operation(summary = "Find the RAEs from the Course with the corresponding courseNumber")
     @GetMapping("/rae")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<List<RAEDTO>> getRAEsFromCourse(@PathVariable(value = "courseNumber") Integer courseNumber){
         List<RAE> raes = raeFinder.findRAEsFromCourseNumber(courseNumber);
         List<RAEDTO> responseRAEs = new ArrayList<>();
@@ -46,7 +47,7 @@ public class RAECRUDController {
 
     @Operation(summary = "Find the RAE with id raeId")
     @GetMapping("/rae/{raeId}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<RAEDTO> getRAEFromCourse(@PathVariable(value = "courseNumber") Integer courseNumber,
                                                          @PathVariable Long raeId){
         RAE rae = raeFinder.findRAEById(raeId);
@@ -56,7 +57,7 @@ public class RAECRUDController {
 
     @Operation(summary = "Update a RAE description that matches the description and courseNumber")
     @PatchMapping("/rae/{raeId}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity updateRAEDescription(@RequestBody DescriptionDTO descriptionDTO,
                                                @PathVariable(value = "raeId") Long raeId,
                                                @PathVariable(value = "courseNumber") Integer courseNumber){
@@ -66,7 +67,7 @@ public class RAECRUDController {
 
     @Operation(summary = "Delete the RAE that matches the id")
     @DeleteMapping("/rae/{raeId}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity deleteRAE(@PathVariable(value = "raeId") Long raeId,
                                             @PathVariable(value = "courseNumber") Integer courseNumber){
         raeCRUDService.deleteRAE(courseNumber, raeId);

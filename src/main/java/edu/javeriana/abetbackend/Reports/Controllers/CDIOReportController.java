@@ -1,5 +1,6 @@
 package edu.javeriana.abetbackend.Reports.Controllers;
 
+import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.Views.CDIOReport;
 import edu.javeriana.abetbackend.Exceptions.*;
 import edu.javeriana.abetbackend.Reports.Services.CDIOReportService;
@@ -18,7 +19,7 @@ public class CDIOReportController {
 
     @GetMapping("/cdio/{cdioNumber}/semester/{semester}")
     @Operation(description = "Get the report for the cdio in the corresponding semester")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<CDIOReport> getCDIOReport(@PathVariable Float cdioNumber, @PathVariable Integer semester){
         CDIOReport report = reportService.getCDIOReportByNumberAndSemester(cdioNumber, semester);
         return ResponseEntity.status(HttpStatus.OK).body(report);

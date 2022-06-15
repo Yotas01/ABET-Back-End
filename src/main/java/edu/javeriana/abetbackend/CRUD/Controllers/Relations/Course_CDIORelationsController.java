@@ -1,6 +1,7 @@
 package edu.javeriana.abetbackend.CRUD.Controllers.Relations;
 
 import edu.javeriana.abetbackend.CRUD.Services.Relations.Course_CDIORelationService;
+import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.Course_has_CDIO;
 import edu.javeriana.abetbackend.Entities.DTOs.CourseDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.Course_has_CDIODTO;
@@ -21,7 +22,7 @@ public class Course_CDIORelationsController {
 
     @Operation(summary = "Make a relation between a Course and a CDIO competence")
     @PostMapping()
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<CourseDTO> addCDIOToCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                            @PathVariable(name = "cdioNumber") Float cdioNumber,
                                                            @RequestBody(required = false) ValueDTO value){
@@ -32,7 +33,7 @@ public class Course_CDIORelationsController {
 
     @Operation(summary = "Make a relation between a Course and a CDIO competence")
     @PutMapping()
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<Course_has_CDIODTO> updateCDIOHasCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                      @PathVariable(name = "cdioNumber") Float cdioNumber,
                                                      @RequestBody(required = false) ValueDTO value){
@@ -42,7 +43,7 @@ public class Course_CDIORelationsController {
 
     @Operation(summary = "Make a relation between a Course and a CDIO competence")
     @GetMapping()
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<Course_has_CDIODTO> getCourseHasCDIO(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                                @PathVariable(name = "cdioNumber") Float cdioNumber){
         Course_has_CDIODTO course_has_cdio = new Course_has_CDIODTO(relationService.getCourseHasCDIO(courseNumber,cdioNumber));
@@ -51,7 +52,7 @@ public class Course_CDIORelationsController {
 
     @Operation(summary = "Delete a relation between a Course and a CDIO competence")
     @DeleteMapping()
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<CourseDTO> deleteCDIOFromCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                      @PathVariable(name = "cdioNumber") Float cdioNumber){
         Course_has_CDIO course_has_cdio = relationService.deleteCDIOFromCourse(courseNumber,cdioNumber);

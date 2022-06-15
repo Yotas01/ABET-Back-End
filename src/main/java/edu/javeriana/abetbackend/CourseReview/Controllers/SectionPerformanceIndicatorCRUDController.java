@@ -1,5 +1,6 @@
 package edu.javeriana.abetbackend.CourseReview.Controllers;
 
+import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.CourseReview.Services.CRUD.SectionPerformanceIndicatorCRUD;
 import edu.javeriana.abetbackend.CourseReview.Services.Find.SectionPerformanceIndicatorFinder;
 import edu.javeriana.abetbackend.Entities.DTOs.SectionPerformanceIndicatorDTO;
@@ -26,7 +27,7 @@ public class SectionPerformanceIndicatorCRUDController {
 
     @Operation(description = "Add a new section performance indicator")
     @PostMapping("/sectionPI")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<SectionPerformanceIndicatorDTO> addSectionPI(@PathVariable Integer courseNumber,
                                                                        @PathVariable Integer sectionNumber,
                                                                        @PathVariable Long raeId,
@@ -42,7 +43,7 @@ public class SectionPerformanceIndicatorCRUDController {
 
     @Operation(description = "Update an existing section performance indicator")
     @PutMapping("/sectionPI/{sectionPIId}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<SectionPerformanceIndicatorDTO> updateSectionPI(@PathVariable Integer courseNumber,
                                                                           @PathVariable Integer sectionNumber,
                                                                           @PathVariable Long raeId,
@@ -59,7 +60,7 @@ public class SectionPerformanceIndicatorCRUDController {
 
     @Operation(description = "Delete an existing section performance indicator")
     @DeleteMapping("/sectionPI/{sectionPIId}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<SectionPerformanceIndicatorDTO> deleteSectionPI(@PathVariable Integer courseNumber,
                                                                           @PathVariable Integer sectionNumber,
                                                                           @PathVariable Long raeId,
@@ -75,7 +76,7 @@ public class SectionPerformanceIndicatorCRUDController {
 
     @Operation(description = "Get all the section Performance Indicators from a section assessment tool")
     @GetMapping("/sectionPI")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<List<SectionPerformanceIndicatorDTO>> getSectionPIsFromSectionAT(@PathVariable Integer courseNumber,
                                                                                            @PathVariable Integer sectionNumber,
                                                                                            @PathVariable Long raeId,

@@ -2,6 +2,7 @@ package edu.javeriana.abetbackend.CRUD.Controllers;
 
 import edu.javeriana.abetbackend.CRUD.Services.CRUD.OutcomeCRUD;
 import edu.javeriana.abetbackend.CRUD.Services.Find.OutcomeFinder;
+import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.Outcome;
 import edu.javeriana.abetbackend.Entities.DTOs.OutcomeDTO;
 import edu.javeriana.abetbackend.Exceptions.*;
@@ -25,7 +26,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Create a new ABET outcome")
     @PostMapping("/outcome")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<OutcomeDTO> addCompetence(@RequestBody OutcomeDTO outcome){
         crudService.saveOutcome(outcome);
         return ResponseEntity.status(HttpStatus.CREATED).body(outcome);
@@ -33,7 +34,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Find the ABET outcome with idOutcome")
     @GetMapping("/outcome/{idOutcome}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<OutcomeDTO> findCompetence(@PathVariable(value = "idOutcome") Integer id){
         Outcome outcome = finder.findOutcomeById(id);
         OutcomeDTO outcomeDTO = new OutcomeDTO(outcome);
@@ -42,7 +43,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Get all the ABET outcomes")
     @GetMapping("/outcome")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<List<OutcomeDTO>> getAllCompetences(){
         List<Outcome> outcomes = finder.getAllOutcomes();
         List<OutcomeDTO> outcomeDTOS = new ArrayList<>();
@@ -52,7 +53,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Update an ABET outcome that matches the outcome's id")
     @PutMapping("/outcome/{outcomeId}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<OutcomeDTO> updateCompetence(@RequestBody OutcomeDTO outcome,
                                                        @PathVariable(name = "outcomeId") Integer outcomeId){
         Outcome updatedOutcome = crudService.updateOutcome(outcome, outcomeId);
@@ -62,7 +63,7 @@ public class OutcomeCRUDController {
 
     @Operation(summary = "Delete the ABET outcome that matches the id")
     @DeleteMapping("/outcome/{idOutcome}")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<OutcomeDTO> deleteCompetence(@PathVariable(value = "idOutcome") Integer id){
         Outcome outcomeToDelete = finder.findOutcomeById(id);
         crudService.deleteOutcome(outcomeToDelete);

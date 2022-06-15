@@ -1,6 +1,7 @@
 package edu.javeriana.abetbackend.CRUD.Controllers.Relations;
 
 import edu.javeriana.abetbackend.CRUD.Services.Relations.RAE_CDIORelationsService;
+import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.DTOs.RAEDTO;
 import edu.javeriana.abetbackend.Exceptions.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,7 +20,7 @@ public class RAE_CDIORelationsController {
 
     @Operation(summary = "Create a relation between a RAE and a CDIO competence")
     @PostMapping
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<RAEDTO> addRAEToCDIO(@PathVariable(value = "cdioNumber") Float cdioNumber,
                                                @PathVariable(value = "raeId") Long raeId){
         relationsService.addRAEtoCDIO(cdioNumber, raeId);
@@ -28,7 +29,7 @@ public class RAE_CDIORelationsController {
 
     @Operation(summary = "Delete a relation between a RAE and a CDIO competence")
     @DeleteMapping
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<RAEDTO> deleteRAEFromCDIO(@PathVariable(value = "cdioNumber") Float cdioNumber,
                                                @PathVariable(value = "raeId") Long raeId){
         relationsService.deleteRAEFromCDIO(cdioNumber, raeId);

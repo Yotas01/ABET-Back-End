@@ -1,5 +1,6 @@
 package edu.javeriana.abetbackend.Reports.Controllers;
 
+import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.Views.CourseReport;
 import edu.javeriana.abetbackend.Exceptions.*;
 import edu.javeriana.abetbackend.Reports.Services.CourseReportService;
@@ -18,7 +19,7 @@ public class CourseReportController {
 
     @GetMapping("/course/{courseNumber}/semester/{semester}")
     @Operation(description = "Get the report for the course with the course Id for the specified semester")
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<CourseReport> getCourseReport(@PathVariable Integer courseNumber, @PathVariable Integer semester){
         CourseReport report = reportService.getCourseReportByIdAndSemester(courseNumber, semester);
         return ResponseEntity.status(HttpStatus.OK).body(report);
