@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "section_assessmenttool")
+@Table(name = "Section_AssessmentTool")
 public class SectionAssessmentTool {
 
     @Id

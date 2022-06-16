@@ -7,7 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "section_performanceindicator")
+@Table(name = "Section_PerformanceIndicator")
 public class SectionPerformanceIndicator {
 
     @Id

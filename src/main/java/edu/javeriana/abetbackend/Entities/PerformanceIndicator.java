@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "performanceindicator")
+@Table(name = "PerformanceIndicator")
 public class PerformanceIndicator {
 
     @Id
