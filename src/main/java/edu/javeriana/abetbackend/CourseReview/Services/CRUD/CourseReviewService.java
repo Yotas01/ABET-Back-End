@@ -4,11 +4,13 @@ import edu.javeriana.abetbackend.CRUD.Services.Find.AssessmentToolFinder;
 import edu.javeriana.abetbackend.CRUD.Services.Find.CourseFinder;
 import edu.javeriana.abetbackend.CRUD.Services.Find.PerformanceIndicatorFinder;
 import edu.javeriana.abetbackend.CRUD.Services.Find.SectionFinder;
+import edu.javeriana.abetbackend.CourseReview.Services.Find.SectionAssessmentToolFinder;
 import edu.javeriana.abetbackend.Entities.*;
 import edu.javeriana.abetbackend.Entities.DTOs.CourseReview;
 import edu.javeriana.abetbackend.Entities.DTOs.SectionAssessmentToolDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.SectionPerformanceIndicatorDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.SectionReview;
+import edu.javeriana.abetbackend.Exceptions.AlreadyExists;
 import edu.javeriana.abetbackend.Exceptions.Inconsistent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class CourseReviewService {
     @Autowired
     private SectionAssessmentToolCRUD sectionATService;
     @Autowired
+    private SectionAssessmentToolFinder sectionATFinder;
+    @Autowired
     private SectionPerformanceIndicatorCRUD sectionPIService;
     @Autowired
     private AssessmentToolFinder assessmentToolFinder;
@@ -32,6 +36,9 @@ public class CourseReviewService {
     public CourseReview getCourseForReview(Integer courseNumber, Integer sectionNumber, Integer semester){
         Course course = courseFinder.findCourseByNumber(courseNumber);
         Section section = sectionFinder.findSectionByNumberAndSemester(courseNumber,sectionNumber, semester);
+        if(!sectionATFinder.findAllSectionAssessmentToolsBySectionId(courseNumber,sectionNumber,semester).isEmpty())
+            throw new AlreadyExists("The review for the course " + courseNumber + " and the section " + sectionNumber +
+                    " for the semester " + semester + " has already been made");
         return new CourseReview(course,section);
     }
 
