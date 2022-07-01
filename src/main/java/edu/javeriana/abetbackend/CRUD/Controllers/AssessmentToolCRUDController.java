@@ -79,13 +79,13 @@ public class AssessmentToolCRUDController {
 
     @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String badRequestError(Exception e){ return  e.getMessage();}
+    public ABETSystemException badRequestError(Exception e){ return  new ABETSystemException(e.getMessage());}
 
     @ExceptionHandler(NotFound.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String notFoundError(Exception e){ return  e.getMessage();}
+    public ABETSystemException notFoundError(Exception e){ return  new ABETSystemException(e.getMessage());}
 
     @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String conflictError(Exception e){ return  e.getMessage();}
+    public ABETSystemException conflictError(Exception e){ return  new ABETSystemException(e.getMessage());}
 }
