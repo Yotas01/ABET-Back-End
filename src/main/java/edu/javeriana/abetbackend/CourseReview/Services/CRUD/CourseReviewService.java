@@ -12,8 +12,13 @@ import edu.javeriana.abetbackend.Entities.DTOs.SectionPerformanceIndicatorDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.SectionReview;
 import edu.javeriana.abetbackend.Exceptions.AlreadyExists;
 import edu.javeriana.abetbackend.Exceptions.Inconsistent;
+import edu.javeriana.abetbackend.Exceptions.NotFound;
+import edu.javeriana.abetbackend.Repositories.SectionAssessmentToolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseReviewService {
@@ -25,7 +30,7 @@ public class CourseReviewService {
     @Autowired
     private SectionAssessmentToolCRUD sectionATService;
     @Autowired
-    private SectionAssessmentToolFinder sectionATFinder;
+    private SectionAssessmentToolRepository sectionATRepository;
     @Autowired
     private SectionPerformanceIndicatorCRUD sectionPIService;
     @Autowired
@@ -36,9 +41,10 @@ public class CourseReviewService {
     public CourseReview getCourseForReview(Integer courseNumber, Integer sectionNumber, Integer semester){
         Course course = courseFinder.findCourseByNumber(courseNumber);
         Section section = sectionFinder.findSectionByNumberAndSemester(courseNumber,sectionNumber, semester);
-        if(!sectionATFinder.findAllSectionAssessmentToolsBySectionId(courseNumber,sectionNumber,semester).isEmpty())
+        Optional<List<SectionAssessmentTool>> sectionAssessmentToolList = sectionATRepository.findAllBySection(section);
+        if (sectionAssessmentToolList.isPresent() && !sectionAssessmentToolList.get().isEmpty())
             throw new AlreadyExists("The review for the course " + courseNumber + " and the section " + sectionNumber +
-                    " for the semester " + semester + " has already been made");
+                " for the semester " + semester + " has already been made");
         return new CourseReview(course,section);
     }
 

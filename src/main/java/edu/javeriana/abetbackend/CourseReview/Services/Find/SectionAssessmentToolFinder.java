@@ -35,7 +35,7 @@ public class SectionAssessmentToolFinder {
         Section section = sectionFinder.findSectionByNumberAndSemester(courseNumber, sectionNumber, semester);
         Optional<List<SectionAssessmentTool>> sectionAssessmentTool = repository.findAllBySection(section);
         if(sectionAssessmentTool.isEmpty() || sectionAssessmentTool.get().isEmpty())
-            throw new NotFound("There were no section_assessmentTools found for the course" +
+            throw new NotFound("There were no section_assessmentTools found for the course " +
                     section.getCourse().getNumber() + " and section " + section.getNumber());
         return sectionAssessmentTool.get();
     }
