@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface SectionAssessmentToolRepository extends CrudRepository<SectionAssessmentTool, Long> {
-    Optional<List<SectionAssessmentTool>> findAllBySection(Section section);
+    Optional<List<SectionAssessmentTool>> findAllBySectionAndSemester(Section section,Integer semester);
     Optional<SectionAssessmentTool> findByAssessmentTool(AssessmentTool assessmentTool);
     Optional<SectionAssessmentTool> findByAssessmentToolAndSemester(AssessmentTool assessmentTool, Integer semester);
     Optional<SectionAssessmentTool> findByAssessmentToolAndSemesterAndSection

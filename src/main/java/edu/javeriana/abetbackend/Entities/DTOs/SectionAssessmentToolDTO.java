@@ -24,6 +24,7 @@ public class SectionAssessmentToolDTO {
         this.id = sectionAssessmentTool.getSectionAssessmentToolId();
         this.courseNumber = sectionAssessmentTool.getSection().getCourse().getNumber();
         this.sectionNumber = sectionAssessmentTool.getSection().getNumber();
+        this.raeId = sectionAssessmentTool.getAssessmentTool().getRae().getRAEId();
         this.assessmentToolId = sectionAssessmentTool.getAssessmentTool().getAssessmentToolId();
         this.totalStudents = sectionAssessmentTool.getTotalStudents();
         this.semester = sectionAssessmentTool.getSemester();
