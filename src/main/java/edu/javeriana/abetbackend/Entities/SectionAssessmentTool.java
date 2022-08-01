@@ -38,6 +38,8 @@ public class SectionAssessmentTool {
     }
 
     public SectionAssessmentTool(SectionAssessmentToolDTO dto){
+        if(dto.getId() != null)
+            this.sectionAssessmentToolId = dto.getId();
         this.totalStudents = dto.getTotalStudents();
         this.semester = dto.getSemester();
         this.sectionPerformanceIndicators = new ArrayList<>();

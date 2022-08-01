@@ -9,35 +9,38 @@ import java.util.List;
 
 public class CourseReview {
 
-    private Long CourseId;
+    private Long courseId;
     private Integer number;
     private String name;
     private SectionDTO section;
+    private List<Float> cdioList;
     private List<RAEDTO> RAEs;
-    private List<CDIODTO> cdioList;
+    private SectionReview sectionReview;
 
     public CourseReview(Course course, Section section) {
-        CourseId = course.getCourseId();
+        this.courseId = course.getCourseId();
         this.number = course.getNumber();
         this.name = course.getName();
         this.section = new SectionDTO(section);
         this.cdioList = new ArrayList<>();
         this.RAEs = new ArrayList<>();
         course.getRAEs().forEach(rae -> this.RAEs.add(new RAEDTO(rae)));
-        course.getCdioList().forEach(cdio -> this.cdioList.add(new CDIODTO(cdio)));
+        course.getCdioList().forEach(cdio -> this.cdioList.add(cdio.getNumber()));
+        this.sectionReview = new SectionReview();
     }
 
     public CourseReview() {
         this.cdioList = new ArrayList<>();
         this.RAEs = new ArrayList<>();
+        this.sectionReview = new SectionReview();
     }
 
     public Long getCourseId() {
-        return CourseId;
+        return this.courseId;
     }
 
-    public void setCourseId(Long CourseId) {
-        this.CourseId = CourseId;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     public int getNumber() {
@@ -80,20 +83,28 @@ public class CourseReview {
         getRAEs().remove(RAE);
     }
 
-    public List<CDIODTO> getCdioList() {
+    public List<Float> getCdioList() {
         return this.cdioList;
     }
 
-    public void setCdioList(List<CDIODTO> CDIos) {
+    public void setCdioList(List<Float> CDIos) {
         this.cdioList = CDIos;
     }
 
     public void addCDIo(CDIODTO CDIo) {
-        getCdioList().add(CDIo);
+        getCdioList().add(CDIo.getNumber());
     }
 
     public void removeCDIo(CDIODTO CDIo) {
-        getCdioList().remove(CDIo);
+        getCdioList().remove(CDIo.getNumber());
+    }
+
+    public SectionReview getSectionReview() {
+        return sectionReview;
+    }
+
+    public void setSectionReview(SectionReview sectionReview) {
+        this.sectionReview = sectionReview;
     }
 
     @Override
@@ -101,18 +112,18 @@ public class CourseReview {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CourseReview course = (CourseReview) o;
-        return Objects.equal(CourseId, course.CourseId) && Objects.equal(number, course.number) && Objects.equal(name, course.name) && Objects.equal(section, course.section) && Objects.equal(RAEs, course.RAEs) && Objects.equal(cdioList, course.cdioList);
+        return Objects.equal(this.courseId, course.courseId) && Objects.equal(number, course.number) && Objects.equal(name, course.name) && Objects.equal(section, course.section) && Objects.equal(RAEs, course.RAEs) && Objects.equal(cdioList, course.cdioList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(CourseId, number, name);
+        return Objects.hashCode(courseId, number, name);
     }
 
     @Override
     public String toString() {
         return "Course Report{" +
-                "CourseId=" + CourseId +
+                "CourseId=" + courseId +
                 ", number=" + number +
                 ", name='" + name + '\'' +
                 ", section'"+ section + '\''+

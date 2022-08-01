@@ -9,18 +9,15 @@ public class CDIODTO {
     private String description;
     private Float number;
     private List<Integer> outcomes;
-    private List<String> RAEs;
     private List<String> courses;
 
     public CDIODTO(CDIO cdio) {
         this.description = cdio.getDescription();
         this.number = cdio.getNumber();
         this.outcomes = new ArrayList<>();
-        this.RAEs = new ArrayList<>();
         this.courses = new ArrayList<>();
         cdio.getOutcomes().forEach(outcome -> this.outcomes.add(outcome.getOutcomeId()));
         cdio.getCourses().forEach(course -> this.courses.add(course.getName()));
-        cdio.getRAEs().forEach(rae -> this.RAEs.add(rae.toString()));
     }
 
     public CDIODTO() {
@@ -48,14 +45,6 @@ public class CDIODTO {
 
     public void setOutcomes(List<Integer> outcomes) {
         this.outcomes = outcomes;
-    }
-
-    public List<String> getRAEs() {
-        return RAEs;
-    }
-
-    public void setRAEs(List<String> RAEs) {
-        this.RAEs = RAEs;
     }
 
     public List<String> getCourses() {

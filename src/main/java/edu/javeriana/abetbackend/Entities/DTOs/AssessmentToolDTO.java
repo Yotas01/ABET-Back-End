@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AssessmentToolDTO {
 
-    private Long AssessmentToolId;
+    private Long assessmentToolId;
     private String description;
     private Double value;
     private String rae;
@@ -19,7 +19,7 @@ public class AssessmentToolDTO {
     }
 
     public AssessmentToolDTO(AssessmentTool assessmentTool) {
-        this.AssessmentToolId = assessmentTool.getAssessmentToolId();
+        this.assessmentToolId = assessmentTool.getAssessmentToolId();
         this.description = assessmentTool.getDescription();
         this.value = assessmentTool.getValue();
         this.rae = assessmentTool.getRae().getDescription();
@@ -28,11 +28,11 @@ public class AssessmentToolDTO {
     }
 
     public Long getAssessmentToolId() {
-        return AssessmentToolId;
+        return assessmentToolId;
     }
 
     public void setAssessmentToolId(Long assessmentToolId) {
-        AssessmentToolId = assessmentToolId;
+        this.assessmentToolId = assessmentToolId;
     }
 
     public String getDescription() {

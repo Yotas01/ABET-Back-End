@@ -34,6 +34,18 @@ public class SectionAssessmentToolDTO {
                 .forEach(spi -> this.sectionPerformanceIndicators.add(new SectionPerformanceIndicatorDTO(spi)));
     }
 
+    public SectionAssessmentToolDTO(Long id, Integer courseNumber, Integer sectionNumber, Long raeId, Long assessmentToolId, Integer totalStudents, Integer semester, boolean draft, List<SectionPerformanceIndicatorDTO> sectionPerformanceIndicators) {
+        this.id = id;
+        this.courseNumber = courseNumber;
+        this.sectionNumber = sectionNumber;
+        this.raeId = raeId;
+        this.assessmentToolId = assessmentToolId;
+        this.totalStudents = totalStudents;
+        this.semester = semester;
+        this.draft = draft;
+        this.sectionPerformanceIndicators = sectionPerformanceIndicators;
+    }
+
     public Long getId() {
         return id;
     }

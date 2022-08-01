@@ -27,15 +27,6 @@ public class CourseReviewController {
         CourseReview courseReview = courseReviewService.getCourseForReview(courseNumber,sectionNumber,semester);
         return ResponseEntity.status(HttpStatus.OK).body(courseReview);
     }
-    @Operation(description = "Get a previous section review")
-    @GetMapping("/section-review/course/{courseNumber}/section/{sectionNumber}/semester/{semester}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<SectionReview> getSectionReview(@PathVariable Integer courseNumber,
-                                                          @PathVariable Integer sectionNumber,
-                                                          @PathVariable Integer semester){
-        SectionReview sectionReview = courseReviewService.getSectionReview(courseNumber,sectionNumber,semester);
-        return ResponseEntity.status(HttpStatus.OK).body(sectionReview);
-    }
 
     @Operation
     @PostMapping("/course/{courseNumber}/section/{sectionNumber}/semester/{semester}")
@@ -45,17 +36,6 @@ public class CourseReviewController {
                                               @PathVariable Integer semester,
                                               @RequestBody SectionReview sectionReview){
         courseReviewService.reviewCourseSection(courseNumber, sectionNumber, semester, sectionReview);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
-    }
-
-    @Operation
-    @PutMapping("/course/{courseNumber}/section/{sectionNumber}/semester/{semester}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity updateSectionReview(@PathVariable Integer courseNumber,
-                                              @PathVariable Integer sectionNumber,
-                                              @PathVariable Integer semester,
-                                              @RequestBody SectionReview sectionReview){
-        courseReviewService.updateSectionReview(courseNumber, sectionNumber, semester, sectionReview);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
