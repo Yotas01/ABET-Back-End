@@ -24,6 +24,16 @@ public class SectionPerformanceIndicatorDTO {
     public SectionPerformanceIndicatorDTO() {
     }
 
+    public SectionPerformanceIndicatorDTO(Long id, Long sectionAssessmentToolId, Long performanceIndicatorId, Integer exemplary, Integer competent, Integer below, boolean draft) {
+        this.id = id;
+        this.sectionAssessmentToolId = sectionAssessmentToolId;
+        this.performanceIndicatorId = performanceIndicatorId;
+        this.exemplary = exemplary;
+        this.competent = competent;
+        this.below = below;
+        this.draft = draft;
+    }
+
     public Long getId() {
         return id;
     }

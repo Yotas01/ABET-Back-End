@@ -3,17 +3,15 @@ package edu.javeriana.abetbackend.Entities.DTOs;
 import edu.javeriana.abetbackend.Entities.RAE;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RAEDTO {
 
-    private Long RAEId;
+    private Long raeId;
     private String description;
     private Long courseId;
-    private List<AssessmentToolDTO> assessmentTools;
     private List<Float> cdioList;
+    private List<AssessmentToolDTO> assessmentTools;
 
     public RAEDTO() {
         this.assessmentTools = new ArrayList<>();
@@ -21,13 +19,13 @@ public class RAEDTO {
     }
 
     public RAEDTO(RAE rae) {
-        this.RAEId = rae.getRAEId();
+        this.raeId = rae.getRAEId();
         this.description = rae.getDescription();
         this.courseId = rae.getCourse().getCourseId();
-        this.assessmentTools = new ArrayList<>();
-        rae.getAssessmentTools().forEach(at -> assessmentTools.add(new AssessmentToolDTO(at)));
         this.cdioList = new ArrayList<>();
         rae.getCdioList().forEach(cdio -> cdioList.add(cdio.getNumber()));
+        this.assessmentTools = new ArrayList<>();
+        rae.getAssessmentTools().forEach(at -> assessmentTools.add(new AssessmentToolDTO(at)));
     }
 
     public List<AssessmentToolDTO> getAssessmentTools() {
@@ -46,12 +44,12 @@ public class RAEDTO {
         this.cdioList = cdioList;
     }
 
-    public Long getRAEId() {
-        return RAEId;
+    public Long getRaeId() {
+        return raeId;
     }
 
-    public void setRAEId(Long RAEId) {
-        this.RAEId = RAEId;
+    public void setRaeId(Long raeId) {
+        this.raeId = raeId;
     }
 
     public String getDescription() {

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class CourseDTO {
 
-    private Long CourseId;
+    private Long courseId;
     private Integer number;
     private String name;
     private Map<Integer,String> sections;
@@ -17,7 +17,7 @@ public class CourseDTO {
     private List<Float> cdioList;
 
     public CourseDTO(Course course) {
-        this.CourseId = course.getCourseId();
+        this.courseId = course.getCourseId();
         this.number = course.getNumber();
         this.name = course.getName();
         this.sections =  new HashMap<>();
@@ -35,11 +35,11 @@ public class CourseDTO {
     }
 
     public Long getCourseId() {
-        return CourseId;
+        return courseId;
     }
 
     public void setCourseId(Long courseId) {
-        CourseId = courseId;
+        this.courseId = courseId;
     }
 
     public Integer getNumber() {

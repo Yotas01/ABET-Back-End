@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class SectionDTO {
 
-    private Long SectionId;
+    private Long sectionId;
     private Integer number;
     private String professor;
     private Integer totalStudents;
@@ -19,7 +19,7 @@ public class SectionDTO {
     }
 
     public SectionDTO(Section section) {
-        this.SectionId = section.getSectionId();
+        this.sectionId = section.getSectionId();
         this.number = section.getNumber();
         this.professor = section.getProfessor();
         this.totalStudents = section.getTotalStudents();
@@ -29,11 +29,11 @@ public class SectionDTO {
     }
 
     public Long getSectionId() {
-        return SectionId;
+        return sectionId;
     }
 
     public void setSectionId(Long sectionId) {
-        SectionId = sectionId;
+        this.sectionId = sectionId;
     }
 
     public Integer getNumber() {

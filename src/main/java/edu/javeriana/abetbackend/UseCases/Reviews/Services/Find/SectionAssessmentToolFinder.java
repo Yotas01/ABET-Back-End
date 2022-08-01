@@ -33,7 +33,7 @@ public class SectionAssessmentToolFinder {
 
     public List<SectionAssessmentTool> findAllSectionAssessmentToolsBySectionId(Integer courseNumber, Integer sectionNumber, Integer semester){
         Section section = sectionFinder.findSectionByNumberAndSemester(courseNumber, sectionNumber, semester);
-        Optional<List<SectionAssessmentTool>> sectionAssessmentTool = repository.findAllBySection(section);
+        Optional<List<SectionAssessmentTool>> sectionAssessmentTool = repository.findAllBySectionAndSemester(section, semester);
         if(sectionAssessmentTool.isEmpty() || sectionAssessmentTool.get().isEmpty())
             throw new NotFound("There were no section_assessmentTools found for the course " +
                     section.getCourse().getNumber() + " and section " + section.getNumber());

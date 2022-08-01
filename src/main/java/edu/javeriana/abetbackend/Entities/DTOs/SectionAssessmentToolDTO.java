@@ -24,6 +24,7 @@ public class SectionAssessmentToolDTO {
         this.id = sectionAssessmentTool.getSectionAssessmentToolId();
         this.courseNumber = sectionAssessmentTool.getSection().getCourse().getNumber();
         this.sectionNumber = sectionAssessmentTool.getSection().getNumber();
+        this.raeId = sectionAssessmentTool.getAssessmentTool().getRae().getRAEId();
         this.assessmentToolId = sectionAssessmentTool.getAssessmentTool().getAssessmentToolId();
         this.totalStudents = sectionAssessmentTool.getTotalStudents();
         this.semester = sectionAssessmentTool.getSemester();
@@ -31,6 +32,18 @@ public class SectionAssessmentToolDTO {
         this.sectionPerformanceIndicators = new ArrayList<>();
         sectionAssessmentTool.getSectionPerformanceIndicators()
                 .forEach(spi -> this.sectionPerformanceIndicators.add(new SectionPerformanceIndicatorDTO(spi)));
+    }
+
+    public SectionAssessmentToolDTO(Long id, Integer courseNumber, Integer sectionNumber, Long raeId, Long assessmentToolId, Integer totalStudents, Integer semester, boolean draft, List<SectionPerformanceIndicatorDTO> sectionPerformanceIndicators) {
+        this.id = id;
+        this.courseNumber = courseNumber;
+        this.sectionNumber = sectionNumber;
+        this.raeId = raeId;
+        this.assessmentToolId = assessmentToolId;
+        this.totalStudents = totalStudents;
+        this.semester = semester;
+        this.draft = draft;
+        this.sectionPerformanceIndicators = sectionPerformanceIndicators;
     }
 
     public Long getId() {

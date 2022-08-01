@@ -34,6 +34,8 @@ public class SectionPerformanceIndicator {
     }
 
     public SectionPerformanceIndicator(SectionPerformanceIndicatorDTO sectionPerformanceIndicator) {
+        if(sectionPerformanceIndicator.getId() != null)
+            this.sectionPerformanceIndicatorId = sectionPerformanceIndicator.getId();
         this.exemplary = sectionPerformanceIndicator.getExemplary();
         this.competent = sectionPerformanceIndicator.getCompetent();
         this.below = sectionPerformanceIndicator.getBelow();
