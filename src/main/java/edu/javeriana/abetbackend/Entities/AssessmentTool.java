@@ -8,19 +8,20 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "ASSESSMENT_TOOL")
 public class AssessmentTool {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    @Column(name = "idAssessmentTool")
+    @Column(name = "id_assessment_tool")
     private Long AssessmentToolId;
     @Basic
     private String description;
     @Basic
     private Double value;
     @ManyToOne
-    @JoinColumn(name = "idRAE")
+    @JoinColumn(name = "id_rae")
     private RAE rae;
     @OneToMany(mappedBy = "assessmentTool", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PerformanceIndicator> performanceIndicators;

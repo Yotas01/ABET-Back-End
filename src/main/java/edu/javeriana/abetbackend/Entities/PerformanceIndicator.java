@@ -7,20 +7,20 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "PerformanceIndicator")
+@Table(name = "PERFORMANCE_INDICATOR")
 public class PerformanceIndicator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    @Column(name = "idPerformanceIndicator")
+    @Column(name = "id_performanceindicator")
     private Long PerformanceIndicatorId;
     @Basic
     private String description;
     @Basic
     private Double percentage;
     @ManyToOne
-    @JoinColumn(name = "idAssessmentTool")
+    @JoinColumn(name = "id_assessment_tool")
     private AssessmentTool assessmentTool;
     @OneToMany(mappedBy = "performanceIndicator", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<SectionPerformanceIndicator> sectionPerformanceIndicators;

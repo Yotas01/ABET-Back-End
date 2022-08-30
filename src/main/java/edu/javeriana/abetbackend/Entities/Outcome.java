@@ -9,18 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "OUTCOME")
 public class Outcome {
 
     @Id
-    @Column(name = "idOutcome")
+    @Column(name = "id_outcome")
     private Integer OutcomeId;
     @Basic
     private String description;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "CDIO_has_Outcome",
-            joinColumns = @JoinColumn(name = "idOutcome"),
-            inverseJoinColumns = @JoinColumn(name = "cdioNumber")
+            joinColumns = @JoinColumn(name = "id_outcome"),
+            inverseJoinColumns = @JoinColumn(name = "cdio_number")
     )
     @JsonIgnore
     private List<CDIO> cdioList;

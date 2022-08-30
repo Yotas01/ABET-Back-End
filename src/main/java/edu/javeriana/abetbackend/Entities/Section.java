@@ -7,14 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "SECTION")
 public class Section {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idSection")
+    @Column(name = "id_section")
     private Long SectionId;
     @ManyToOne
-    @JoinColumn(name = "idCourse")
+    @JoinColumn(name = "id_course")
     private Course course;
     @Basic
     private Integer semester;
@@ -23,6 +24,7 @@ public class Section {
     @Basic
     private String professor;
     @Basic
+    @Column(name = "total_students")
     private Integer totalStudents;
     @OneToMany(mappedBy = "section")
     private List<SectionAssessmentTool> sectionAssessmentTool;
