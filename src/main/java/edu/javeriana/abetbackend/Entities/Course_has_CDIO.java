@@ -6,7 +6,7 @@ import edu.javeriana.abetbackend.Entities.Ids.Course_has_CdioId;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Course_HAS_CDIO")
+@Table(name = "COURSE_HAS_CDIO")
 public class Course_has_CDIO {
 
     @EmbeddedId
