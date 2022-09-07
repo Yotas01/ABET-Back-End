@@ -30,8 +30,8 @@ public class OutcomeCRUD {
                 CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
                 createdOutcome.addCDIo(cdio);
                 cdio.addOutcome(createdOutcome);
-                repository.save(createdOutcome);
             }
+            repository.save(createdOutcome);
             return;
         }
         throw new AlreadyExists("The outcome with the id " + outcomeDTO.getId() + " already exists");

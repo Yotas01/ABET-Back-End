@@ -13,18 +13,18 @@ public class RAE {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    @Column(name = "idRAE")
+    @Column(name = "id_rae")
     private Long RAEId;
     @Basic
     private String description;
     @ManyToOne
-    @JoinColumn(name = "idCourse")
+    @JoinColumn(name = "id_course")
     private Course course;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "RAE_has_CDIO",
-            joinColumns = @JoinColumn(name = "idRAE"),
-            inverseJoinColumns = @JoinColumn(name = "cdioNumber")
+            name = "RAE_HAS_CDIO",
+            joinColumns = @JoinColumn(name = "id_rae"),
+            inverseJoinColumns = @JoinColumn(name = "cdio_number")
     )
     private List<CDIO> cdioList;
     @OneToMany(mappedBy = "rae", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

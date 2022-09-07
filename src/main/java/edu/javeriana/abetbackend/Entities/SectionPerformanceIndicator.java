@@ -7,19 +7,19 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Section_PerformanceIndicator")
+@Table(name = "SECTION_PERFORMANCEINDICATOR")
 public class SectionPerformanceIndicator {
 
     @Id
-    @Column(name = "section_performanceIndicatorId")
+    @Column(name = "section_performanceindicator_id")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long sectionPerformanceIndicatorId;
     @ManyToOne
-    @JoinColumn(name = "section_assessmentToolId")
+    @JoinColumn(name = "section_assessmenttool_id")
     private SectionAssessmentTool sectionAssessmentTool;
     @ManyToOne
-    @JoinColumn(name = "idPerformanceIndicator", referencedColumnName = "idPerformanceIndicator")
+    @JoinColumn(name = "id_performanceindicator", referencedColumnName = "id_performanceindicator")
     private PerformanceIndicator performanceIndicator;
     @Basic
     private Integer exemplary;

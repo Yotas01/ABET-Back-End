@@ -8,33 +8,38 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "COURSE")
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCourse")
+    @Column(name = "id_course")
     private Long CourseId;
     @Basic
     private Integer number;
     @Basic
     private String name;
+    @Basic
+    @Column(name = "id_sae")
+    private String idSAE;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Section> sections;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<RAE> RAEs;
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "Course_has_CDIO",
-            joinColumns = @JoinColumn(name = "idCourse"),
-            inverseJoinColumns = @JoinColumn(name = "cdioNumber")
+            name = "COURSE_HAS_CDIO",
+            joinColumns = @JoinColumn(name = "id_course"),
+            inverseJoinColumns = @JoinColumn(name = "cdio_number")
     )
     @JsonIgnore
     private List<CDIO> cdioList;
 
-    public Course(Long courseId, Integer number, String name) {
+    public Course(Long courseId, Integer number, String name, String idSAE) {
         CourseId = courseId;
         this.number = number;
         this.name = name;
+        this.idSAE = idSAE;
         this.cdioList = new ArrayList<>();
         this.sections = new ArrayList<>();
         this.RAEs = new ArrayList<>();
@@ -106,6 +111,14 @@ public class Course {
 
     public void removeRAE(RAE RAE) {
         getRAEs().remove(RAE);
+    }
+
+    public String getIdSAE() {
+        return idSAE;
+    }
+
+    public void setIdSAE(String idSAE) {
+        this.idSAE = idSAE;
     }
 
     public List<CDIO> getCdioList() {

@@ -10,21 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Section_AssessmentTool")
+@Table(name = "SECTION_ASSESSMENTTOOL")
 public class SectionAssessmentTool {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    @Column(name = "section_assessmentToolId")
+    @Column(name = "section_assessmenttool_id")
     private Long sectionAssessmentToolId;
     @ManyToOne
-    @JoinColumn(name = "idSection")
+    @JoinColumn(name = "id_section")
     private Section section;
     @ManyToOne
-    @JoinColumn(name = "idAssessmentTool", referencedColumnName = "idAssessmentTool")
+    @JoinColumn(name = "id_assessment_tool", referencedColumnName = "id_assessment_tool")
     private AssessmentTool assessmentTool;
     @Basic
+    @Column(name = "total_students")
     private Integer totalStudents;
     @Basic
     private Integer semester;
