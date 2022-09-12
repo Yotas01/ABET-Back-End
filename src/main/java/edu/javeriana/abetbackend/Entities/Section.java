@@ -28,18 +28,21 @@ public class Section {
     private Integer totalStudents;
     @OneToMany(mappedBy = "section")
     private List<SectionAssessmentTool> sectionAssessmentTool;
+    @OneToOne(mappedBy = "section")
+    private SectionReviewComment comment;
 
     public Section() {
         this.sectionAssessmentTool = new ArrayList<>();
     }
 
-    public Section(Long sectionId, Integer number, String professor, Integer totalStudents, Integer semester, Course course) {
+    public Section(Long sectionId, Integer number, String professor, Integer totalStudents, Integer semester, Course course, SectionReviewComment comment) {
         SectionId = sectionId;
         this.number = number;
         this.professor = professor;
         this.totalStudents = totalStudents;
         this.semester = semester;
         this.course = course;
+        this.comment = comment;
         this.sectionAssessmentTool = new ArrayList<>();
     }
 
@@ -105,6 +108,14 @@ public class Section {
 
     public void setSemester(Integer semester) {
         this.semester = semester;
+    }
+
+    public SectionReviewComment getComment() {
+        return comment;
+    }
+
+    public void setComment(SectionReviewComment comment) {
+        this.comment = comment;
     }
 
     @Override
