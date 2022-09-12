@@ -1,6 +1,5 @@
 package edu.javeriana.abetbackend.Entities.DTOs;
 
-import edu.javeriana.abetbackend.Entities.DTOs.SectionAssessmentToolDTO;
 import edu.javeriana.abetbackend.Entities.SectionAssessmentTool;
 
 import java.util.ArrayList;
@@ -10,6 +9,7 @@ public class SectionReview {
     private Integer courseNumber;
     private Integer sectionNumber;
     private Integer semester;
+    private String comment;
     private List<SectionAssessmentToolDTO> sectionAssessmentTools;
 
     public SectionReview() {
@@ -38,6 +38,14 @@ public class SectionReview {
 
     public void setSemester(Integer semester) {
         this.semester = semester;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public List<SectionAssessmentToolDTO> getSectionAssessmentTools() {
