@@ -13,10 +13,10 @@ import java.io.Serializable;
 public class Course_has_CdioId implements Serializable {
     private static final long serialVersionUID = 9221266263378821083L;
     @ManyToOne
-    @JoinColumn(name = "idCourse")
+    @JoinColumn(name = "id_course")
     private Course course;
     @ManyToOne
-    @JoinColumn(name = "cdioNumber")
+    @JoinColumn(name = "cdio_number")
     private CDIO cdio;
 
     @Override

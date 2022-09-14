@@ -11,7 +11,7 @@ public class CDIOSummaryForCourse {
 
     @Id
     @Column(name = "cdio_number")
-    private Long cdioNumber;
+    private Float cdioNumber;
     @Basic
     @Column(name = "id_course")
     private Long courseId;
@@ -22,7 +22,7 @@ public class CDIOSummaryForCourse {
     @Basic
     private Double below;
 
-    public CDIOSummaryForCourse(Long cdioNumber, Long courseId, Double exemplary, Double competent, Double below) {
+    public CDIOSummaryForCourse(Float cdioNumber, Long courseId, Double exemplary, Double competent, Double below) {
         this.cdioNumber = cdioNumber;
         this.courseId = courseId;
         this.exemplary = exemplary;
@@ -33,11 +33,11 @@ public class CDIOSummaryForCourse {
     public CDIOSummaryForCourse() {
     }
 
-    public Long getCdioNumber() {
+    public Float getCdioNumber() {
         return cdioNumber;
     }
 
-    public void setCdioNumber(Long cdioNumber) {
+    public void setCdioNumber(Float cdioNumber) {
         this.cdioNumber = cdioNumber;
     }
 

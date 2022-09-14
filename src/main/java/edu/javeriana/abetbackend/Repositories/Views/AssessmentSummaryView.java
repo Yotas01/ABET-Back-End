@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AssessmentSummaryView extends CrudRepository<AssessmentSummary,Long> {
-
 }

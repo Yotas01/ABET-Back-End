@@ -102,17 +102,15 @@ public class CourseReviewService {
 
         Optional<List<SectionAssessmentTool>> sectionAssessmentTools = sectionATRepository.findAllBySectionAndSemester(section, semester);
         if(sectionAssessmentTools.isPresent() && !sectionAssessmentTools.get().isEmpty())
-            updateSectionReview(sectionReview, section);
-
+            updateSectionReview(sectionReview);
         else {
-            for (SectionAssessmentToolDTO satDTO : sectionReview.getSectionAssessmentTools()) {
+            for (SectionAssessmentToolDTO satDTO : sectionReview.getSectionAssessmentTools())
                 saveSectionAssessmentTool(courseNumber, sectionNumber, semester, section, satDTO);
-            }
         }
         reviewCommentRepository.save(new SectionReviewComment(section, sectionReview.getSemester(), sectionReview.getComment()));
     }
 
-    public void updateSectionReview(SectionReview sectionReview, Section section) {
+    public void updateSectionReview(SectionReview sectionReview) {
         for (SectionAssessmentToolDTO sat:sectionReview.getSectionAssessmentTools())
             updateSectionAssessmentTool(sat);
     }

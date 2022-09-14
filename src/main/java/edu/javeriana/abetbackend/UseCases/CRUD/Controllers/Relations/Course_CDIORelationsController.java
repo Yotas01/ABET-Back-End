@@ -25,7 +25,7 @@ public class Course_CDIORelationsController {
     @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<CourseDTO> addCDIOToCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                            @PathVariable(name = "cdioNumber") Float cdioNumber,
-                                                           @RequestBody(required = false) ValueDTO value){
+                                                           @RequestBody ValueDTO value){
         Course_has_CDIO course_has_cdio = relationService.addCDIOToCourse(courseNumber,cdioNumber, value.getValue());
         CourseDTO dto = new CourseDTO(course_has_cdio.getId().getCourse());
         return ResponseEntity.status(HttpStatus.OK).body(dto);
