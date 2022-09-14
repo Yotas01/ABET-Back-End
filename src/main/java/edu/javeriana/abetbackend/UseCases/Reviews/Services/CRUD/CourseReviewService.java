@@ -3,6 +3,7 @@ package edu.javeriana.abetbackend.UseCases.Reviews.Services.CRUD;
 import edu.javeriana.abetbackend.Entities.DTOs.*;
 import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.SectionPerformanceIndicatorRepository;
+import edu.javeriana.abetbackend.Repositories.SectionReviewCommentRepository;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.CourseFinder;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.PerformanceIndicatorFinder;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.SectionFinder;
@@ -10,6 +11,7 @@ import edu.javeriana.abetbackend.Entities.*;
 import edu.javeriana.abetbackend.Exceptions.AlreadyExists;
 import edu.javeriana.abetbackend.Exceptions.Inconsistent;
 import edu.javeriana.abetbackend.Repositories.SectionAssessmentToolRepository;
+import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.SectionReviewCommentFinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,10 @@ public class CourseReviewService {
     private PerformanceIndicatorFinder performanceIndicatorFinder;
     @Autowired
     private SectionPerformanceIndicatorRepository sectionPIRepository;
+    @Autowired
+    private SectionReviewCommentFinder sectionReviewCommentFinder;
+    @Autowired
+    private SectionReviewCommentRepository reviewCommentRepository;
 
     public CourseReview getCourseForReview(Integer courseNumber, Integer sectionNumber, Integer semester){
         Course course = courseFinder.findCourseByNumber(courseNumber);
@@ -55,12 +61,18 @@ public class CourseReviewService {
 
         //This section has been reviewed, but it is still in draft mode
         else if(sectionAssessmentToolList.isPresent() && !sectionAssessmentToolList.get().isEmpty() &&
-                sectionAssessmentToolList.get().get(0).getDraft() == 1)
+                sectionAssessmentToolList.get().get(0).getDraft() == 1) {
             sectionAssessmentToolList.get().forEach(sectionReview::addSectionAssessmentTool);
+            SectionReviewComment sectionReviewComment = sectionReviewCommentFinder
+                    .getSectionReviewComment(courseNumber,sectionNumber, semester);
+            sectionReview.setComment(sectionReviewComment.getComment());
+        }
 
         //This section nas not been reviewed
-        else
+        else {
             sectionReview.setSectionAssessmentTools(createNewSectionReview(courseReview));
+            sectionReview.setComment("");
+        }
 
         courseReview.setSectionReview(sectionReview);
         return courseReview;
@@ -95,12 +107,12 @@ public class CourseReviewService {
             for (SectionAssessmentToolDTO satDTO : sectionReview.getSectionAssessmentTools())
                 saveSectionAssessmentTool(courseNumber, sectionNumber, semester, section, satDTO);
         }
+        reviewCommentRepository.save(new SectionReviewComment(section, sectionReview.getSemester(), sectionReview.getComment()));
     }
 
     public void updateSectionReview(SectionReview sectionReview) {
-        for (SectionAssessmentToolDTO sat:sectionReview.getSectionAssessmentTools()) {
+        for (SectionAssessmentToolDTO sat:sectionReview.getSectionAssessmentTools())
             updateSectionAssessmentTool(sat);
-        }
     }
 
     private void updateSectionAssessmentTool(SectionAssessmentToolDTO sat) {
@@ -116,6 +128,7 @@ public class CourseReviewService {
         else
             satToUpdate.get().setDraft(0);
         sectionATRepository.save(satToUpdate.get());
+
     }
 
     private void updateSectionPerformanceIndicator(SectionPerformanceIndicatorDTO spi) {
