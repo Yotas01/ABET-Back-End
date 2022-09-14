@@ -3,7 +3,6 @@ package edu.javeriana.abetbackend.UseCases.Reviews.Services.CRUD;
 import edu.javeriana.abetbackend.Entities.DTOs.*;
 import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.SectionPerformanceIndicatorRepository;
-import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.AssessmentToolFinder;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.CourseFinder;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.PerformanceIndicatorFinder;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.SectionFinder;
@@ -34,7 +33,7 @@ public class CourseReviewService {
     @Autowired
     private PerformanceIndicatorFinder performanceIndicatorFinder;
     @Autowired
-    private SectionPerformanceIndicatorRepository sectionPIReposotory;
+    private SectionPerformanceIndicatorRepository sectionPIRepository;
 
     public CourseReview getCourseForReview(Integer courseNumber, Integer sectionNumber, Integer semester){
         Course course = courseFinder.findCourseByNumber(courseNumber);
@@ -92,9 +91,10 @@ public class CourseReviewService {
         Optional<List<SectionAssessmentTool>> sectionAssessmentTools = sectionATRepository.findAllBySectionAndSemester(section, semester);
         if(sectionAssessmentTools.isPresent() && !sectionAssessmentTools.get().isEmpty())
             updateSectionReview(sectionReview);
-        else
-            for(SectionAssessmentToolDTO satDTO: sectionReview.getSectionAssessmentTools())
+        else {
+            for (SectionAssessmentToolDTO satDTO : sectionReview.getSectionAssessmentTools())
                 saveSectionAssessmentTool(courseNumber, sectionNumber, semester, section, satDTO);
+        }
     }
 
     public void updateSectionReview(SectionReview sectionReview) {
@@ -119,7 +119,7 @@ public class CourseReviewService {
     }
 
     private void updateSectionPerformanceIndicator(SectionPerformanceIndicatorDTO spi) {
-        Optional<SectionPerformanceIndicator> spiToUpdate = sectionPIReposotory.findById(spi.getId());
+        Optional<SectionPerformanceIndicator> spiToUpdate = sectionPIRepository.findById(spi.getId());
         if(spiToUpdate.isEmpty())
             throw new NotFound("The section performance indicator with the id " + spi.getId() + " was not found");
         spiToUpdate.get().setExemplary(spi.getExemplary());
@@ -129,7 +129,7 @@ public class CourseReviewService {
             spiToUpdate.get().setDraft(1);
         else
             spiToUpdate.get().setDraft(0);
-        sectionPIReposotory.save(spiToUpdate.get());
+        sectionPIRepository.save(spiToUpdate.get());
     }
 
     private void saveSectionAssessmentTool(Integer courseNumber, Integer sectionNumber, Integer semester, Section section, SectionAssessmentToolDTO satDTO) {

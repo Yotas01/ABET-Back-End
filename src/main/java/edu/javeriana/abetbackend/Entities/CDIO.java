@@ -113,17 +113,6 @@ public class CDIO {
     }
 
     @Override
-    public String toString() {
-        return "CDIO{" +
-                ", description='" + description + '\'' +
-                ", number=" + number +
-                ", outcomes=" + outcomes +
-                ", RAEs=" + RAEs +
-                ", courses=" + courses +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

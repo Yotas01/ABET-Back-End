@@ -1,36 +1,36 @@
 package edu.javeriana.abetbackend.Entities.DTOs;
 
-import edu.javeriana.abetbackend.Entities.Views.CourseReport;
-import edu.javeriana.abetbackend.Entities.Views.SectionReport;
+
+import edu.javeriana.abetbackend.Entities.Views.CDIOSummaryForCourse;
 
 import java.util.List;
 
 public class CourseReportDTO {
 
-    private CourseReport courseReport;
-    private List<SectionReport> sectionsReport;
+    private List<RAESummaryDTO> raeSummaries;
+    private List<CDIOSummaryForCourse> cdioSummary;
 
-    public CourseReportDTO(CourseReport courseReport, List<SectionReport> sectionsReport) {
-        this.courseReport = courseReport;
-        this.sectionsReport = sectionsReport;
+    public CourseReportDTO(List<RAESummaryDTO> raeSummaries, List<CDIOSummaryForCourse> cdioSummary) {
+        this.raeSummaries = raeSummaries;
+        this.cdioSummary = cdioSummary;
     }
 
     public CourseReportDTO() {
     }
 
-    public CourseReport getCourseReport() {
-        return courseReport;
+    public List<RAESummaryDTO> getRaeSummaries() {
+        return raeSummaries;
     }
 
-    public void setCourseReport(CourseReport courseReport) {
-        this.courseReport = courseReport;
+    public void setRaeSummaries(List<RAESummaryDTO> raeSummaries) {
+        this.raeSummaries = raeSummaries;
     }
 
-    public List<SectionReport> getSectionsReport() {
-        return sectionsReport;
+    public List<CDIOSummaryForCourse> getCdioSummary() {
+        return cdioSummary;
     }
 
-    public void setSectionsReport(List<SectionReport> sectionsReport) {
-        this.sectionsReport = sectionsReport;
+    public void setCdioSummary(List<CDIOSummaryForCourse> cdioSummary) {
+        this.cdioSummary = cdioSummary;
     }
 }
