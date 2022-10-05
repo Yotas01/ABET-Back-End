@@ -1,8 +1,9 @@
 package edu.javeriana.abetbackend.UseCases.Reports.Controllers;
 
 import edu.javeriana.abetbackend.Common.Constants;
+import edu.javeriana.abetbackend.Entities.DTOs.CDIOReportDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.CourseReportDTO;
-import edu.javeriana.abetbackend.Entities.Views.CDIOSummary;
+import edu.javeriana.abetbackend.Entities.DTOs.OutcomeReportDTO;
 import edu.javeriana.abetbackend.Entities.Views.OutcomeSummary;
 import edu.javeriana.abetbackend.Exceptions.*;
 import edu.javeriana.abetbackend.UseCases.Reports.Services.CDIOReportService;
@@ -38,22 +39,22 @@ public class ReportController {
     @Operation(description = "Generate a report for a cdio in an specific semester")
     @GetMapping("/cdio/{cdioNumber}/semester/{semester}")
     @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<CDIOSummary> getCDIOReport(@PathVariable Float cdioNumber,
-                                                                 @PathVariable Integer semester){
+    public ResponseEntity<CDIOReportDTO> getCDIOReport(@PathVariable Float cdioNumber,
+                                                       @PathVariable Integer semester){
 
         //TODO: Implement for semester
-        CDIOSummary cdioSummary = cdioReportService.getCDIOReport(cdioNumber);
-        return ResponseEntity.status(HttpStatus.OK).body(cdioSummary);
+        CDIOReportDTO cdioReportDTO = cdioReportService.getCDIOReport(cdioNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(cdioReportDTO);
     }
 
     @Operation(description = "Generate a report for an outcome in an specific semester")
     @GetMapping("/outcome/{outcomeNumber}/semester/{semester}")
     @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<OutcomeSummary> getOutcomeReport(@PathVariable Integer outcomeNumber,
-                                                     @PathVariable Integer semester){
+    public ResponseEntity<OutcomeReportDTO> getOutcomeReport(@PathVariable Integer outcomeNumber,
+                                                             @PathVariable Integer semester){
 
         //TODO: Implement for semester
-        OutcomeSummary outcomeSummary = outcomeReportService.getOutcomeSummary(outcomeNumber);
+        OutcomeReportDTO outcomeSummary = outcomeReportService.getOutcomeSummary(outcomeNumber);
         return ResponseEntity.status(HttpStatus.OK).body(outcomeSummary);
     }
 

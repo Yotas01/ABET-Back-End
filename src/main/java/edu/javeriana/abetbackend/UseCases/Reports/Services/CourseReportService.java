@@ -4,9 +4,11 @@ import edu.javeriana.abetbackend.Entities.Course;
 import edu.javeriana.abetbackend.Entities.DTOs.CourseReportDTO;
 import edu.javeriana.abetbackend.Entities.DTOs.RAESummaryDTO;
 import edu.javeriana.abetbackend.Entities.RAE;
+import edu.javeriana.abetbackend.Entities.SectionReviewComment;
 import edu.javeriana.abetbackend.Entities.Views.CDIOSummaryForCourse;
 import edu.javeriana.abetbackend.Entities.Views.RAESummary;
 import edu.javeriana.abetbackend.Exceptions.NotFound;
+import edu.javeriana.abetbackend.Repositories.SectionReviewCommentRepository;
 import edu.javeriana.abetbackend.Repositories.Views.CDIOSummaryForCourseView;
 import edu.javeriana.abetbackend.Repositories.Views.RAESummaryView;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.CourseFinder;
@@ -27,6 +29,8 @@ public class CourseReportService {
     private CDIOSummaryForCourseView cdioSummaryForCourseView;
     @Autowired
     private CourseFinder courseFinder;
+    @Autowired
+    private SectionReviewCommentRepository commentRepository;
 
     //TODO: Add semester to Views
     public CourseReportDTO getCourseReport(Integer courseNumber, Integer semester){
@@ -48,6 +52,13 @@ public class CourseReportService {
         if (cdioSummary.isEmpty())
             throw new NotFound("There were no cdio summaries found for the course " + courseNumber);
 
-        return new CourseReportDTO(raeSummaries, cdioSummary.get());
+        CourseReportDTO courseReportDTO = new CourseReportDTO(raeSummaries, cdioSummary.get());
+
+        course.getSections().forEach(section -> {
+            Optional<SectionReviewComment> comment = commentRepository.findBySectionAndSemester(section, semester);
+            comment.ifPresent(sectionReviewComment -> courseReportDTO.addComment(sectionReviewComment.getComment()));
+        });
+
+        return courseReportDTO;
     }
 }

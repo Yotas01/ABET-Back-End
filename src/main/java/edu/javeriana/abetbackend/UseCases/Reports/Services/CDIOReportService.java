@@ -1,11 +1,15 @@
 package edu.javeriana.abetbackend.UseCases.Reports.Services;
 
+import edu.javeriana.abetbackend.Entities.DTOs.CDIOReportDTO;
 import edu.javeriana.abetbackend.Entities.Views.CDIOSummary;
+import edu.javeriana.abetbackend.Entities.Views.CDIOSummaryForCourse;
 import edu.javeriana.abetbackend.Exceptions.NotFound;
+import edu.javeriana.abetbackend.Repositories.Views.CDIOSummaryForCourseView;
 import edu.javeriana.abetbackend.Repositories.Views.CDIOSummaryView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,11 +17,19 @@ public class CDIOReportService {
 
     @Autowired
     private CDIOSummaryView cdioSummaryView;
+    @Autowired
+    private CDIOSummaryForCourseView cdioSummaryForCourseView;
 
-    public CDIOSummary getCDIOReport(Float cdioNumber){
+    public CDIOReportDTO getCDIOReport(Float cdioNumber){
         Optional<CDIOSummary> cdioSummary = cdioSummaryView.findById(cdioNumber);
         if(cdioSummary.isEmpty())
             throw new NotFound("The summary for the cdio " + cdioNumber + " was not found");
-        return cdioSummary.get();
+        Optional<List<CDIOSummaryForCourse>> courseSummaries = cdioSummaryForCourseView.findAllByCdioNumber(cdioNumber);
+        if(courseSummaries.isEmpty())
+            throw new NotFound("The summary for the cdio " + cdioNumber + " was not found");
+        CDIOReportDTO report = new CDIOReportDTO();
+        report.setCdioSummary(cdioSummary.get());
+        report.setCdioSummaryForCourseList(courseSummaries.get());
+        return report;
     }
 }
