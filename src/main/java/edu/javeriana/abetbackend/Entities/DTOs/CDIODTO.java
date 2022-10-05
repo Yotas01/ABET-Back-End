@@ -16,8 +16,10 @@ public class CDIODTO {
         this.number = cdio.getNumber();
         this.outcomes = new ArrayList<>();
         this.courses = new ArrayList<>();
-        cdio.getOutcomes().forEach(outcome -> this.outcomes.add(outcome.getOutcomeId()));
-        cdio.getCourses().forEach(course -> this.courses.add(course.getName()));
+        if (!cdio.getOutcomes().isEmpty())
+            cdio.getOutcomes().forEach(outcome -> this.outcomes.add(outcome.getOutcomeId()));
+        if (!cdio.getCourses().isEmpty())
+            cdio.getCourses().forEach(course -> this.courses.add(course.getName()));
     }
 
     public CDIODTO() {

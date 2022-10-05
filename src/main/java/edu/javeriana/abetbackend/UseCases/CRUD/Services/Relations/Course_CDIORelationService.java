@@ -50,7 +50,7 @@ public class Course_CDIORelationService {
                     + cdioNumber);
         course.addCDIo(cdio);
         cdio.addCourse(course);
-        cdioService.updateCDIO(cdio);
+        cdioService.updateCDIO(cdio, cdioNumber);
         courseService.updateCourse(course, courseNumber);
         Course_has_CDIO course_has_cdio = new Course_has_CDIO(new Course_has_CdioId(course,cdio),value);
         course_has_cdioRepository.save(course_has_cdio);
@@ -87,7 +87,7 @@ public class Course_CDIORelationService {
         course_has_cdioRepository.delete(courseHasCdio.get());
         course.removeCDIo(cdio);
         cdio.removeCourse(course);
-        cdioService.updateCDIO(cdio);
+        cdioService.updateCDIO(cdio, cdioNumber);
         courseService.updateCourse(course, courseNumber);
         return new Course_has_CDIO(id,courseHasCdio.get().getBloomValue());
     }

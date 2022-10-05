@@ -32,7 +32,7 @@ public class RAE_CDIORelationsService {
         rae.addCDIO(cdio);
         cdio.addRAE(rae);
         raeService.saveRAE(rae);
-        cdioService.updateCDIO(cdio);
+        cdioService.updateCDIO(cdio, cdioNumber);
     }
 
     public void addRAEtoCDIO(Float cdioNumber, Integer courseNumber, String description){
@@ -44,7 +44,7 @@ public class RAE_CDIORelationsService {
         rae.addCDIO(cdio);
         cdio.addRAE(rae);
         raeService.saveRAE(rae);
-        cdioService.updateCDIO(cdio);
+        cdioService.updateCDIO(cdio, cdioNumber);
     }
 
     public void deleteRAEFromCDIO(Float cdioNumber, Long raeId){
@@ -56,7 +56,7 @@ public class RAE_CDIORelationsService {
         rae.removeCDIO(cdio);
         cdio.removeRAE(rae);
         raeService.saveRAE(rae);
-        cdioService.updateCDIO(cdio);
+        cdioService.updateCDIO(cdio, cdioNumber);
     }
 
     public void deleteRAEtFromCDIO(Float cdioNumber, Integer courseNumber, String description){
@@ -68,6 +68,6 @@ public class RAE_CDIORelationsService {
         rae.removeCDIO(cdio);
         cdio.removeRAE(rae);
         raeService.saveRAE(rae);
-        cdioService.updateCDIO(cdio);
+        cdioService.updateCDIO(cdio, cdioNumber);
     }
 }

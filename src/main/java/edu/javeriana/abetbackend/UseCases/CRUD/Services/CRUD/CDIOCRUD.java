@@ -28,8 +28,8 @@ public class CDIOCRUD {
         throw new AlreadyExists("The CDIO with number " + cdio.getNumber() + " already exists");
     }
 
-    public CDIO updateCDIO(CDIO cdio){
-        CDIO updatedCDIO = finder.findCDIOById(cdio.getNumber());
+    public CDIO updateCDIO(CDIO cdio, Float cdioNumber){
+        CDIO updatedCDIO = finder.findCDIOById(cdioNumber);
         updatedCDIO.setDescription(cdio.getDescription());
         updatedCDIO.setNumber(cdio.getNumber());
         updatedCDIO.setOutcomes(new ArrayList<>(cdio.getOutcomes()));

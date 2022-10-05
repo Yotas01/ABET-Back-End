@@ -53,10 +53,10 @@ public class CDIOCrudController {
     }
 
     @Operation(summary = "Update a CDIO competence that matches the cdio's number")
-    @PutMapping("/cdio")
+    @PutMapping("/cdio/{cdioNumber}")
     @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<CDIODTO> updateCompetence(@RequestBody CDIO cdio){
-        CDIO updatedCODIO = crudService.updateCDIO(cdio);
+    public ResponseEntity<CDIODTO> updateCompetence(@RequestBody CDIO cdio, @PathVariable Float cdioNumber){
+        CDIO updatedCODIO = crudService.updateCDIO(cdio, cdioNumber);
         CDIODTO CDIODTO = new CDIODTO(updatedCODIO);
         return ResponseEntity.status(HttpStatus.OK).body(CDIODTO);
     }
@@ -64,7 +64,7 @@ public class CDIOCrudController {
     @Operation(summary = "Delete the CDIO competence that matches the number")
     @DeleteMapping("/cdio/{cdioNumber}")
     @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<CDIODTO> deleteCompetence(@PathVariable(value = "cdioNumber") Float cdioNumber){
+    public ResponseEntity<CDIODTO> deleteCompetence(@PathVariable Float cdioNumber){
         CDIO deletedCDIO = crudService.deleteCDIO(cdioNumber);
         CDIODTO CDIODTO = new CDIODTO(deletedCDIO);
         return ResponseEntity.status(HttpStatus.OK).body(CDIODTO);
