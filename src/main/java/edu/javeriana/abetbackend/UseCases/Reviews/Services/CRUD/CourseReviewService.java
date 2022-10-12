@@ -101,13 +101,19 @@ public class CourseReviewService {
         validateCourseAndSectionData(courseNumber, sectionNumber, semester, sectionReview);
 
         Optional<List<SectionAssessmentTool>> sectionAssessmentTools = sectionATRepository.findAllBySectionAndSemester(section, semester);
-        if(sectionAssessmentTools.isPresent() && !sectionAssessmentTools.get().isEmpty())
+        if(sectionAssessmentTools.isPresent() && !sectionAssessmentTools.get().isEmpty()) {
             updateSectionReview(sectionReview);
-        else {
-            for (SectionAssessmentToolDTO satDTO : sectionReview.getSectionAssessmentTools())
-                saveSectionAssessmentTool(courseNumber, sectionNumber, semester, section, satDTO);
+            SectionReviewComment commentToUpdate = sectionReviewCommentFinder.getSectionReviewComment(courseNumber,sectionNumber,semester);
+            commentToUpdate.setComment(sectionReview.getComment());
+            reviewCommentRepository.save(commentToUpdate);
         }
-        reviewCommentRepository.save(new SectionReviewComment(section, sectionReview.getSemester(), sectionReview.getComment()));
+        else {
+            for (SectionAssessmentToolDTO satDTO : sectionReview.getSectionAssessmentTools()) {
+                saveSectionAssessmentTool(courseNumber, sectionNumber, semester, section, satDTO);
+            }
+            reviewCommentRepository.save(new SectionReviewComment(section, sectionReview.getSemester(), sectionReview.getComment()));
+        }
+
     }
 
     public void updateSectionReview(SectionReview sectionReview) {
