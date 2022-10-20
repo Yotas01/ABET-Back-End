@@ -1,14 +1,14 @@
 package edu.javeriana.abetbackend.UseCases.Reports.Controllers;
 
 import edu.javeriana.abetbackend.Common.Constants;
-import edu.javeriana.abetbackend.Entities.DTOs.CDIOReportDTO;
-import edu.javeriana.abetbackend.Entities.DTOs.CourseReportDTO;
-import edu.javeriana.abetbackend.Entities.DTOs.OutcomeReportDTO;
+import edu.javeriana.abetbackend.Entities.DTOs.*;
+import edu.javeriana.abetbackend.Entities.SemesterReport;
 import edu.javeriana.abetbackend.Entities.Views.OutcomeSummary;
 import edu.javeriana.abetbackend.Exceptions.*;
 import edu.javeriana.abetbackend.UseCases.Reports.Services.CDIOReportService;
 import edu.javeriana.abetbackend.UseCases.Reports.Services.CourseReportService;
 import edu.javeriana.abetbackend.UseCases.Reports.Services.OutcomeReportService;
+import edu.javeriana.abetbackend.UseCases.Reports.Services.SemesterReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +25,8 @@ public class ReportController {
     private CDIOReportService cdioReportService;
     @Autowired
     private OutcomeReportService outcomeReportService;
+    @Autowired
+    private SemesterReportService semesterReportService;
 
     @Operation(description = "Generate a report for a course in an specific semester")
     @GetMapping("/course/{courseNumber}/semester/{semester}")
@@ -56,6 +58,22 @@ public class ReportController {
         //TODO: Implement for semester
         OutcomeReportDTO outcomeSummary = outcomeReportService.getOutcomeSummary(outcomeNumber);
         return ResponseEntity.status(HttpStatus.OK).body(outcomeSummary);
+    }
+
+    @Operation(description = "Save the Improvement actions and the semester performance of a semester")
+    @PostMapping("/semester-report")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
+    public ResponseEntity saveSemesterReport(@RequestBody SemesterReport semesterReport){
+        semesterReportService.saveSemesterReport(semesterReport);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @Operation(description = "Get the Improvement actions and the semester performance of a semester")
+    @GetMapping("/semester-report/{semester}")
+    @CrossOrigin(origins = Constants.crossOriginLocalhost)
+    public ResponseEntity<SemesterReport> getSemesterReport(@PathVariable Integer semester){
+        SemesterReport report = semesterReportService.getSemesterReport(semester);
+        return ResponseEntity.status(HttpStatus.OK).body(report);
     }
 
     @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
