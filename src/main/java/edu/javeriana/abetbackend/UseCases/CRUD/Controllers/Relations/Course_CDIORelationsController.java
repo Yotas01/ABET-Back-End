@@ -26,8 +26,7 @@ public class Course_CDIORelationsController {
     public ResponseEntity<CourseDTO> addCDIOToCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                            @PathVariable(name = "cdioNumber") Float cdioNumber,
                                                            @RequestBody ValueDTO value){
-        Course_has_CDIO course_has_cdio = relationService.addCDIOToCourse(courseNumber,cdioNumber, value.getValue());
-        CourseDTO dto = new CourseDTO(course_has_cdio.getId().getCourse());
+        CourseDTO dto = new CourseDTO(relationService.addCDIOToCourse(courseNumber,cdioNumber, value.getValue()));
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
@@ -55,8 +54,7 @@ public class Course_CDIORelationsController {
     @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<CourseDTO> deleteCDIOFromCourse(@PathVariable(name = "courseNumber") Integer courseNumber,
                                                      @PathVariable(name = "cdioNumber") Float cdioNumber){
-        Course_has_CDIO course_has_cdio = relationService.deleteCDIOFromCourse(courseNumber,cdioNumber);
-        CourseDTO dto = new CourseDTO(course_has_cdio.getId().getCourse());
+        CourseDTO dto = new CourseDTO(relationService.deleteCDIOFromCourse(courseNumber,cdioNumber));
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 

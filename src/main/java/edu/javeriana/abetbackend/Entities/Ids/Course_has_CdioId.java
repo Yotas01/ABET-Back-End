@@ -1,66 +1,61 @@
 package edu.javeriana.abetbackend.Entities.Ids;
 
-import com.google.common.base.Objects;
-import edu.javeriana.abetbackend.Entities.CDIO;
-import edu.javeriana.abetbackend.Entities.Course;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class Course_has_CdioId implements Serializable {
+    @Serial
     private static final long serialVersionUID = 9221266263378821083L;
-    @ManyToOne
-    @JoinColumn(name = "id_course")
-    private Course course;
-    @ManyToOne
-    @JoinColumn(name = "cdio_number")
-    private CDIO cdio;
 
-    @Override
-    public String toString() {
-        return "Course_has_CdioId{" +
-                "course=" + course +
-                ", cdio=" + cdio +
-                '}';
-    }
+    @Column(name = "id_course")
+    private Long courseId;
+    @Column(name = "cdio_number")
+    private Float cdioNumber;
 
-    public Course_has_CdioId(Course course, CDIO cdio) {
-        this.course = course;
-        this.cdio = cdio;
+    public Course_has_CdioId(Long courseId, Float cdioNumber) {
+        this.courseId = courseId;
+        this.cdioNumber = cdioNumber;
     }
 
     public Course_has_CdioId() {
     }
 
-    public Course getCourse() {
-        return course;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
-    public CDIO getCdio() {
-        return cdio;
+    public Float getCdioNumber() {
+        return cdioNumber;
     }
 
-    public void setCdio(CDIO cdio) {
-        this.cdio = cdio;
+    public void setCdioNumber(Float cdioNumber) {
+        this.cdioNumber = cdioNumber;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Course_has_CdioId that = (Course_has_CdioId) o;
-        return Objects.equal(course, that.course) && Objects.equal(cdio, that.cdio);
+
+        if (!Objects.equals(courseId, that.courseId)) return false;
+        return Objects.equals(cdioNumber, that.cdioNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(course, cdio);
+        int result = courseId != null ? courseId.hashCode() : 0;
+        result = 31 * result + (cdioNumber != null ? cdioNumber.hashCode() : 0);
+        return result;
     }
 }

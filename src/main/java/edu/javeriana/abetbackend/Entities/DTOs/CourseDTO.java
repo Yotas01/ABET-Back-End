@@ -25,7 +25,7 @@ public class CourseDTO {
         this.RAEs = new HashMap<>();
         course.getRAEs().forEach(rae -> RAEs.put(rae.getRAEId(), rae.getDescription()));
         this.cdioList = new ArrayList<>();
-        course.getCdioList().forEach(cdio -> cdioList.add(cdio.getNumber()));
+        course.getListOfCDIO().forEach(cdio -> cdioList.add(cdio.getNumber()));
     }
 
     public CourseDTO() {

@@ -34,7 +34,7 @@ public class CDIOCRUD {
         updatedCDIO.setNumber(cdio.getNumber());
         updatedCDIO.setOutcomes(new ArrayList<>(cdio.getOutcomes()));
         updatedCDIO.setRAEs(new ArrayList<>(cdio.getRAEs()));
-        updatedCDIO.setCourses(new ArrayList<>(cdio.getCourses()));
+        updatedCDIO.setCourses(new ArrayList<>(cdio.getCourseHasCDIO()));
         repository.save(updatedCDIO);
         return updatedCDIO;
     }

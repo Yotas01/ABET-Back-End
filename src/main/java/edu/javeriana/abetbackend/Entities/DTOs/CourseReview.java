@@ -25,7 +25,7 @@ public class CourseReview {
         this.cdioList = new ArrayList<>();
         this.RAEs = new ArrayList<>();
         course.getRAEs().forEach(rae -> this.RAEs.add(new RAEDTO(rae)));
-        course.getCdioList().forEach(cdio -> this.cdioList.add(cdio.getNumber()));
+        course.getListOfCDIO().forEach(cdio -> this.cdioList.add(cdio.getNumber()));
         this.sectionReview = new SectionReview();
     }
 

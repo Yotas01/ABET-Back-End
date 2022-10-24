@@ -2,6 +2,7 @@ package edu.javeriana.abetbackend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
+import edu.javeriana.abetbackend.Entities.Ids.Course_has_CdioId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,8 @@ public class CDIO {
     @ManyToMany(mappedBy = "cdioList", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<RAE> RAEs;
-    @ManyToMany(mappedBy = "cdioList", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Course> courses;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)
+    private List<Course_has_CDIO> courses;
 
     public CDIO(String description, Float number) {
         this.description = description;
@@ -97,19 +97,28 @@ public class CDIO {
         if (courses == null) {
             courses = new ArrayList<>();
         }
-        return courses;
+        return this.courses.stream().map(Course_has_CDIO::getCourse).toList();
     }
 
-    public void setCourses(List<Course> courses) {
+    public List<Course_has_CDIO> getCourseHasCDIO() {
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
+        return this.courses;
+    }
+
+    public void setCourses(List<Course_has_CDIO> courses) {
         this.courses = courses;
     }
 
-    public void addCourse(Course course) {
-        getCourses().add(course);
+    public void addCourse(Course course, Integer bloomValue){
+        Course_has_CDIO course_has_cdio = new Course_has_CDIO(new Course_has_CdioId(course.getCourseId(), this.number), course, this, bloomValue);
+        this.courses.add(course_has_cdio);
     }
 
-    public void removeCourse(Course course) {
-        getCourses().remove(course);
+    public void removeCourse(Course course){
+        Course_has_CDIO course_has_cdio = new Course_has_CDIO(new Course_has_CdioId(course.getCourseId(), this.number), course, this, null);
+        this.courses.remove(course_has_cdio);
     }
 
     @Override

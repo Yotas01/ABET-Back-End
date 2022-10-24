@@ -1,7 +1,7 @@
 package edu.javeriana.abetbackend.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
+import edu.javeriana.abetbackend.Entities.Ids.Course_has_CdioId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +26,8 @@ public class Course {
     private List<Section> sections;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<RAE> RAEs;
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "COURSE_HAS_CDIO",
-            joinColumns = @JoinColumn(name = "id_course"),
-            inverseJoinColumns = @JoinColumn(name = "cdio_number")
-    )
-    @JsonIgnore
-    private List<CDIO> cdioList;
+    @OneToMany(mappedBy = "cdio", cascade = CascadeType.MERGE)
+    private List<Course_has_CDIO> cdioList;
 
     public Course(Long courseId, Integer number, String name, String idSAE) {
         CourseId = courseId;
@@ -121,25 +115,31 @@ public class Course {
         this.idSAE = idSAE;
     }
 
-    public List<CDIO> getCdioList() {
-        if (cdioList == null) {
-            cdioList = new ArrayList<>();
-        }
+    public List<Course_has_CDIO> getCdioList() {
         return cdioList;
     }
 
-    public void setCdioList(List<CDIO> CDIos) {
-        this.cdioList = CDIos;
+    public void setCdioList(List<Course_has_CDIO> cdioList) {
+        this.cdioList = cdioList;
     }
 
-    public void addCDIo(CDIO CDIo) {
-        getCdioList().add(CDIo);
-        CDIo.getCourses().add(this);
+    public List<CDIO> getListOfCDIO() {
+        if (cdioList == null) {
+            cdioList = new ArrayList<>();
+        }
+        return this.cdioList.stream().map(Course_has_CDIO::getCdio).toList();
     }
 
-    public void removeCDIo(CDIO CDIo) {
-        getCdioList().remove(CDIo);
-        CDIo.getCourses().remove(this);
+    public void addCDIO(CDIO cdio, Integer bloomValue) {
+        Course_has_CDIO course_has_cdio = new Course_has_CDIO(new Course_has_CdioId(this.getCourseId(),cdio.getNumber()),this, cdio, bloomValue);
+        this.cdioList.add(course_has_cdio);
+        cdio.addCourse(this,bloomValue);
+    }
+
+    public void removeCDIO(CDIO cdio) {
+        Course_has_CDIO course_has_cdio = new Course_has_CDIO(new Course_has_CdioId(this.getCourseId(),cdio.getNumber()),this, cdio, null);
+        this.cdioList.remove(course_has_cdio);
+        cdio.removeCourse(this);
     }
 
     @Override
