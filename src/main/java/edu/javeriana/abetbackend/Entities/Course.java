@@ -12,53 +12,43 @@ import javax.persistence.*;
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_course")
-    private Long CourseId;
-    @Basic
-    private Integer number;
-    @Basic
-    private String name;
-    @Basic
     @Column(name = "id_sae")
-    private String idSAE;
+    private Integer courseId;
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(mappedBy = "cdio", cascade = CascadeType.MERGE)
+    private List<Course_has_CDIO> cdioList;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Section> sections;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<RAE> RAEs;
-    @OneToMany(mappedBy = "cdio", cascade = CascadeType.MERGE)
-    private List<Course_has_CDIO> cdioList;
+    private List<AssessmentTool> assessmentTools;
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RAE> raeList;
 
-    public Course(Long courseId, Integer number, String name, String idSAE) {
-        CourseId = courseId;
-        this.number = number;
+
+    public Course(Integer courseId, String name) {
+        this.courseId = courseId;
         this.name = name;
-        this.idSAE = idSAE;
         this.cdioList = new ArrayList<>();
         this.sections = new ArrayList<>();
-        this.RAEs = new ArrayList<>();
+        this.assessmentTools = new ArrayList<>();
+        this.raeList = new ArrayList<>();
     }
 
     public Course() {
         this.cdioList = new ArrayList<>();
         this.sections = new ArrayList<>();
-        this.RAEs = new ArrayList<>();
+        this.assessmentTools = new ArrayList<>();
+        this.raeList = new ArrayList<>();
     }
 
-    public Long getCourseId() {
-        return CourseId;
+    public Integer getCourseId() {
+        return courseId;
     }
 
-    public void setCourseId(Long CourseId) {
-        this.CourseId = CourseId;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 
     public String getName() {
@@ -88,31 +78,23 @@ public class Course {
         getSections().remove(section);
     }
 
-    public List<RAE> getRAEs() {
-        if (RAEs == null) {
-            RAEs = new ArrayList<>();
+    public List<RAE> getRaeList() {
+        if (raeList == null) {
+            raeList = new ArrayList<>();
         }
-        return RAEs;
+        return raeList;
     }
 
-    public void setRAEs(List<RAE> RAEs) {
-        this.RAEs = RAEs;
+    public void setRaeList(List<RAE> RAEs) {
+        this.raeList = RAEs;
     }
 
     public void addRAE(RAE RAE) {
-        getRAEs().add(RAE);
+        getRaeList().add(RAE);
     }
 
     public void removeRAE(RAE RAE) {
-        getRAEs().remove(RAE);
-    }
-
-    public String getIdSAE() {
-        return idSAE;
-    }
-
-    public void setIdSAE(String idSAE) {
-        this.idSAE = idSAE;
+        getRaeList().remove(RAE);
     }
 
     public List<Course_has_CDIO> getCdioList() {
@@ -121,13 +103,6 @@ public class Course {
 
     public void setCdioList(List<Course_has_CDIO> cdioList) {
         this.cdioList = cdioList;
-    }
-
-    public List<CDIO> getListOfCDIO() {
-        if (cdioList == null) {
-            cdioList = new ArrayList<>();
-        }
-        return this.cdioList.stream().map(Course_has_CDIO::getCdio).toList();
     }
 
     public void addCDIO(CDIO cdio, Integer bloomValue) {
@@ -142,25 +117,35 @@ public class Course {
         cdio.removeCourse(this);
     }
 
+    public List<CDIO> getCDIOList(){
+        return this.cdioList.stream().map(Course_has_CDIO::getCdio).toList();
+    }
+
+    public List<AssessmentTool> getAssessmentTools() {
+        return assessmentTools;
+    }
+
+    public void setAssessmentTools(List<AssessmentTool> assessmentTools) {
+        this.assessmentTools = assessmentTools;
+    }
+
+    public void addAssessmentTool(AssessmentTool assessmentTool){
+        this.assessmentTools.add(assessmentTool);
+    }
+
+    public void removeAssessmentTool(AssessmentTool assessmentTool){
+        this.assessmentTools.remove(assessmentTool);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return Objects.equal(CourseId, course.CourseId) && Objects.equal(number, course.number) && Objects.equal(name, course.name) && Objects.equal(sections, course.sections) && Objects.equal(RAEs, course.RAEs) && Objects.equal(cdioList, course.cdioList);
+        if (!(o instanceof Course course)) return false;
+        return Objects.equal(courseId, course.courseId) && Objects.equal(name, course.name) && Objects.equal(cdioList, course.cdioList) && Objects.equal(sections, course.sections) && Objects.equal(assessmentTools, course.assessmentTools) && Objects.equal(raeList, course.raeList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(CourseId, number, name);
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "CourseId=" + CourseId +
-                ", number=" + number +
-                ", name='" + name + '\'' +
-                '}';
+        return Objects.hashCode(courseId, name, cdioList, sections, assessmentTools, raeList);
     }
 }

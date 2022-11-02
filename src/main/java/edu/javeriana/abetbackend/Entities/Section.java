@@ -1,65 +1,62 @@
 package edu.javeriana.abetbackend.Entities;
 
 import com.google.common.base.Objects;
+import edu.javeriana.abetbackend.Entities.Ids.SectionId;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "SECTION")
-public class Section {
+@IdClass(SectionId.class)
+public class Section implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_section")
-    private Long SectionId;
+    @Column(name = "class_number")
+    public Integer classNumber;
+    @Id
+    @Column(name = "semester")
+    public Integer semester;
+
     @ManyToOne
-    @JoinColumn(name = "id_course")
+    @JoinColumn(name = "course_id_sae", referencedColumnName = "id_sae")
     private Course course;
-    @Basic
-    private Integer semester;
-    @Basic
-    private Integer number;
-    @Basic
+    @Column(name = "professor")
     private String professor;
-    @Basic
     @Column(name = "total_students")
     private Integer totalStudents;
+
     @OneToMany(mappedBy = "section")
-    private List<SectionAssessmentTool> sectionAssessmentTool;
+    private List<SectionReport> sectionReports;
     @OneToOne(mappedBy = "section")
-    private SectionReviewComment comment;
+    private SectionComment comment;
 
-    public Section() {
-        this.sectionAssessmentTool = new ArrayList<>();
-    }
-
-    public Section(Long sectionId, Integer number, String professor, Integer totalStudents, Integer semester, Course course, SectionReviewComment comment) {
-        SectionId = sectionId;
-        this.number = number;
-        this.professor = professor;
-        this.totalStudents = totalStudents;
+    public Section(Integer classNumber, Integer semester, Course course, String professor, Integer totalStudents) {
+        this.classNumber = classNumber;
         this.semester = semester;
         this.course = course;
-        this.comment = comment;
-        this.sectionAssessmentTool = new ArrayList<>();
+        this.professor = professor;
+        this.totalStudents = totalStudents;
     }
 
-    public void addSectionAssessmentTool(SectionAssessmentTool sectionAssessmentTool){
-        this.sectionAssessmentTool.add(sectionAssessmentTool);
+    public Section() {
     }
 
-    public void removeSectionAssessmentTool(SectionAssessmentTool sectionAssessmentTool){
-        this.sectionAssessmentTool.remove(sectionAssessmentTool);
+    public Integer getClassNumber() {
+        return classNumber;
     }
 
-    public List<SectionAssessmentTool> getSectionAssessmentTool() {
-        return sectionAssessmentTool;
+    public void setClassNumber(Integer classNumber) {
+        this.classNumber = classNumber;
     }
 
-    public void setSectionAssessmentTool(List<SectionAssessmentTool> sectionAssessmentTool) {
-        this.sectionAssessmentTool = sectionAssessmentTool;
+    public Integer getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Integer semester) {
+        this.semester = semester;
     }
 
     public Course getCourse() {
@@ -68,22 +65,6 @@ public class Section {
 
     public void setCourse(Course course) {
         this.course = course;
-    }
-
-    public Long getSectionId() {
-        return SectionId;
-    }
-
-    public void setSectionId(Long SectionId) {
-        this.SectionId = SectionId;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
     }
 
     public String getProfessor() {
@@ -102,32 +83,39 @@ public class Section {
         this.totalStudents = totalStudents;
     }
 
-    public Integer getSemester() {
-        return semester;
+    public List<SectionReport> getSectionReports() {
+        return sectionReports;
     }
 
-    public void setSemester(Integer semester) {
-        this.semester = semester;
+    public void setSectionReports(List<SectionReport> sectionReports) {
+        this.sectionReports = sectionReports;
     }
 
-    public SectionReviewComment getComment() {
+    public void addSectionReport(SectionReport sectionReport){
+        this.sectionReports.add(sectionReport);
+    }
+
+    public void removeSectionReport(SectionReport sectionReport){
+        this.sectionReports.remove(sectionReport);
+    }
+
+    public SectionComment getComment() {
         return comment;
     }
 
-    public void setComment(SectionReviewComment comment) {
+    public void setComment(SectionComment comment) {
         this.comment = comment;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Section section = (Section) o;
-        return number == section.number && totalStudents == section.totalStudents && semester == section.semester && Objects.equal(SectionId, section.SectionId) && Objects.equal(professor, section.professor) && Objects.equal(course, section.course);
+        if (!(o instanceof Section section)) return false;
+        return Objects.equal(classNumber, section.classNumber) && Objects.equal(semester, section.semester) && Objects.equal(course, section.course) && Objects.equal(professor, section.professor) && Objects.equal(totalStudents, section.totalStudents) && Objects.equal(sectionReports, section.sectionReports) && Objects.equal(comment, section.comment);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(SectionId,professor);
+        return Objects.hashCode(classNumber, semester, course, professor, totalStudents, sectionReports, comment);
     }
 }

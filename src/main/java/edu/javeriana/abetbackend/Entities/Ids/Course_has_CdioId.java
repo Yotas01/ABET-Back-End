@@ -12,12 +12,12 @@ public class Course_has_CdioId implements Serializable {
     @Serial
     private static final long serialVersionUID = 9221266263378821083L;
 
-    @Column(name = "id_course")
-    private Long courseId;
+    @Column(name = "id_sae")
+    private Integer courseId;
     @Column(name = "cdio_number")
     private Float cdioNumber;
 
-    public Course_has_CdioId(Long courseId, Float cdioNumber) {
+    public Course_has_CdioId(Integer courseId, Float cdioNumber) {
         this.courseId = courseId;
         this.cdioNumber = cdioNumber;
     }
@@ -25,11 +25,11 @@ public class Course_has_CdioId implements Serializable {
     public Course_has_CdioId() {
     }
 
-    public Long getCourseId() {
+    public Integer getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Long courseId) {
+    public void setCourseId(Integer courseId) {
         this.courseId = courseId;
     }
 

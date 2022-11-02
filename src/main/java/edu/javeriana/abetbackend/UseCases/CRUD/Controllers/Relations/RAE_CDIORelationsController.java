@@ -1,9 +1,12 @@
 package edu.javeriana.abetbackend.UseCases.CRUD.Controllers.Relations;
 
+import edu.javeriana.abetbackend.Entities.RAE;
+import edu.javeriana.abetbackend.UseCases.BaseController;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Relations.RAE_CDIORelationsService;
-import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.DTOs.RAEDTO;
 import edu.javeriana.abetbackend.Exceptions.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,38 +16,29 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/admin/cdio/{cdioNumber}/rae/{raeId}")
-public class RAE_CDIORelationsController {
+@CrossOrigin(origins = "*")
+public class RAE_CDIORelationsController extends BaseController {
 
     @Autowired
     private RAE_CDIORelationsService relationsService;
 
-    @Operation(summary = "Create a relation between a RAE and a CDIO competence")
+    @ApiOperation(value = "Create a relation between a RAE and a CDIO competence")
     @PostMapping
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<RAEDTO> addRAEToCDIO(@PathVariable(value = "cdioNumber") Float cdioNumber,
-                                               @PathVariable(value = "raeId") Long raeId){
-        relationsService.addRAEtoCDIO(cdioNumber, raeId);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    public ResponseEntity<RAEDTO> addRAEToCDIO(@ApiParam(name = "cdioNumber", required = true)
+                                                   @PathVariable Float cdioNumber,
+                                               @ApiParam(name = "raeId", required = true)
+                                               @PathVariable Long raeId){
+        RAE rae = relationsService.addRAEtoCDIO(cdioNumber, raeId);
+        return ResponseEntity.status(HttpStatus.OK).body(new RAEDTO(rae));
     }
 
-    @Operation(summary = "Delete a relation between a RAE and a CDIO competence")
+    @ApiOperation(value = "Delete a relation between a RAE and a CDIO competence")
     @DeleteMapping
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<RAEDTO> deleteRAEFromCDIO(@PathVariable(value = "cdioNumber") Float cdioNumber,
-                                               @PathVariable(value = "raeId") Long raeId){
-        relationsService.deleteRAEFromCDIO(cdioNumber, raeId);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    public ResponseEntity<RAEDTO> deleteRAEFromCDIO(@ApiParam(name = "cdioNumber", required = true)
+                                                        @PathVariable Float cdioNumber,
+                                                    @ApiParam(name = "raeId", required = true)
+                                                        @PathVariable Long raeId){
+        RAE rae = relationsService.deleteRAEFromCDIO(cdioNumber, raeId);
+        return ResponseEntity.status(HttpStatus.OK).body(new RAEDTO(rae));
     }
-
-    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ABETSystemException badRequestError(Exception e){ return  new ABETSystemException(e.getMessage(), 400);}
-
-    @ExceptionHandler(NotFound.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ABETSystemException notFoundError(Exception e){ return  new ABETSystemException(e.getMessage(), 404);}
-
-    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ABETSystemException conflictError(Exception e){ return  new ABETSystemException(e.getMessage(), 409);}
 }

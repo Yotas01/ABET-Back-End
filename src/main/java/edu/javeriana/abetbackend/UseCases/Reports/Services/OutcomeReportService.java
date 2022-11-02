@@ -30,7 +30,7 @@ public class OutcomeReportService {
         if(outcomeSummary.isEmpty())
             throw new NotFound("The summary for the outcome " + outcomeId + " was not found");
         dto.setOutcomeSummary(outcomeSummary.get());
-        outcome.getCDIos().forEach(cdio -> {
+        outcome.getCdioList().forEach(cdio -> {
             Optional<CDIOSummary> cdioSummary = cdioSummaryView.findById(cdio.getNumber());
             cdioSummary.ifPresent(dto::addCDIOSummary);
         });

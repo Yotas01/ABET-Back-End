@@ -8,18 +8,24 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "RAE")
 public class RAE {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id_rae")
-    private Long RAEId;
-    @Basic
-    private String description;
+    private Long id;
+
     @ManyToOne
-    @JoinColumn(name = "id_course")
+    @JoinColumn(name = "course_id_sae", referencedColumnName = "id_sae")
     private Course course;
+
+    @Column(name = "description")
+    private String description;
+    @Column(name = "semester")
+    private Integer semester;
+
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "RAE_HAS_CDIO",
@@ -28,18 +34,19 @@ public class RAE {
     )
     private List<CDIO> cdioList;
     @OneToMany(mappedBy = "rae", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<AssessmentTool> assessmentTools;
+    private List<PerformanceIndicator> performanceIndicators;
 
-    public RAE(Long RAEId, String description, Course course) {
-        this.RAEId = RAEId;
+    public RAE(Long RAEId, String description, Integer semester, Course course) {
+        this.id = RAEId;
         this.description = description;
         this.course = course;
-        this.assessmentTools = new ArrayList<>();
+        this.semester = semester;
+        this.performanceIndicators = new ArrayList<>();
         this.cdioList = new ArrayList<>();
     }
 
     public RAE() {
-        this.assessmentTools = new ArrayList<>();
+        this.performanceIndicators = new ArrayList<>();
         this.cdioList = new ArrayList<>();
     }
 
@@ -51,12 +58,12 @@ public class RAE {
         this.course = course;
     }
 
-    public Long getRAEId() {
-        return RAEId;
+    public Long getId() {
+        return id;
     }
 
-    public void setRAEId(Long RAEId) {
-        this.RAEId = RAEId;
+    public void setId(Long RAEId) {
+        this.id = RAEId;
     }
 
     public String getDescription() {
@@ -67,23 +74,28 @@ public class RAE {
         this.description = description;
     }
 
-    public List<AssessmentTool> getAssessmentTools() {
-        if (assessmentTools == null) {
-            assessmentTools = new ArrayList<>();
-        }
-        return assessmentTools;
+    public Integer getSemester() {
+        return semester;
     }
 
-    public void setAssessmentTools(List<AssessmentTool> assessmentTools) {
-        this.assessmentTools = assessmentTools;
+    public void setSemester(Integer semester) {
+        this.semester = semester;
     }
 
-    public void addAssessmentTool(AssessmentTool assessmentTool) {
-        getAssessmentTools().add(assessmentTool);
+    public List<PerformanceIndicator> getPerformanceIndicators() {
+        return performanceIndicators;
     }
 
-    public void removeAssessmentTool(AssessmentTool assessmentTool) {
-        getAssessmentTools().remove(assessmentTool);
+    public void setPerformanceIndicators(List<PerformanceIndicator> performanceIndicators) {
+        this.performanceIndicators = performanceIndicators;
+    }
+
+    public void addPerformanceIndicator(PerformanceIndicator performanceIndicator){
+        this.performanceIndicators.add(performanceIndicator);
+    }
+
+    public void removePerformanceIndicator(PerformanceIndicator performanceIndicator){
+        this.performanceIndicators.remove(performanceIndicator);
     }
 
     public List<CDIO> getCdioList() {
@@ -99,31 +111,13 @@ public class RAE {
 
     public void addCDIO(CDIO cdio) {
         getCdioList().add(cdio);
-        cdio.getRAEs().add(this);
+        cdio.getRaes().add(this);
     }
 
     public void removeCDIO(CDIO cdio) {
         getCdioList().remove(cdio);
-        cdio.getRAEs().remove(this);
+        cdio.getRaes().remove(this);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RAE rae = (RAE) o;
-        return Objects.equal(RAEId, rae.RAEId) && Objects.equal(description, rae.description) && Objects.equal(course, rae.course) && Objects.equal(assessmentTools, rae.assessmentTools) && Objects.equal(cdioList, rae.cdioList);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(RAEId, description);
-    }
-
-    @Override
-    public String toString() {
-        return "RAEId=" + RAEId +
-                ", description='" + description + '\'' +
-                ", course=" + course.getNumber() + "-" + course.getName();
-    }
 }

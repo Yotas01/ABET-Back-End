@@ -1,6 +1,8 @@
 package edu.javeriana.abetbackend.UseCases.CRUD.Services.Find;
 
 import edu.javeriana.abetbackend.Entities.AssessmentTool;
+import edu.javeriana.abetbackend.Entities.Course;
+import edu.javeriana.abetbackend.Entities.DTOs.AssessmentToolDTO;
 import edu.javeriana.abetbackend.Entities.RAE;
 import edu.javeriana.abetbackend.Exceptions.DoesNotContain;
 import edu.javeriana.abetbackend.Exceptions.NotFound;
@@ -17,7 +19,7 @@ public class AssessmentToolFinder {
     @Autowired
     private AssessmentToolRepository repository;
     @Autowired
-    private RAEFinder raeFinder;
+    private CourseFinder courseFinder;
 
     public AssessmentTool findById(Long id){
         Optional<AssessmentTool> assessmentTool = repository.findById(id);
@@ -26,23 +28,21 @@ public class AssessmentToolFinder {
         return assessmentTool.get();
     }
 
-    public List<AssessmentTool> findAssessmentToolsByRAEId(Long raeId){
-        RAE rae = raeFinder.findRAEById(raeId);
-        Optional<List<AssessmentTool>> assessmentTools = repository.findAllByRae(rae);
-        if (assessmentTools.isEmpty() || assessmentTools.get().isEmpty())
-            throw new NotFound("The assessment tools from the rae " + rae.getRAEId()
-                    + " were not found");
-        return assessmentTools.get();
-    }
-
-    public AssessmentTool findAssessmentToolByCourseAndRAEId(Integer courseNumber, Long raeId, Long assessmentToolId){
-        RAE rae = raeFinder.findRAEByCourseAndRaeId(courseNumber, raeId);
+    public AssessmentTool findByCourseAndId(Integer courseNumber, Long assessmentToolId){
+        Course course = courseFinder.findCourseByNumber(courseNumber);
         Optional<AssessmentTool> assessmentTool = repository.findById(assessmentToolId);
         if (assessmentTool.isEmpty())
             throw new NotFound("The assessment tool with id " + assessmentToolId + " was not found");
-        if(!assessmentTool.get().getRae().equals(rae))
-            throw new DoesNotContain("The rae " + raeId + " does not contain the assessment tool"
-            + assessmentToolId);
+        if (!assessmentTool.get().getCourse().equals(course))
+            throw new DoesNotContain("The course " + courseNumber + " does not contain the assessment tool " + assessmentToolId);
         return assessmentTool.get();
+    }
+
+    public List<AssessmentTool> getAllByCourse(Integer courseNumber){
+        Course course = courseFinder.findCourseByNumber(courseNumber);
+        Optional<List<AssessmentTool>> assessmentTools = repository.findAllByCourse(course);
+        if(assessmentTools.isEmpty() || assessmentTools.get().isEmpty())
+            throw new NotFound("There are no assessment tools for the course " + courseNumber);
+        return assessmentTools.get();
     }
 }

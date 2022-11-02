@@ -1,7 +1,6 @@
 package edu.javeriana.abetbackend.Entities.DTOs;
 
 
-import edu.javeriana.abetbackend.Entities.SectionReviewComment;
 import edu.javeriana.abetbackend.Entities.Views.CDIOSummaryForCourse;
 
 import java.util.ArrayList;

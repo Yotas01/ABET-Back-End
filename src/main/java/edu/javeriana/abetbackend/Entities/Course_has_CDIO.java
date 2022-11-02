@@ -14,7 +14,7 @@ public class Course_has_CDIO {
 
     @ManyToOne
     @MapsId("courseId")
-    @JoinColumn(name = "id_course")
+    @JoinColumn(name = "id_sae")
     private Course course;
     @ManyToOne
     @MapsId("cdioNumber")

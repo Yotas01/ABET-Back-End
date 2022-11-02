@@ -6,20 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CDIODTO {
-    private String description;
+
     private Float number;
+    private String description;
     private List<Integer> outcomes;
-    private List<String> courses;
 
     public CDIODTO(CDIO cdio) {
         this.description = cdio.getDescription();
         this.number = cdio.getNumber();
         this.outcomes = new ArrayList<>();
-        this.courses = new ArrayList<>();
         if (!cdio.getOutcomes().isEmpty())
             cdio.getOutcomes().forEach(outcome -> this.outcomes.add(outcome.getOutcomeId()));
-        if (!cdio.getCourses().isEmpty())
-            cdio.getCourses().forEach(course -> this.courses.add(course.getName()));
     }
 
     public CDIODTO() {
@@ -49,11 +46,11 @@ public class CDIODTO {
         this.outcomes = outcomes;
     }
 
-    public List<String> getCourses() {
-        return courses;
+    public void addOutcome(Integer outcome){
+        this.outcomes.add(outcome);
     }
 
-    public void setCourses(List<String> courses) {
-        this.courses = courses;
+    public void removeOutcome(Integer outcome){
+        this.outcomes.remove(outcome);
     }
 }

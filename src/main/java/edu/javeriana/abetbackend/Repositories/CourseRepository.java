@@ -8,7 +8,6 @@ import javax.persistence.Table;
 import java.util.Optional;
 
 @Repository
-public interface CourseRepository extends CrudRepository<Course, Long> {
+public interface CourseRepository extends CrudRepository<Course, Integer> {
     Optional<Course> findCourseByName(String name);
-    Optional<Course> findCourseByNumber(Integer number);
 }

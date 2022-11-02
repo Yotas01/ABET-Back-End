@@ -7,11 +7,10 @@ import java.util.Map;
 
 public class SectionDTO {
 
-    private Long sectionId;
-    private Integer number;
+    private Integer classNumber;
+    private Integer semester;
     private String professor;
     private Integer totalStudents;
-    private Integer semester;
     private Map<Integer, String> course;
 
     public SectionDTO() {
@@ -19,29 +18,28 @@ public class SectionDTO {
     }
 
     public SectionDTO(Section section) {
-        this.sectionId = section.getSectionId();
-        this.number = section.getNumber();
+        this.classNumber = section.getClassNumber();
         this.professor = section.getProfessor();
         this.totalStudents = section.getTotalStudents();
         this.semester = section.getSemester();
         this.course = new HashMap<>();
-        course.put(section.getCourse().getNumber(),section.getCourse().getName());
+        course.put(section.getCourse().getCourseId(),section.getCourse().getName());
     }
 
-    public Long getSectionId() {
-        return sectionId;
+    public Integer getClassNumber() {
+        return classNumber;
     }
 
-    public void setSectionId(Long sectionId) {
-        this.sectionId = sectionId;
+    public void setClassNumber(Integer classNumber) {
+        this.classNumber = classNumber;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getSemester() {
+        return semester;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setSemester(Integer semester) {
+        this.semester = semester;
     }
 
     public String getProfessor() {
@@ -58,14 +56,6 @@ public class SectionDTO {
 
     public void setTotalStudents(Integer totalStudents) {
         this.totalStudents = totalStudents;
-    }
-
-    public Integer getSemester() {
-        return semester;
-    }
-
-    public void setSemester(Integer semester) {
-        this.semester = semester;
     }
 
     public Map<Integer, String> getCourse() {

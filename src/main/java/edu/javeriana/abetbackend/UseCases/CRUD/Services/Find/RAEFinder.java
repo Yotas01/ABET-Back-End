@@ -4,7 +4,6 @@ import edu.javeriana.abetbackend.Entities.Course;
 import edu.javeriana.abetbackend.Entities.RAE;
 import edu.javeriana.abetbackend.Exceptions.DoesNotContain;
 import edu.javeriana.abetbackend.Exceptions.NotFound;
-import edu.javeriana.abetbackend.Repositories.CourseRepository;
 import edu.javeriana.abetbackend.Repositories.RAERepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +16,6 @@ public class RAEFinder {
 
     @Autowired
     private RAERepository raeRepository;
-    @Autowired
-    private CourseRepository courseRepository;
     @Autowired
     private CourseFinder courseFinder;
 
@@ -40,25 +37,12 @@ public class RAEFinder {
         return optionalRAE.get();
     }
 
-    public List<RAE> findRAEsFromCourseNumber(Integer courseNumber){
-        Optional<Course> optionalCourse = courseRepository.findCourseByNumber(courseNumber);
-        if (optionalCourse.isEmpty())
-            throw new NotFound("The course with the number " + courseNumber + " was not found");
-        Optional<List<RAE>> optionalRAES = raeRepository.findAllByCourse(optionalCourse.get());
+    public List<RAE> findRAEsFromCourseNumber(Integer courseNumber, Integer semester){
+        Course course = courseFinder.findCourseByNumber(courseNumber);
+        Optional<List<RAE>> optionalRAES = raeRepository.findAllByCourseAndSemester(course, semester);
         if (optionalRAES.isEmpty())
             throw new NotFound("There where no RAEs found from the course " +
-                    optionalCourse.get().getNumber() + ":" + optionalCourse.get().getName());
+                    courseNumber + ":" + course.getName());
         return optionalRAES.get();
-    }
-
-    public RAE findRAEByCourseAndDescription(Integer courseNumber, String description){
-        List<RAE> courseRaes = findRAEsFromCourseNumber(courseNumber);
-        Optional<RAE> rae = courseRaes.stream().
-                filter(r -> r.getDescription().equals(description))
-                .findAny();
-        if (rae.isEmpty())
-            throw new NotFound("The rae with description " + description + " and course " +
-                    courseNumber + " was not found");
-        return rae.get();
     }
 }

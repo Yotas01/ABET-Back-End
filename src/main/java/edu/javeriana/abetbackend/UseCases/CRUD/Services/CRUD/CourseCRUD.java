@@ -1,5 +1,6 @@
 package edu.javeriana.abetbackend.UseCases.CRUD.Services.CRUD;
 
+import edu.javeriana.abetbackend.Entities.DTOs.CourseDTO;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.CourseFinder;
 import edu.javeriana.abetbackend.Entities.Course;
 import edu.javeriana.abetbackend.Exceptions.AlreadyExists;
@@ -18,29 +19,27 @@ public class CourseCRUD {
     @Autowired
     private CourseFinder finder;
 
-    public void saveCourse(Course course){
+    public Course createCourse(CourseDTO dto){
         try{
-            Course foundCourse = finder.findCourseByNumber(course.getNumber());
+            Course foundCourse = finder.findCourseByNumber(dto.getCourseId());
         }catch (NotFound exception){
+            Course course = new Course(dto.getCourseId(), dto.getName());
             repository.save(course);
-            return;
+            return course;
         }
-        throw new AlreadyExists("The course with number " + course.getNumber() + " already exists");
+        throw new AlreadyExists("The course with number " + dto.getCourseId() + " already exists");
     }
 
-    public Course updateCourse(Course course, Integer courseNumber){
+    public Course updateCourse(CourseDTO course, Integer courseNumber){
         Course courseToUpdate = finder.findCourseByNumber(courseNumber);
-        courseToUpdate.setNumber(course.getNumber());
+        courseToUpdate.setCourseId(course.getCourseId());
         courseToUpdate.setName(course.getName());
-        courseToUpdate.setRAEs(new ArrayList<>(course.getRAEs()));
-        courseToUpdate.setCdioList(new ArrayList<>(course.getCdioList()));
-        courseToUpdate.setSections(new ArrayList<>(course.getSections()));
         repository.save(courseToUpdate);
         return courseToUpdate;
     }
 
-    public Course deleteCourse(Course course){
-        Course courseToDelete = finder.findCourseById(course.getCourseId());
+    public Course deleteCourse(Integer courseNumber){
+        Course courseToDelete = finder.findCourseByNumber(courseNumber);
         repository.delete(courseToDelete);
         return courseToDelete;
     }

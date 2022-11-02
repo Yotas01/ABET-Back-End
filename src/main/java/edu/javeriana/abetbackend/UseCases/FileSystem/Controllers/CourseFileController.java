@@ -1,7 +1,6 @@
 package edu.javeriana.abetbackend.UseCases.FileSystem.Controllers;
 
 
-import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.UseCases.FileSystem.Services.ExcelScriptService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import java.io.*;
 
 @RestController
 @RequestMapping("/savecourses")
+@CrossOrigin(origins = "*")
 public class CourseFileController {
 
     @Autowired
@@ -22,7 +22,6 @@ public class CourseFileController {
 
     @GetMapping("/get-file")
     @Operation(description = "Returns an excel file containing the information for all the courses")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity getFile() throws IOException, InterruptedException, ScriptException {
         excelService.runPython();
 

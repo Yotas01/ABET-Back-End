@@ -1,11 +1,12 @@
 package edu.javeriana.abetbackend.UseCases.CRUD.Controllers;
 
+import edu.javeriana.abetbackend.UseCases.BaseController;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.CRUD.CDIOCRUD;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.CDIOFinder;
-import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.CDIO;
 import edu.javeriana.abetbackend.Entities.DTOs.CDIODTO;
-import edu.javeriana.abetbackend.Exceptions.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,34 +18,30 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/admin")
-public class CDIOCrudController {
+@CrossOrigin(origins = "*")
+public class CDIOCrudController extends BaseController {
 
     @Autowired
     private CDIOCRUD crudService;
     @Autowired
     private CDIOFinder finder;
 
-    @Operation(summary = "Create a new CDIO competence")
+    @ApiOperation(value = "Create a new CDIO competence")
     @PostMapping("/cdio")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<CDIODTO> addCDIO(@RequestBody CDIO cdio){
-        crudService.saveCDIO(cdio);
-        CDIODTO CDIODTO = new CDIODTO(cdio);
-        return ResponseEntity.status(HttpStatus.CREATED).body(CDIODTO);
+    public ResponseEntity<CDIODTO> createCDIO(@RequestBody CDIODTO cdio){
+        CDIO createdCDIO = crudService.createCDIO(cdio);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CDIODTO(createdCDIO));
     }
 
-    @Operation(summary = "Find the CDIO competence with cdioNumber")
+    @ApiOperation(value = "Find the CDIO competence with cdioNumber")
     @GetMapping("/cdio/{cdioNumber}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<CDIODTO> findCDIO(@PathVariable(value = "cdioNumber") Float id){
-        CDIO cdio = finder.findCDIOById(id);
-        CDIODTO CDIODTO = new CDIODTO(cdio);
-        return ResponseEntity.status(HttpStatus.OK).body(CDIODTO);
+    public ResponseEntity<CDIODTO> findCDIO(@ApiParam(name = "cdioNumber", required = true) @PathVariable Float cdioNumber){
+        CDIO cdio = finder.findCDIOById(cdioNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(new CDIODTO(cdio));
     }
 
-    @Operation(summary = "Get all the CDIO competences")
+    @ApiOperation(value = "Get all the CDIO competences")
     @GetMapping("/cdio")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<List<CDIODTO>> getAllCDIOs(){
         List<CDIO> cdios = finder.getAllCDIOs();
         List<CDIODTO> CDIODTOs = new ArrayList<>();
@@ -54,31 +51,18 @@ public class CDIOCrudController {
 
     @Operation(summary = "Update a CDIO competence that matches the cdio's number")
     @PutMapping("/cdio/{cdioNumber}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<CDIODTO> updateCompetence(@RequestBody CDIO cdio, @PathVariable Float cdioNumber){
+    public ResponseEntity<CDIODTO> updateCompetence(@RequestBody CDIODTO cdio,
+                                                    @ApiParam(name = "cdioNumber", required = true)
+                                                    @PathVariable Float cdioNumber){
         CDIO updatedCODIO = crudService.updateCDIO(cdio, cdioNumber);
-        CDIODTO CDIODTO = new CDIODTO(updatedCODIO);
-        return ResponseEntity.status(HttpStatus.OK).body(CDIODTO);
+        return ResponseEntity.status(HttpStatus.OK).body(new CDIODTO(updatedCODIO));
     }
 
     @Operation(summary = "Delete the CDIO competence that matches the number")
     @DeleteMapping("/cdio/{cdioNumber}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<CDIODTO> deleteCompetence(@PathVariable Float cdioNumber){
+    public ResponseEntity<CDIODTO> deleteCompetence(@ApiParam(name = "cdioNumber", required = true)
+                                                        @PathVariable Float cdioNumber){
         CDIO deletedCDIO = crudService.deleteCDIO(cdioNumber);
-        CDIODTO CDIODTO = new CDIODTO(deletedCDIO);
-        return ResponseEntity.status(HttpStatus.OK).body(CDIODTO);
+        return ResponseEntity.status(HttpStatus.OK).body(new CDIODTO(deletedCDIO));
     }
-
-    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ABETSystemException badRequestError(Exception e){ return  new ABETSystemException(e.getMessage(), 400);}
-
-    @ExceptionHandler(NotFound.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ABETSystemException notFoundError(Exception e){ return  new ABETSystemException(e.getMessage(), 404);}
-
-    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ABETSystemException conflictError(Exception e){ return  new ABETSystemException(e.getMessage(), 409);}
 }

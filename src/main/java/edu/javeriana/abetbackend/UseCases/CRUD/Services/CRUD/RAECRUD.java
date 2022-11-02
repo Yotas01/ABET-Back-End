@@ -1,5 +1,6 @@
 package edu.javeriana.abetbackend.UseCases.CRUD.Services.CRUD;
 
+import edu.javeriana.abetbackend.Entities.DTOs.RAEDTO;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.CourseFinder;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.RAEFinder;
 import edu.javeriana.abetbackend.Entities.Course;
@@ -22,34 +23,38 @@ public class RAECRUD {
     @Autowired
     private CourseRepository courseRepository;
 
-    public void saveRAE(RAE rae, Integer courseNumber){
+    public RAE createRAE(RAEDTO raedto, Integer courseNumber){
         Course course = courseFinder.findCourseByNumber(courseNumber);
-        rae.setCourse(course);
+        RAE rae = new RAE(raedto.getRaeId(), raedto.getDescription(), raedto.getSemester(), course);
         course.addRAE(rae);
         raeRepository.save(rae);
         courseRepository.save(course);
+        return rae;
     }
 
     public void saveRAE(RAE rae){
         raeRepository.save(rae);
     }
 
-    public void updateRAE(Integer courseNumber, Long raeId, String description){
+    public RAE updateRAE(Integer courseNumber, Long raeId, RAEDTO raedto){
         Course course = courseFinder.findCourseByNumber(courseNumber);
         RAE raeToUpdate = raeFinder.findRAEById(raeId);
         if(!raeToUpdate.getCourse().equals(course))
             throw new DoesNotContain("The course " + course.getName() + " does not contain the rae "
                     + raeId);
-        raeToUpdate.setDescription(description);
+        raeToUpdate.setDescription(raedto.getDescription());
+        raeToUpdate.setSemester(raedto.getSemester());
         raeRepository.save(raeToUpdate);
+        return raeToUpdate;
     }
 
-    public void deleteRAE(Integer courseNumber, Long raeId){
+    public RAE deleteRAE(Integer courseNumber, Long raeId){
         Course course = courseFinder.findCourseByNumber(courseNumber);
         RAE raeToDelete = raeFinder.findRAEById(raeId);
         if(!raeToDelete.getCourse().equals(course))
             throw new DoesNotContain("The course " + course.getName() + " does not contain the rae "
                     + raeId);
         raeRepository.delete(raeToDelete);
+        return raeToDelete;
     }
 }

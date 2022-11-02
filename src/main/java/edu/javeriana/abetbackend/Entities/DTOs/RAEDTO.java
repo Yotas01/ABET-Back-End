@@ -3,45 +3,32 @@ package edu.javeriana.abetbackend.Entities.DTOs;
 import edu.javeriana.abetbackend.Entities.RAE;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RAEDTO {
 
     private Long raeId;
+    private Integer courseId;
     private String description;
-    private Long courseId;
-    private List<Float> cdioList;
-    private List<AssessmentToolDTO> assessmentTools;
+    private Integer semester;
+    private Map<Float, String> cdioList;
+    private List<PerformanceIndicatorDTO> performanceIndicators;
 
     public RAEDTO() {
-        this.assessmentTools = new ArrayList<>();
-        this.cdioList = new ArrayList<>();
+        this.performanceIndicators = new ArrayList<>();
+        this.cdioList = new HashMap<>();
     }
 
     public RAEDTO(RAE rae) {
-        this.raeId = rae.getRAEId();
-        this.description = rae.getDescription();
+        this.raeId = rae.getId();
         this.courseId = rae.getCourse().getCourseId();
-        this.cdioList = new ArrayList<>();
-        rae.getCdioList().forEach(cdio -> cdioList.add(cdio.getNumber()));
-        this.assessmentTools = new ArrayList<>();
-        rae.getAssessmentTools().forEach(at -> assessmentTools.add(new AssessmentToolDTO(at)));
-    }
-
-    public List<AssessmentToolDTO> getAssessmentTools() {
-        return assessmentTools;
-    }
-
-    public void setAssessmentTools(List<AssessmentToolDTO> assessmentTools) {
-        this.assessmentTools = assessmentTools;
-    }
-
-    public List<Float> getCdioList() {
-        return cdioList;
-    }
-
-    public void setCdioList(List<Float> cdioList) {
-        this.cdioList = cdioList;
+        this.description = rae.getDescription();
+        this.semester = rae.getSemester();
+        this.cdioList = new HashMap<>();
+        rae.getCdioList().forEach(cdio -> this.cdioList.put(cdio.getNumber(), cdio.getDescription()));
+        this.performanceIndicators = new ArrayList<>(rae.getPerformanceIndicators().stream().map(PerformanceIndicatorDTO::new).toList());
     }
 
     public Long getRaeId() {
@@ -52,6 +39,14 @@ public class RAEDTO {
         this.raeId = raeId;
     }
 
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -60,11 +55,27 @@ public class RAEDTO {
         this.description = description;
     }
 
-    public Long  getCourseId() {
-        return courseId;
+    public Integer getSemester() {
+        return semester;
     }
 
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
+    public void setSemester(Integer semester) {
+        this.semester = semester;
+    }
+
+    public Map<Float, String> getCdioList() {
+        return cdioList;
+    }
+
+    public void setCdioList(Map<Float, String> cdioList) {
+        this.cdioList = cdioList;
+    }
+
+    public List<PerformanceIndicatorDTO> getPerformanceIndicators() {
+        return performanceIndicators;
+    }
+
+    public void setPerformanceIndicators(List<PerformanceIndicatorDTO> performanceIndicators) {
+        this.performanceIndicators = performanceIndicators;
     }
 }

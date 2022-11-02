@@ -18,15 +18,8 @@ public class CourseFinder {
     @Autowired
     private Course_has_CdioRepository course_has_cdioRepository;
 
-    public  Course findCourseById(Long courseId){
-        Optional<Course> optionalCourse = repository.findById(courseId);
-        if(optionalCourse.isEmpty())
-            throw new NotFound("The course with the id " + courseId + " was not found");
-        return optionalCourse.get();
-    }
-
     public Course findCourseByNumber(Integer courseNumber){
-        Optional<Course> optionalCourse = repository.findCourseByNumber(courseNumber);
+        Optional<Course> optionalCourse = repository.findById(courseNumber);
         if(optionalCourse.isEmpty())
             throw new NotFound("The course with the number " + courseNumber + " was not found");
         var optionalCDIOS = course_has_cdioRepository.findAllByCourse(optionalCourse.get());

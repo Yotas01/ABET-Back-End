@@ -1,11 +1,12 @@
 package edu.javeriana.abetbackend.UseCases.CRUD.Controllers;
 
+import edu.javeriana.abetbackend.UseCases.BaseController;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.CRUD.AssessmentToolCRUD;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.AssessmentToolFinder;
-import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.AssessmentTool;
 import edu.javeriana.abetbackend.Entities.DTOs.AssessmentToolDTO;
-import edu.javeriana.abetbackend.Exceptions.*;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,76 +17,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/course/{courseNumber}/rae/{raeId}")
-public class AssessmentToolCRUDController {
+@RequestMapping("/admin/course/{courseNumber}")
+@CrossOrigin(origins = "*")
+public class AssessmentToolCRUDController extends BaseController {
 
     @Autowired
     private AssessmentToolCRUD assessmentToolService;
     @Autowired
     private AssessmentToolFinder assessmentToolFinder;
 
-    @Operation(summary = "Create an assessment tool")
+    @ApiOperation(value = "Add an assessment tool to a course")
     @PostMapping("/assessmentTool")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<AssessmentToolDTO> addAssessmentTool(@PathVariable(name = "courseNumber") Integer courseNumber,
-                                                               @PathVariable(name = "raeId") Long raeId,
-                                                               @RequestBody AssessmentTool assessmentTool){
-        assessmentToolService.saveAssessmentTool(assessmentTool,raeId,courseNumber);
-        AssessmentToolDTO dto = new AssessmentToolDTO(assessmentTool);
-        return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+    public ResponseEntity<AssessmentToolDTO> addAssessmentTool(@ApiParam(name = "courseNumber", required = true)
+                                                                   @PathVariable Integer courseNumber,
+                                                               @RequestBody AssessmentToolDTO dto){
+        AssessmentTool assessmentTool = assessmentToolService.saveAssessmentTool(dto,courseNumber);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AssessmentToolDTO(assessmentTool));
     }
 
-    @Operation(summary = "update an assessment tool")
+    @ApiOperation(value = "Update an existing assessment tool")
     @PutMapping("/assessmentTool/{assessmentToolId}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<AssessmentToolDTO> updateAssessmentTool(@PathVariable(name = "courseNumber") Integer courseNumber,
-                                                                  @PathVariable(name = "raeId") Long raeId,
+    public ResponseEntity<AssessmentToolDTO> updateAssessmentTool(@ApiParam(name = "courseNumber", required = true)
+                                                                      @PathVariable(name = "courseNumber") Integer courseNumber,
+                                                                  @ApiParam(name = "assessmentToolId", required = true)
                                                                   @PathVariable(name = "assessmentToolId") Long assessmentToolId,
-                                                                  @RequestBody AssessmentTool assessmentTool){
-        AssessmentTool at = assessmentToolService.updateAssessmentTool(assessmentTool, raeId, courseNumber, assessmentToolId);
-        AssessmentToolDTO dto = new AssessmentToolDTO(at);
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+                                                                  @RequestBody AssessmentToolDTO dto){
+        AssessmentTool at = assessmentToolService.updateAssessmentTool(dto, courseNumber, assessmentToolId);
+        return ResponseEntity.status(HttpStatus.OK).body(new AssessmentToolDTO(at));
     }
 
     @Operation(summary = "Delete an assessment tool")
     @DeleteMapping("/assessmentTool/{assessmentToolId}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<AssessmentToolDTO> deleteAssessmentTool(@PathVariable(name = "courseNumber") Integer courseNumber,
-                                                                  @PathVariable(name = "raeId") Long raeId,
-                                                                  @PathVariable(name = "assessmentToolId") Long assessmentToolId){
-        AssessmentTool at = assessmentToolService.deleteAssessmentTool(assessmentToolId,raeId,courseNumber);
-        AssessmentToolDTO dto = new AssessmentToolDTO(at);
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    public ResponseEntity<AssessmentToolDTO> deleteAssessmentTool(@ApiParam(name = "courseNumber", required = true)
+                                                                      @PathVariable(name = "courseNumber") Integer courseNumber,
+                                                                  @ApiParam(name = "assessmentToolId", required = true)
+                                                                      @PathVariable(name = "assessmentToolId") Long assessmentToolId){
+        AssessmentTool at = assessmentToolService.deleteAssessmentTool(assessmentToolId, courseNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(new AssessmentToolDTO(at));
     }
 
     @Operation(summary = "Get an Assessment tool by id")
     @GetMapping("/assessmentTool/{assessmentToolId}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<AssessmentToolDTO> getAssessmentTool(@PathVariable(name = "assessmentToolId") Long assessmentToolId){
+    public ResponseEntity<AssessmentToolDTO> getAssessmentTool(@ApiParam(name = "courseNumber", required = false)
+                                                                   @PathVariable(name = "courseNumber") Integer courseNumber,
+                                                               @ApiParam(name = "assessmentToolId", required = true)
+                                                                   @PathVariable(name = "assessmentToolId") Long assessmentToolId){
         AssessmentTool at = assessmentToolFinder.findById(assessmentToolId);
-        AssessmentToolDTO dto = new AssessmentToolDTO(at);
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(new AssessmentToolDTO(at));
     }
 
-    @Operation(summary = "Get all Assessment tool by Rae id")
+    @Operation(summary = "Get all Assessment tools from a course")
     @GetMapping("/assessmentTool")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<List<AssessmentToolDTO>> getAssessmentToolByRAEId(@PathVariable(name = "raeId") Long raeId){
-        List<AssessmentTool> assessmentTools = assessmentToolFinder.findAssessmentToolsByRAEId(raeId);
-        List<AssessmentToolDTO> dto = new ArrayList<>();
-        assessmentTools.forEach(at -> dto.add(new AssessmentToolDTO(at)));
+    public ResponseEntity<List<AssessmentToolDTO>> getAssessmentToolByRAEId(@ApiParam(name = "courseNumber", required = true)
+                                                                                @PathVariable(name = "courseNumber") Integer courseNumber){
+        List<AssessmentTool> assessmentTools = assessmentToolFinder.getAllByCourse(courseNumber);
+        List<AssessmentToolDTO> dto = new ArrayList<>(assessmentTools.stream().map(AssessmentToolDTO::new).toList());
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
-
-    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ABETSystemException badRequestError(Exception e){ return  new ABETSystemException(e.getMessage(), 400);}
-
-    @ExceptionHandler(NotFound.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ABETSystemException notFoundError(Exception e){ return  new ABETSystemException(e.getMessage(), 404);}
-
-    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ABETSystemException conflictError(Exception e){ return  new ABETSystemException(e.getMessage(), 409);}
 }

@@ -2,6 +2,7 @@ package edu.javeriana.abetbackend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
+import edu.javeriana.abetbackend.Entities.DTOs.CDIODTO;
 import edu.javeriana.abetbackend.Entities.Ids.Course_has_CdioId;
 
 import java.util.ArrayList;
@@ -9,19 +10,21 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "CDIO")
 public class CDIO {
 
     @Id
     @Column(name = "number")
     private Float number;
-    @Basic
+    @Column(name = "description")
     private String description;
-    @ManyToMany(mappedBy = "cdioList", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+
+    @ManyToMany(mappedBy = "cdioList", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Outcome> outcomes;
     @ManyToMany(mappedBy = "cdioList", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<RAE> RAEs;
+    private List<RAE> raes;
     @OneToMany(mappedBy = "course", cascade = CascadeType.MERGE)
     private List<Course_has_CDIO> courses;
 
@@ -30,13 +33,13 @@ public class CDIO {
         this.number = number;
         this.courses = new ArrayList<>();
         this.outcomes = new ArrayList<>();
-        this.RAEs = new ArrayList<>();
+        this.raes = new ArrayList<>();
     }
 
     public CDIO() {
         this.courses = new ArrayList<>();
         this.outcomes = new ArrayList<>();
-        this.RAEs = new ArrayList<>();
+        this.raes = new ArrayList<>();
     }
 
     public String getDescription() {
@@ -74,23 +77,23 @@ public class CDIO {
         getOutcomes().remove(outcome);
     }
 
-    public List<RAE> getRAEs() {
-        if (RAEs == null) {
-            RAEs = new ArrayList<>();
+    public List<RAE> getRaes() {
+        if (raes == null) {
+            raes = new ArrayList<>();
         }
-        return RAEs;
+        return raes;
     }
 
-    public void setRAEs(List<RAE> RAEs) {
-        this.RAEs = RAEs;
+    public void setRaes(List<RAE> RAEs) {
+        this.raes = RAEs;
     }
 
     public void addRAE(RAE RAE) {
-        getRAEs().add(RAE);
+        getRaes().add(RAE);
     }
 
     public void removeRAE(RAE RAE) {
-        getRAEs().remove(RAE);
+        getRaes().remove(RAE);
     }
 
     public List<Course> getCourses() {
@@ -124,13 +127,12 @@ public class CDIO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CDIO cdio = (CDIO) o;
-        return Objects.equal(description, cdio.description) && Objects.equal(number, cdio.number) && Objects.equal(outcomes, cdio.outcomes) && Objects.equal(RAEs, cdio.RAEs) && Objects.equal(courses, cdio.courses);
+        if (!(o instanceof CDIO cdio)) return false;
+        return Objects.equal(number, cdio.number) && Objects.equal(description, cdio.description) && Objects.equal(outcomes, cdio.outcomes) && Objects.equal(raes, cdio.raes) && Objects.equal(courses, cdio.courses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(description, number);
+        return Objects.hashCode(number, description, outcomes, raes, courses);
     }
 }

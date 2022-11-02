@@ -1,12 +1,12 @@
 package edu.javeriana.abetbackend.UseCases.CRUD.Controllers;
 
+import edu.javeriana.abetbackend.UseCases.BaseController;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.CRUD.OutcomeCRUD;
 import edu.javeriana.abetbackend.UseCases.CRUD.Services.Find.OutcomeFinder;
-import edu.javeriana.abetbackend.Common.Constants;
 import edu.javeriana.abetbackend.Entities.Outcome;
 import edu.javeriana.abetbackend.Entities.DTOs.OutcomeDTO;
-import edu.javeriana.abetbackend.Exceptions.*;
-import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,33 +17,31 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/admin")
-public class OutcomeCRUDController {
+@CrossOrigin(origins = "*")
+public class OutcomeCRUDController extends BaseController {
 
     @Autowired
     private OutcomeCRUD crudService;
     @Autowired
     private OutcomeFinder finder;
 
-    @Operation(summary = "Create a new ABET outcome")
+    @ApiOperation(value = "Create a new ABET outcome")
     @PostMapping("/outcome")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<OutcomeDTO> addCompetence(@RequestBody OutcomeDTO outcome){
-        crudService.saveOutcome(outcome);
-        return ResponseEntity.status(HttpStatus.CREATED).body(outcome);
+    public ResponseEntity<OutcomeDTO> addOutcome(@RequestBody OutcomeDTO outcome){
+        Outcome createdOutcome = crudService.createOutcome(outcome);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new OutcomeDTO(createdOutcome));
     }
 
-    @Operation(summary = "Find the ABET outcome with idOutcome")
+    @ApiOperation(value = "Find the ABET outcome with idOutcome")
     @GetMapping("/outcome/{idOutcome}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<OutcomeDTO> findCompetence(@PathVariable(value = "idOutcome") Integer id){
-        Outcome outcome = finder.findOutcomeById(id);
-        OutcomeDTO outcomeDTO = new OutcomeDTO(outcome);
-        return ResponseEntity.status(HttpStatus.OK).body(outcomeDTO);
+    public ResponseEntity<OutcomeDTO> findCompetence(@ApiParam(name = "idOutcome", required = true, defaultValue = "1")
+                                                         @PathVariable Integer idOutcome){
+        Outcome outcome = finder.findOutcomeById(idOutcome);
+        return ResponseEntity.status(HttpStatus.OK).body(new OutcomeDTO(outcome));
     }
 
-    @Operation(summary = "Get all the ABET outcomes")
+    @ApiOperation(value = "Get all the ABET outcomes")
     @GetMapping("/outcome")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<List<OutcomeDTO>> getAllCompetences(){
         List<Outcome> outcomes = finder.getAllOutcomes();
         List<OutcomeDTO> outcomeDTOS = new ArrayList<>();
@@ -51,37 +49,19 @@ public class OutcomeCRUDController {
         return ResponseEntity.status(HttpStatus.OK).body(outcomeDTOS);
     }
 
-    @Operation(summary = "Update an ABET outcome that matches the outcome's id")
+    @ApiOperation(value = "Update an ABET outcome that matches the outcome's id")
     @PutMapping("/outcome/{outcomeId}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<OutcomeDTO> updateCompetence(@RequestBody OutcomeDTO outcome,
-                                                       @PathVariable(name = "outcomeId") Integer outcomeId){
+                                                       @ApiParam(name = "outcomeId", required = true)
+                                                       @PathVariable Integer outcomeId){
         Outcome updatedOutcome = crudService.updateOutcome(outcome, outcomeId);
-        OutcomeDTO outcomeDTO = new OutcomeDTO(updatedOutcome);
-        return ResponseEntity.status(HttpStatus.OK).body(outcomeDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(new OutcomeDTO(updatedOutcome));
     }
 
-    @Operation(summary = "Delete the ABET outcome that matches the id")
+    @ApiOperation(value = "Delete the ABET outcome that matches the id")
     @DeleteMapping("/outcome/{idOutcome}")
-    @CrossOrigin(origins = Constants.crossOriginLocalhost)
-    public ResponseEntity<OutcomeDTO> deleteCompetence(@PathVariable(value = "idOutcome") Integer id){
-        Outcome outcomeToDelete = finder.findOutcomeById(id);
-        crudService.deleteOutcome(outcomeToDelete);
-        OutcomeDTO outcomeDTO = new OutcomeDTO();
-        outcomeDTO.setId(id);
-        outcomeDTO.setDescription(outcomeToDelete.getDescription());
-        return ResponseEntity.status(HttpStatus.OK).body(outcomeDTO);
+    public ResponseEntity<OutcomeDTO> deleteCompetence(@ApiParam(name = "idOutcome", required = true) @PathVariable Integer idOutcome){
+        Outcome outcome = crudService.deleteOutcome(idOutcome);
+        return ResponseEntity.status(HttpStatus.OK).body(new OutcomeDTO(outcome));
     }
-
-    @ExceptionHandler({DoesNotContain.class, Inconsistent.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ABETSystemException badRequestError(Exception e){ return  new ABETSystemException(e.getMessage(), 400);}
-
-    @ExceptionHandler(NotFound.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ABETSystemException notFoundError(Exception e){ return  new ABETSystemException(e.getMessage(), 404);}
-
-    @ExceptionHandler({AlreadyContains.class, AlreadyExists.class})
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ABETSystemException conflictError(Exception e){ return  new ABETSystemException(e.getMessage(), 409);}
 }

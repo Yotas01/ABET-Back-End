@@ -19,11 +19,9 @@ public class RAE_CDIORelationsService {
     @Autowired
     private RAEFinder raeFinder;
     @Autowired
-    private CDIOCRUD cdioService;
-    @Autowired
     private CDIOFinder cdioFinder;
 
-    public void addRAEtoCDIO(Float cdioNumber, Long raeId){
+    public RAE addRAEtoCDIO(Float cdioNumber, Long raeId){
         RAE rae = raeFinder.findRAEById(raeId);
         CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
         if(rae.getCdioList().contains(cdio))
@@ -32,22 +30,10 @@ public class RAE_CDIORelationsService {
         rae.addCDIO(cdio);
         cdio.addRAE(rae);
         raeService.saveRAE(rae);
-        cdioService.updateCDIO(cdio, cdioNumber);
+        return rae;
     }
 
-    public void addRAEtoCDIO(Float cdioNumber, Integer courseNumber, String description){
-        CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
-        RAE rae = raeFinder.findRAEByCourseAndDescription(courseNumber, description);
-        if(rae.getCdioList().contains(cdio))
-            throw new AlreadyContains("The rae " + rae.getRAEId() + " from the course " +
-                    rae.getCourse().getName() + " already contains the cdio " + cdioNumber);
-        rae.addCDIO(cdio);
-        cdio.addRAE(rae);
-        raeService.saveRAE(rae);
-        cdioService.updateCDIO(cdio, cdioNumber);
-    }
-
-    public void deleteRAEFromCDIO(Float cdioNumber, Long raeId){
+    public RAE deleteRAEFromCDIO(Float cdioNumber, Long raeId){
         RAE rae = raeFinder.findRAEById(raeId);
         CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
         if(!rae.getCdioList().contains(cdio))
@@ -56,18 +42,6 @@ public class RAE_CDIORelationsService {
         rae.removeCDIO(cdio);
         cdio.removeRAE(rae);
         raeService.saveRAE(rae);
-        cdioService.updateCDIO(cdio, cdioNumber);
-    }
-
-    public void deleteRAEtFromCDIO(Float cdioNumber, Integer courseNumber, String description){
-        CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
-        RAE rae = raeFinder.findRAEByCourseAndDescription(courseNumber, description);
-        if(!rae.getCdioList().contains(cdio))
-            throw new DoesNotContain("The rae " + rae.getRAEId() + " from the course " +
-                    rae.getCourse().getName() + " does not contain the cdio " + cdioNumber);
-        rae.removeCDIO(cdio);
-        cdio.removeRAE(rae);
-        raeService.saveRAE(rae);
-        cdioService.updateCDIO(cdio, cdioNumber);
+        return rae;
     }
 }

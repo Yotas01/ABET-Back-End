@@ -8,13 +8,14 @@ import java.util.List;
 public class OutcomeDTO {
     private Integer id;
     private String description;
-    private List<Float> cdios =  new ArrayList<>();
+    private List<Float> cdioList =  new ArrayList<>();
 
     public OutcomeDTO(Outcome outcome) {
         this.id = outcome.getOutcomeId();
         this.description = outcome.getDescription();
-        if (!outcome.getCDIos().isEmpty())
-            outcome.getCDIos().forEach(cdio -> this.getCdios().add(cdio.getNumber()));
+        this.cdioList = new ArrayList<>();
+        if(outcome.getCdioList() != null && !outcome.getCdioList().isEmpty())
+            outcome.getCdioList().forEach(cdio -> this.cdioList.add(cdio.getNumber()));
     }
 
     public OutcomeDTO() {
@@ -36,11 +37,11 @@ public class OutcomeDTO {
             this.description = description;
     }
 
-    public List<Float> getCdios() {
-            return cdios;
+    public List<Float> getCdioList() {
+        return cdioList;
     }
 
-    public void setCdios(List<Float> cdios) {
-            this.cdios = cdios;
+    public void setCdioList(List<Float> cdioList) {
+        this.cdioList = cdioList;
     }
 }

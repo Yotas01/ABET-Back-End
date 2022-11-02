@@ -15,45 +15,69 @@ public class AssessmentTool {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id_assessment_tool")
-    private Long AssessmentToolId;
-    @Basic
-    private String description;
-    @Basic
-    private Double value;
+    private Long assessmentToolId;
+
     @ManyToOne
-    @JoinColumn(name = "id_rae")
-    private RAE rae;
-    @OneToMany(mappedBy = "assessmentTool", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "code", referencedColumnName = "code")
+    private AssessmentToolCode code;
+    @ManyToOne
+    @JoinColumn(name = "course_id_sae", referencedColumnName = "id_sae")
+    private Course course;
+
+    @Column(name = "semester")
+    private Integer semester;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "value")
+    private Double value;
+
+    @ManyToMany(mappedBy = "assessmentTools")
     private List<PerformanceIndicator> performanceIndicators;
-    @OneToMany(mappedBy = "assessmentTool", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private List<SectionAssessmentTool> sectionAssessmentTools;
+
+    public AssessmentTool(Long assessmentToolId, AssessmentToolCode code, Course course, Integer semester, String description, Double value) {
+        this.assessmentToolId = assessmentToolId;
+        this.code = code;
+        this.course = course;
+        this.semester = semester;
+        this.description = description;
+        this.value = value;
+        this.performanceIndicators = new ArrayList<>();
+    }
 
     public AssessmentTool() {
         this.performanceIndicators = new ArrayList<>();
     }
 
-    public AssessmentTool(Long assessmentToolId, String description, Double value, RAE rae) {
-        AssessmentToolId = assessmentToolId;
-        this.description = description;
-        this.value = value;
-        this.rae = rae;
-        this.performanceIndicators = new ArrayList<>();
-    }
-
-    public RAE getRae() {
-        return rae;
-    }
-
-    public void setRae(RAE rae) {
-        this.rae = rae;
-    }
-
     public Long getAssessmentToolId() {
-        return AssessmentToolId;
+        return assessmentToolId;
     }
 
-    public void setAssessmentToolId(Long AssessmentToolId) {
-        this.AssessmentToolId = AssessmentToolId;
+    public void setAssessmentToolId(Long assessmentToolId) {
+        this.assessmentToolId = assessmentToolId;
+    }
+
+    public AssessmentToolCode getCode() {
+        return code;
+    }
+
+    public void setCode(AssessmentToolCode code) {
+        this.code = code;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public Integer getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Integer semester) {
+        this.semester = semester;
     }
 
     public String getDescription() {
@@ -73,9 +97,6 @@ public class AssessmentTool {
     }
 
     public List<PerformanceIndicator> getPerformanceIndicators() {
-        if (performanceIndicators == null) {
-            performanceIndicators = new ArrayList<>();
-        }
         return performanceIndicators;
     }
 
@@ -83,24 +104,23 @@ public class AssessmentTool {
         this.performanceIndicators = performanceIndicators;
     }
 
-    public void addPerformanceIndicator(PerformanceIndicator performanceIndicator) {
-        getPerformanceIndicators().add(performanceIndicator);
+    public void addPerformanceIndicator(PerformanceIndicator performanceIndicator){
+        this.performanceIndicators.add(performanceIndicator);
     }
 
-    public void removePerformanceIndicator(PerformanceIndicator performanceIndicator) {
-        getPerformanceIndicators().remove(performanceIndicator);
+    public void removePerformanceIndicator(PerformanceIndicator performanceIndicator){
+        this.performanceIndicators.remove(performanceIndicator);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AssessmentTool that = (AssessmentTool) o;
-        return Objects.equal(AssessmentToolId, that.AssessmentToolId) && Objects.equal(description, that.description) && Objects.equal(value, that.value) && Objects.equal(rae, that.rae) && Objects.equal(performanceIndicators, that.performanceIndicators);
+        if (!(o instanceof AssessmentTool that)) return false;
+        return Objects.equal(assessmentToolId, that.assessmentToolId) && Objects.equal(code, that.code) && Objects.equal(course, that.course) && Objects.equal(semester, that.semester) && Objects.equal(description, that.description) && Objects.equal(value, that.value) && Objects.equal(performanceIndicators, that.performanceIndicators);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(AssessmentToolId, description, value, rae);
+        return Objects.hashCode(assessmentToolId, code, course, semester, description, value, performanceIndicators);
     }
 }

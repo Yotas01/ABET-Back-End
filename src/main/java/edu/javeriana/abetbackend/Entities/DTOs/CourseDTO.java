@@ -9,45 +9,45 @@ import java.util.Map;
 
 public class CourseDTO {
 
-    private Long courseId;
-    private Integer number;
+    private Integer courseId;
     private String name;
+    private Map<Float, String> cdioList;
     private Map<Integer,String> sections;
+    private Map<String, Double> assessmentTools;
     private Map<Long,String> RAEs;
-    private List<Float> cdioList;
+
 
     public CourseDTO(Course course) {
         this.courseId = course.getCourseId();
-        this.number = course.getNumber();
         this.name = course.getName();
+
+        this.cdioList = new HashMap<>();
+        if(!course.getCDIOList().isEmpty())
+            course.getCdioList().forEach(cdio -> cdioList.put(cdio.getCdio().getNumber(), cdio.getCdio().getDescription()));
         this.sections =  new HashMap<>();
-        course.getSections().forEach(section -> sections.put(section.getNumber(), section.getProfessor()));
+        if(!course.getSections().isEmpty())
+            course.getSections().forEach(section -> sections.put(section.getClassNumber(), section.getProfessor()));
+        this.assessmentTools = new HashMap<>();
+        if(!course.getAssessmentTools().isEmpty())
+            course.getAssessmentTools().forEach(at -> this.assessmentTools.put(at.getDescription(), at.getValue()));
         this.RAEs = new HashMap<>();
-        course.getRAEs().forEach(rae -> RAEs.put(rae.getRAEId(), rae.getDescription()));
-        this.cdioList = new ArrayList<>();
-        course.getListOfCDIO().forEach(cdio -> cdioList.add(cdio.getNumber()));
+        if(course.getRaeList().isEmpty())
+            course.getRaeList().forEach(rae -> RAEs.put(rae.getId(), rae.getDescription()));
     }
 
     public CourseDTO() {
-        this.cdioList = new ArrayList<>();
+        this.cdioList = new HashMap<>();
         this.sections =  new HashMap<>();
+        this.assessmentTools = new HashMap<>();
         this.RAEs = new HashMap<>();
     }
 
-    public Long getCourseId() {
+    public Integer getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Long courseId) {
+    public void setCourseId(Integer courseId) {
         this.courseId = courseId;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
     }
 
     public String getName() {
@@ -58,6 +58,14 @@ public class CourseDTO {
         this.name = name;
     }
 
+    public Map<Float, String> getCdioList() {
+        return cdioList;
+    }
+
+    public void setCdioList(Map<Float, String> cdioList) {
+        this.cdioList = cdioList;
+    }
+
     public Map<Integer, String> getSections() {
         return sections;
     }
@@ -66,19 +74,19 @@ public class CourseDTO {
         this.sections = sections;
     }
 
+    public Map<String, Double> getAssessmentTools() {
+        return assessmentTools;
+    }
+
+    public void setAssessmentTools(Map<String, Double> assessmentTools) {
+        this.assessmentTools = assessmentTools;
+    }
+
     public Map<Long, String> getRAEs() {
         return RAEs;
     }
 
     public void setRAEs(Map<Long, String> RAEs) {
         this.RAEs = RAEs;
-    }
-
-    public List<Float> getCdioList() {
-        return cdioList;
-    }
-
-    public void setCdioList(List<Float> cdioList) {
-        this.cdioList = cdioList;
     }
 }

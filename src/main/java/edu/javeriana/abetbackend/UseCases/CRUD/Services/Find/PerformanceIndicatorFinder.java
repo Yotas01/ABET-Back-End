@@ -2,6 +2,7 @@ package edu.javeriana.abetbackend.UseCases.CRUD.Services.Find;
 
 import edu.javeriana.abetbackend.Entities.AssessmentTool;
 import edu.javeriana.abetbackend.Entities.PerformanceIndicator;
+import edu.javeriana.abetbackend.Entities.RAE;
 import edu.javeriana.abetbackend.Exceptions.DoesNotContain;
 import edu.javeriana.abetbackend.Exceptions.NotFound;
 import edu.javeriana.abetbackend.Repositories.PerformanceIndicatorRepository;
@@ -20,8 +21,6 @@ public class PerformanceIndicatorFinder {
     private AssessmentToolFinder assessmentToolFinder;
     @Autowired
     private RAEFinder raeFinder;
-    @Autowired
-    private CourseFinder courseFinder;
 
     public PerformanceIndicator findPerformanceIndicatorById(Long performanceIndicatorId){
         Optional<PerformanceIndicator> performanceIndicator = performanceIndicatorRepository.findById(performanceIndicatorId);
@@ -31,24 +30,18 @@ public class PerformanceIndicatorFinder {
         return performanceIndicator.get();
     }
 
-    public PerformanceIndicator findPerformanceIndicatorFromCourse(Integer courseNumber, Long raeId, Long assessmentToolId,
+    public PerformanceIndicator findFromCourseRAEAndId(Integer courseNumber, Long raeId,
                                                                    Long performanceIndicatorId){
-        AssessmentTool assessmentTool = assessmentToolFinder
-                .findAssessmentToolByCourseAndRAEId(courseNumber,raeId,assessmentToolId);
+        RAE rae = raeFinder.findRAEByCourseAndRaeId(courseNumber, raeId);
         PerformanceIndicator pi = findPerformanceIndicatorById(performanceIndicatorId);
-        if(!pi.getAssessmentTool().equals(assessmentTool))
-            throw new DoesNotContain("The assessment tool " + assessmentToolId
+        if(!pi.getRae().equals(rae))
+            throw new DoesNotContain("The rae " + raeId
             + " does not contain the performance indicator " + performanceIndicatorId);
         return pi;
     }
 
-    public List<PerformanceIndicator> getPerformanceIndicatorsFromAssessmentTool(Long assessmentToolId){
-        AssessmentTool assessmentTool = assessmentToolFinder.findById(assessmentToolId);
-        Optional<List<PerformanceIndicator>> performanceIndicators = performanceIndicatorRepository
-                .findByAssessmentTool(assessmentTool);
-        if (performanceIndicators.isEmpty() || performanceIndicators.get().isEmpty())
-            throw new NotFound("There were no performance indicators found for the" +
-                    " assessment tool " + assessmentToolId);
-        return performanceIndicators.get();
+    public List<PerformanceIndicator> getAllByRAE(Integer courseNumber, Long raeId){
+        RAE rae = raeFinder.findRAEByCourseAndRaeId(courseNumber, raeId);
+        return rae.getPerformanceIndicators();
     }
 }

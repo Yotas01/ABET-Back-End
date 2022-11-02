@@ -2,7 +2,6 @@ package edu.javeriana.abetbackend.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,10 +13,12 @@ public class Outcome {
 
     @Id
     @Column(name = "id_outcome")
-    private Integer OutcomeId;
-    @Basic
+    private Integer outcomeId;
+
+    @Column(name = "description")
     private String description;
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "CDIO_HAS_OUTCOME",
             joinColumns = @JoinColumn(name = "id_outcome"),
@@ -26,8 +27,11 @@ public class Outcome {
     @JsonIgnore
     private List<CDIO> cdioList;
 
+    @OneToMany(mappedBy = "outcome")
+    private List<SemesterReport> semesterReports;
+
     public Outcome(Integer outcomeId, String description) {
-        OutcomeId = outcomeId;
+        this.outcomeId = outcomeId;
         this.description = description;
         this.cdioList = new ArrayList<>();
     }
@@ -37,11 +41,11 @@ public class Outcome {
     }
 
     public Integer getOutcomeId() {
-        return OutcomeId;
+        return outcomeId;
     }
 
     public void setOutcomeId(Integer OutcomeId) {
-        this.OutcomeId = OutcomeId;
+        this.outcomeId = OutcomeId;
     }
 
     public String getDescription() {
@@ -52,44 +56,47 @@ public class Outcome {
         this.description = description;
     }
 
-    public List<CDIO> getCDIos() {
-        if (cdioList == null) {
-            cdioList = new ArrayList<>();
-        }
+    public List<CDIO> getCdioList() {
         return cdioList;
     }
 
-    public void setCDIos(List<CDIO> CDIos) {
-        this.cdioList = CDIos;
+    public void setCdioList(List<CDIO> cdioList) {
+        this.cdioList = cdioList;
     }
 
-    public void addCDIo(CDIO CDIo) {
-        getCDIos().add(CDIo);
+    public void addCdio(CDIO cdio){
+        this.cdioList.add(cdio);
     }
 
-    public void removeCDIo(CDIO CDIo) {
-        getCDIos().remove(CDIo);
+    public void removeCdio(CDIO cdio){
+        this.cdioList.remove(cdio);
+    }
+
+    public List<SemesterReport> getSemesterReports() {
+        return semesterReports;
+    }
+
+    public void setSemesterReports(List<SemesterReport> semesterReports) {
+        this.semesterReports = semesterReports;
+    }
+
+    public void addSemesterReport(SemesterReport semesterReport){
+        this.semesterReports.add(semesterReport);
+    }
+
+    public void removeSemesterReport(SemesterReport semesterReport){
+        this.semesterReports.remove(semesterReport);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Outcome outcome = (Outcome) o;
-        return Objects.equal(OutcomeId, outcome.OutcomeId) && Objects.equal(description, outcome.description) && Objects.equal(cdioList, outcome.cdioList);
+        if (!(o instanceof Outcome outcome)) return false;
+        return Objects.equal(outcomeId, outcome.outcomeId) && Objects.equal(description, outcome.description) && Objects.equal(cdioList, outcome.cdioList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(OutcomeId, description);
-    }
-
-    @Override
-    public String toString() {
-        return "Outcome{" +
-                "OutcomeId=" + OutcomeId +
-                ", description='" + description + '\'' +
-                ", cdioList=" + cdioList +
-                '}';
+        return Objects.hashCode(outcomeId, description, cdioList);
     }
 }

@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface RAERepository extends CrudRepository<RAE, Long> {
-    Optional<List<RAE>> findAllByCourse(Course course);
+    Optional<List<RAE>> findAllByCourseAndSemester(Course course, Integer semester);
 }

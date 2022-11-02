@@ -1,31 +1,45 @@
 package edu.javeriana.abetbackend.Entities.DTOs;
 
 
+import edu.javeriana.abetbackend.Entities.AssessmentTool;
 import edu.javeriana.abetbackend.Entities.PerformanceIndicator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PerformanceIndicatorDTO {
 
-    private Long PerformanceIndicatorId;
+    private Long id;
+    private Long raeId;
     private String description;
     private Double percentage;
-    private Long assessmentTool;
+    private List<Long> assessmentTools;
 
     public PerformanceIndicatorDTO() {
+        this.assessmentTools = new ArrayList<>();
     }
 
     public PerformanceIndicatorDTO(PerformanceIndicator pi) {
-        this.PerformanceIndicatorId = pi.getPerformanceIndicatorId();
+        this.id = pi.getId();
         this.description = pi.getDescription();
         this.percentage = pi.getPercentage();
-        this.assessmentTool = pi.getAssessmentTool().getAssessmentToolId();
+        this.assessmentTools = new ArrayList<>(pi.getAssessmentTools().stream().map(AssessmentTool::getAssessmentToolId).toList());
     }
 
-    public Long getPerformanceIndicatorId() {
-        return PerformanceIndicatorId;
+    public Long getId() {
+        return id;
     }
 
-    public void setPerformanceIndicatorId(Long performanceIndicatorId) {
-        PerformanceIndicatorId = performanceIndicatorId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getRaeId() {
+        return raeId;
+    }
+
+    public void setRaeId(Long raeId) {
+        this.raeId = raeId;
     }
 
     public String getDescription() {
@@ -44,11 +58,11 @@ public class PerformanceIndicatorDTO {
         this.percentage = percentage;
     }
 
-    public Long getAssessmentTool() {
-        return assessmentTool;
+    public List<Long> getAssessmentTools() {
+        return assessmentTools;
     }
 
-    public void setAssessmentTool(Long assessmentTool) {
-        this.assessmentTool = assessmentTool;
+    public void setAssessmentTools(List<Long> assessmentTools) {
+        this.assessmentTools = assessmentTools;
     }
 }

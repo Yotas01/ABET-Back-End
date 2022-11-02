@@ -9,7 +9,7 @@ public class Course_has_CDIODTO {
     private Integer value;
 
     public Course_has_CDIODTO(Course_has_CDIO course_has_cdio) {
-        this.course = course_has_cdio.getCourse().getName();
+        this.course = course_has_cdio.getCourse().getCourseId() + " - " + course_has_cdio.getCourse().getName();
         this.cdio = course_has_cdio.getCdio().getNumber();
         this.value = course_has_cdio.getBloomValue();
     }

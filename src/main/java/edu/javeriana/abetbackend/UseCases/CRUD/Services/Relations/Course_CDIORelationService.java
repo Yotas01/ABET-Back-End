@@ -32,50 +32,35 @@ public class Course_CDIORelationService {
     @Autowired
     private Course_has_CdioRepository course_has_cdioRepository;
 
-    public Course_has_CDIO getCourseHasCDIO(Integer courseNumber, Float cdioNumber){
+    public Course addCDIOToCourse(Integer courseNumber, Float cdioNumber, Integer bloomValue){
         Course course = courseFinder.findCourseByNumber(courseNumber);
         CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
-        Course_has_CdioId id = new Course_has_CdioId(course.getCourseId(), cdioNumber);
-        Optional<Course_has_CDIO> courseHasCdio = course_has_cdioRepository.findById(id);
-        if(courseHasCdio.isEmpty())
-            throw new NotFound("The course " + courseNumber + " does not have a relation " +
-                    "with the CDIO " + cdioNumber);
-        return courseHasCdio.get();
-    }
-
-    public Course addCDIOToCourse(Integer courseNumber, Float cdioNumber, Integer value){
-        Course course = courseFinder.findCourseByNumber(courseNumber);
-        CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
-        if(course.getListOfCDIO().contains(cdio))
+        if(course.getCDIOList().contains(cdio))
             throw new AlreadyContains("The course " + course.getName() + " already contains the cdio "
                     + cdioNumber);
-        course.addCDIO(cdio, value);
-        courseService.updateCourse(course, courseNumber);
-        Course_has_CDIO course_has_cdio = new Course_has_CDIO(new Course_has_CdioId(course.getCourseId(),cdioNumber),course, cdio, value);
+        course.addCDIO(cdio, bloomValue);
+        Course_has_CDIO course_has_cdio = new Course_has_CDIO(new Course_has_CdioId(course.getCourseId(),cdioNumber),course, cdio, bloomValue);
         course_has_cdioRepository.save(course_has_cdio);
         return course;
     }
 
     public Course_has_CDIO updateCDIOHasCourse(Integer courseNumber, Float cdioNumber, Integer value){
-        Course course = courseFinder.findCourseByNumber(courseNumber);
-        CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
-        if(!course.getListOfCDIO().contains(cdio))
-            throw new DoesNotContain("The course " + course.getName() + " does not contain the cdio "
-                    + cdioNumber);
-        Course_has_CdioId id = new Course_has_CdioId(course.getCourseId(),cdioNumber);
-        Optional<Course_has_CDIO> courseHasCdio = course_has_cdioRepository.findById(id);
-        if (courseHasCdio.isEmpty())
-            throw new NotFound("The course relation to the cdio " + courseHasCdio +
-                    " was not found");
-        courseHasCdio.get().setBloomValue(value);
-        course_has_cdioRepository.save(courseHasCdio.get());
-        return courseHasCdio.get();
+        Course_has_CDIO courseHasCdio = getCourse_has_cdio(courseNumber, cdioNumber);
+        courseHasCdio.setBloomValue(value);
+        course_has_cdioRepository.save(courseHasCdio);
+        return courseHasCdio;
     }
 
     public Course deleteCDIOFromCourse(Integer courseNumber, Float cdioNumber){
+        Course_has_CDIO courseHasCdio = getCourse_has_cdio(courseNumber, cdioNumber);
+        course_has_cdioRepository.delete(courseHasCdio);
+        return courseFinder.findCourseByNumber(courseNumber);
+    }
+
+    public Course_has_CDIO getCourse_has_cdio(Integer courseNumber, Float cdioNumber) {
         Course course = courseFinder.findCourseByNumber(courseNumber);
         CDIO cdio = cdioFinder.findCDIOById(cdioNumber);
-        if(!course.getListOfCDIO().contains(cdio))
+        if(!course.getCDIOList().contains(cdio))
             throw new DoesNotContain("The course " + course.getName() + " does not contain the cdio "
                     + cdioNumber);
         Course_has_CdioId id = new Course_has_CdioId(course.getCourseId(), cdioNumber);
@@ -83,16 +68,6 @@ public class Course_CDIORelationService {
         if (courseHasCdio.isEmpty())
             throw new NotFound("The course relation to the cdio " + courseHasCdio +
                     " was not found");
-        course.removeCDIO(cdio);
-        course_has_cdioRepository.delete(courseHasCdio.get());
-        return course;
-    }
-
-    public List<Course_has_CDIO> getAllByCourse(Integer courseNumber){
-        Course course = courseFinder.findCourseByNumber(courseNumber);
-        Optional<List<Course_has_CDIO>> courseHasCdios = course_has_cdioRepository.findAllByCourse(course);
-        if(courseHasCdios.isEmpty())
-            throw new NotFound("There are no CDIOs associated with the course " + courseNumber);
-        return courseHasCdios.get();
+        return courseHasCdio.get();
     }
 }
