@@ -14,10 +14,10 @@ public class SectionReport {
     @Column(name = "id_section_report")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_section", referencedColumnName = "id_section")
-    private Section section;
-
+    @Column(name = "class_number")
+    private Integer classNumber;
+    @Column(name = "semester")
+    private Integer semester;
     @Column(name = "at_category")
     private String atCategory;
     @Column(name = "exemplary")
@@ -27,10 +27,11 @@ public class SectionReport {
     @Column(name = "below")
     private Integer below;
 
-    public SectionReport(Long id, Section section, String ATCode, Integer exemplary, Integer competent, Integer below) {
+    public SectionReport(Long id, Integer classNumber, Integer semester, String atCategory, Integer exemplary, Integer competent, Integer below) {
         this.id = id;
-        this.section = section;
-        this.atCategory = ATCode;
+        this.classNumber = classNumber;
+        this.semester = semester;
+        this.atCategory = atCategory;
         this.exemplary = exemplary;
         this.competent = competent;
         this.below = below;
@@ -47,20 +48,28 @@ public class SectionReport {
         this.id = id;
     }
 
-    public Section getSection() {
-        return section;
+    public Integer getClassNumber() {
+        return classNumber;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
+    public void setClassNumber(Integer classNumber) {
+        this.classNumber = classNumber;
+    }
+
+    public Integer getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Integer semester) {
+        this.semester = semester;
     }
 
     public String getAtCategory() {
         return atCategory;
     }
 
-    public void setAtCategory(String ATCode) {
-        this.atCategory = ATCode;
+    public void setAtCategory(String atCategory) {
+        this.atCategory = atCategory;
     }
 
     public Integer getExemplary() {

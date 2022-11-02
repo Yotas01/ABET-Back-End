@@ -30,8 +30,6 @@ public class Section implements Serializable {
     @Column(name = "total_students")
     private Integer totalStudents;
 
-    @OneToMany(mappedBy = "section")
-    private List<SectionReport> sectionReports;
     @OneToOne(mappedBy = "section")
     private SectionComment comment;
 
@@ -42,7 +40,6 @@ public class Section implements Serializable {
         this.semester = semester;
         this.professor = professor;
         this.totalStudents = totalStudents;
-        this.sectionReports = new ArrayList<>();
     }
 
     public Section() {
@@ -94,22 +91,6 @@ public class Section implements Serializable {
 
     public void setTotalStudents(Integer totalStudents) {
         this.totalStudents = totalStudents;
-    }
-
-    public List<SectionReport> getSectionReports() {
-        return sectionReports;
-    }
-
-    public void setSectionReports(List<SectionReport> sectionReports) {
-        this.sectionReports = sectionReports;
-    }
-
-    public void addSectionReport(SectionReport sectionReport){
-        this.sectionReports.add(sectionReport);
-    }
-
-    public void removeSectionReport(SectionReport sectionReport){
-        this.sectionReports.remove(sectionReport);
     }
 
     public SectionComment getComment() {

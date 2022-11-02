@@ -1,27 +1,23 @@
 package edu.javeriana.abetbackend.Entities.DTOs;
 
-import edu.javeriana.abetbackend.Entities.SectionReport;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class SectionReportDTO {
 
     private Long id;
-    private Map<Integer, String> section;
+    private Integer classNumber;
+    private Integer semester;
     private String atCode;
     private Integer exemplary;
     private Integer competent;
     private Integer below;
 
-    public SectionReportDTO(SectionReport sectionReport) {
-        this.id = sectionReport.getId();
-        this.section = new HashMap<>();
-        this.section.put(sectionReport.getSection().getClassNumber(), sectionReport.getSection().getProfessor());
-        this.atCode = sectionReport.getAtCategory();
-        this.exemplary = sectionReport.getExemplary();
-        this.competent = sectionReport.getCompetent();
-        this.below = sectionReport.getBelow();
+    public SectionReportDTO(Long id, Integer classNumber, Integer semester, String atCode, Integer exemplary, Integer competent, Integer below) {
+        this.id = id;
+        this.classNumber = classNumber;
+        this.semester = semester;
+        this.atCode = atCode;
+        this.exemplary = exemplary;
+        this.competent = competent;
+        this.below = below;
     }
 
     public SectionReportDTO() {
@@ -35,12 +31,20 @@ public class SectionReportDTO {
         this.id = id;
     }
 
-    public Map<Integer, String> getSection() {
-        return section;
+    public Integer getClassNumber() {
+        return classNumber;
     }
 
-    public void setSection(Map<Integer, String> section) {
-        this.section = section;
+    public void setClassNumber(Integer classNumber) {
+        this.classNumber = classNumber;
+    }
+
+    public Integer getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Integer semester) {
+        this.semester = semester;
     }
 
     public String getAtCode() {
