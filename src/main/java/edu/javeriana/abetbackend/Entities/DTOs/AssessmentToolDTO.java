@@ -8,7 +8,7 @@ import java.util.List;
 public class AssessmentToolDTO {
 
     private Long id;
-    private String code;
+    private String category;
     private Integer courseId;
     private Integer semester;
     private String description;
@@ -17,17 +17,20 @@ public class AssessmentToolDTO {
 
     public AssessmentToolDTO(AssessmentTool assessmentTool){
         this.id = assessmentTool.getAssessmentToolId();
-        this.code = assessmentTool.getCode().getCode();
+        this.category = assessmentTool.getCategory();
         this.courseId = assessmentTool.getCourse().getCourseId();
         this.semester = assessmentTool.getSemester();
         this.description = assessmentTool.getDescription();
         this.value = assessmentTool.getValue();
-        assessmentTool.getPerformanceIndicators().forEach(pi -> this.performanceIndicators.add(new PerformanceIndicatorDTO(pi)));
+        this.performanceIndicators = new ArrayList<>();
+        if(assessmentTool.getPerformanceIndicators() != null && !assessmentTool.getPerformanceIndicators().isEmpty())
+            assessmentTool.getPerformanceIndicators().forEach(pi -> this.performanceIndicators.add(new PerformanceIndicatorDTO(pi)));
+
     }
 
-    public AssessmentToolDTO(Long id, String code, Integer course_id, Integer semester, String description, Double value) {
+    public AssessmentToolDTO(Long id, String category, Integer course_id, Integer semester, String description, Double value) {
         this.id = id;
-        this.code = code;
+        this.category = category;
         this.courseId = course_id;
         this.semester = semester;
         this.description = description;
@@ -47,12 +50,12 @@ public class AssessmentToolDTO {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setCategory(String code) {
+        this.category = code;
     }
 
     public Integer getCourse_id() {

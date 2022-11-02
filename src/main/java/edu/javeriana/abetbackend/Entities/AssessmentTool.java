@@ -18,12 +18,11 @@ public class AssessmentTool {
     private Long assessmentToolId;
 
     @ManyToOne
-    @JoinColumn(name = "code", referencedColumnName = "code")
-    private AssessmentToolCode code;
-    @ManyToOne
     @JoinColumn(name = "course_id_sae", referencedColumnName = "id_sae")
     private Course course;
 
+    @Column(name = "category")
+    private String category;
     @Column(name = "semester")
     private Integer semester;
     @Column(name = "description")
@@ -34,9 +33,9 @@ public class AssessmentTool {
     @ManyToMany(mappedBy = "assessmentTools")
     private List<PerformanceIndicator> performanceIndicators;
 
-    public AssessmentTool(Long assessmentToolId, AssessmentToolCode code, Course course, Integer semester, String description, Double value) {
+    public AssessmentTool(Long assessmentToolId, String category, Course course, Integer semester, String description, Double value) {
         this.assessmentToolId = assessmentToolId;
-        this.code = code;
+        this.category = category;
         this.course = course;
         this.semester = semester;
         this.description = description;
@@ -56,12 +55,12 @@ public class AssessmentTool {
         this.assessmentToolId = assessmentToolId;
     }
 
-    public AssessmentToolCode getCode() {
-        return code;
+    public String getCategory() {
+        return this.category;
     }
 
-    public void setCode(AssessmentToolCode code) {
-        this.code = code;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Course getCourse() {
@@ -116,11 +115,11 @@ public class AssessmentTool {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AssessmentTool that)) return false;
-        return Objects.equal(assessmentToolId, that.assessmentToolId) && Objects.equal(code, that.code) && Objects.equal(course, that.course) && Objects.equal(semester, that.semester) && Objects.equal(description, that.description) && Objects.equal(value, that.value) && Objects.equal(performanceIndicators, that.performanceIndicators);
+        return Objects.equal(assessmentToolId, that.assessmentToolId) && Objects.equal(course, that.course) && Objects.equal(category, that.category) && Objects.equal(semester, that.semester) && Objects.equal(description, that.description) && Objects.equal(value, that.value) && Objects.equal(performanceIndicators, that.performanceIndicators);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(assessmentToolId, code, course, semester, description, value, performanceIndicators);
+        return Objects.hashCode(assessmentToolId, course, category, semester, description, value, performanceIndicators);
     }
 }

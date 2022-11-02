@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class SectionDTO {
 
+    private Long sectionId;
     private Integer classNumber;
     private Integer semester;
     private String professor;
@@ -18,12 +19,21 @@ public class SectionDTO {
     }
 
     public SectionDTO(Section section) {
+        this.sectionId = section.getSectionId();
         this.classNumber = section.getClassNumber();
         this.professor = section.getProfessor();
         this.totalStudents = section.getTotalStudents();
         this.semester = section.getSemester();
         this.course = new HashMap<>();
         course.put(section.getCourse().getCourseId(),section.getCourse().getName());
+    }
+
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
     }
 
     public Integer getClassNumber() {

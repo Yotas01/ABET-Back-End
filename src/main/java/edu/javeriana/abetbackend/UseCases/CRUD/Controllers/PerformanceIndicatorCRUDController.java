@@ -76,7 +76,7 @@ public class PerformanceIndicatorCRUDController extends BaseController {
         return ResponseEntity.status(HttpStatus.OK).body(new PerformanceIndicatorDTO(pi));
     }
     @Operation(summary = "Get all the performance indicators from a RAE")
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<PerformanceIndicatorDTO>> getPerformanceIndicators(@ApiParam(name = "courseNumber", required = true)
                                                                                 @PathVariable Integer courseNumber,
                                                                             @ApiParam(name = "raeId", required = true)

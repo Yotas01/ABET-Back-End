@@ -1,27 +1,30 @@
 package edu.javeriana.abetbackend.Entities;
 
 import com.google.common.base.Objects;
-import edu.javeriana.abetbackend.Entities.Ids.SectionId;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "SECTION")
-@IdClass(SectionId.class)
 public class Section implements Serializable {
 
     @Id
-    @Column(name = "class_number")
-    public Integer classNumber;
-    @Id
-    @Column(name = "semester")
-    public Integer semester;
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    @Column(name = "id_section")
+    private Long sectionId;
 
     @ManyToOne
     @JoinColumn(name = "course_id_sae", referencedColumnName = "id_sae")
     private Course course;
+    @Column(name = "class_number")
+    private Integer classNumber;
+    @Column(name = "semester")
+    private Integer semester;
     @Column(name = "professor")
     private String professor;
     @Column(name = "total_students")
@@ -32,15 +35,33 @@ public class Section implements Serializable {
     @OneToOne(mappedBy = "section")
     private SectionComment comment;
 
-    public Section(Integer classNumber, Integer semester, Course course, String professor, Integer totalStudents) {
+    public Section(Long sectionId, Course course, Integer classNumber, Integer semester, String professor, Integer totalStudents) {
+        this.sectionId = sectionId;
+        this.course = course;
         this.classNumber = classNumber;
         this.semester = semester;
-        this.course = course;
         this.professor = professor;
         this.totalStudents = totalStudents;
+        this.sectionReports = new ArrayList<>();
     }
 
     public Section() {
+    }
+
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public Integer getClassNumber() {
@@ -57,14 +78,6 @@ public class Section implements Serializable {
 
     public void setSemester(Integer semester) {
         this.semester = semester;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 
     public String getProfessor() {
@@ -105,17 +118,5 @@ public class Section implements Serializable {
 
     public void setComment(SectionComment comment) {
         this.comment = comment;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Section section)) return false;
-        return Objects.equal(classNumber, section.classNumber) && Objects.equal(semester, section.semester) && Objects.equal(course, section.course) && Objects.equal(professor, section.professor) && Objects.equal(totalStudents, section.totalStudents) && Objects.equal(sectionReports, section.sectionReports) && Objects.equal(comment, section.comment);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(classNumber, semester, course, professor, totalStudents, sectionReports, comment);
     }
 }

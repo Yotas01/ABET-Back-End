@@ -1,8 +1,5 @@
 package edu.javeriana.abetbackend.Entities;
 
-import edu.javeriana.abetbackend.Entities.Ids.SectionId;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 @Entity
@@ -14,21 +11,27 @@ public class SectionComment {
     private Long id;
 
     @OneToOne
-    @JoinColumns({
-            @JoinColumn(name = "class_number", referencedColumnName = "class_number"),
-            @JoinColumn(name = "semester", referencedColumnName = "semester")
-    })
+    @JoinColumn(name = "id_section", referencedColumnName = "id_section")
     private Section section;
 
     @Column(name = "comment")
     private String comment;
 
-    public SectionComment(Section section, String comment) {
+    public SectionComment(Long id, Section section, String comment) {
+        this.id = id;
         this.section = section;
         this.comment = comment;
     }
 
     public SectionComment() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Section getSection() {

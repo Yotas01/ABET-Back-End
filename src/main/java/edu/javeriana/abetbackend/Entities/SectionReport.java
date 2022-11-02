@@ -15,14 +15,11 @@ public class SectionReport {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-            @JoinColumn(name = "class_number", referencedColumnName = "class_number"),
-            @JoinColumn(name = "semester", referencedColumnName = "semester")
-    })
+    @JoinColumn(name = "id_section", referencedColumnName = "id_section")
     private Section section;
 
-    @Column(name = "at_code")
-    private String atCode;
+    @Column(name = "at_category")
+    private String atCategory;
     @Column(name = "exemplary")
     private Integer exemplary;
     @Column(name = "competent")
@@ -33,7 +30,7 @@ public class SectionReport {
     public SectionReport(Long id, Section section, String ATCode, Integer exemplary, Integer competent, Integer below) {
         this.id = id;
         this.section = section;
-        this.atCode = ATCode;
+        this.atCategory = ATCode;
         this.exemplary = exemplary;
         this.competent = competent;
         this.below = below;
@@ -58,12 +55,12 @@ public class SectionReport {
         this.section = section;
     }
 
-    public String getAtCode() {
-        return atCode;
+    public String getAtCategory() {
+        return atCategory;
     }
 
-    public void setAtCode(String ATCode) {
-        this.atCode = ATCode;
+    public void setAtCategory(String ATCode) {
+        this.atCategory = ATCode;
     }
 
     public Integer getExemplary() {

@@ -23,6 +23,7 @@ public class PerformanceIndicatorDTO {
         this.id = pi.getId();
         this.description = pi.getDescription();
         this.percentage = pi.getPercentage();
+        this.raeId = pi.getRae().getId();
         this.assessmentTools = new ArrayList<>(pi.getAssessmentTools().stream().map(AssessmentTool::getAssessmentToolId).toList());
     }
 

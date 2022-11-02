@@ -29,7 +29,7 @@ public class SectionCRUD {
         try {
             Section sectionToCreate = sectionFinder.findSectionByNumberAndSemester(courseNumber, dto.getClassNumber(), dto.getSemester());
         }catch (NotFound exception){
-            Section section = new Section(dto.getClassNumber(), dto.getSemester(), course, dto.getProfessor(), dto.getTotalStudents());
+            Section section = new Section(dto.getSectionId(), course, dto.getClassNumber(), dto.getSemester(), dto.getProfessor(), dto.getTotalStudents());
             course.addSection(section);
             sectionRepository.save(section);
             courseRepository.save(course);
@@ -41,6 +41,7 @@ public class SectionCRUD {
 
     public Section updateSection(SectionDTO section, Integer courseNumber, Integer sectionNumber, Integer semester){
         Section sectionToUpdate = sectionFinder.findSectionByNumberAndSemester(courseNumber, sectionNumber, semester);
+        sectionToUpdate.setSectionId(section.getSectionId());
         sectionToUpdate.setProfessor(section.getProfessor());
         sectionToUpdate.setSemester(section.getSemester());
         sectionToUpdate.setTotalStudents(section.getTotalStudents());

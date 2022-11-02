@@ -2,7 +2,6 @@ package edu.javeriana.abetbackend.Entities.DTOs;
 
 import edu.javeriana.abetbackend.Entities.SectionReport;
 
-import javax.persistence.Column;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ public class SectionReportDTO {
         this.id = sectionReport.getId();
         this.section = new HashMap<>();
         this.section.put(sectionReport.getSection().getClassNumber(), sectionReport.getSection().getProfessor());
-        this.atCode = sectionReport.getAtCode();
+        this.atCode = sectionReport.getAtCategory();
         this.exemplary = sectionReport.getExemplary();
         this.competent = sectionReport.getCompetent();
         this.below = sectionReport.getBelow();

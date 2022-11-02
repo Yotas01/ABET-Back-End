@@ -35,6 +35,7 @@ public class PerformanceIndicatorCRUD {
         PerformanceIndicator performanceIndicator = new PerformanceIndicator();
         performanceIndicator.setDescription(dto.getDescription());
         performanceIndicator.setPercentage(dto.getPercentage());
+        performanceIndicator.setRae(rae);
         rae.addPerformanceIndicator(performanceIndicator);
         performanceIndicatorRepository.save(performanceIndicator);
         return performanceIndicator;

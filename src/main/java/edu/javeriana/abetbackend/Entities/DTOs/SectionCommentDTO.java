@@ -4,23 +4,33 @@ import edu.javeriana.abetbackend.Entities.SectionComment;
 
 public class SectionCommentDTO {
 
-    private Integer classNumber;
+    private Long commentId;
+    private Long sectionId;
     private String comment;
 
     public SectionCommentDTO(SectionComment comment){
-        this.classNumber = comment.getSection().getClassNumber();
+        this.commentId = comment.getId();
+        this.sectionId = comment.getSection().getSectionId();
         this.comment = comment.getComment();
     }
 
     public SectionCommentDTO() {
     }
 
-    public Integer getClassNumber() {
-        return classNumber;
+    public Long getCommentId() {
+        return commentId;
     }
 
-    public void setClassNumber(Integer classNumber) {
-        this.classNumber = classNumber;
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
+    }
+
+    public Long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(Long sectionId) {
+        this.sectionId = sectionId;
     }
 
     public String getComment() {
