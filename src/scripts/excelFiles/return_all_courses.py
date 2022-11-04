@@ -3,7 +3,7 @@ import pandas as pd
 
 
 
-f = open("conf.txt", "r")
+f = open("../../conf.txt", "r")
 
 direccion = f.readline().strip()
 contra = f.readline().strip()
