@@ -57,6 +57,20 @@ public class CourseFileController {
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
+    @PostMapping("/section-reports")
+    @ApiOperation(value = "Generate all the section reports for a semester from an Excel file with all the grades")
+    public ResponseEntity createSectionReports(@ApiParam(name = "file", required = true)
+                                         @RequestParam MultipartFile file){
+        try{
+            String realPath = request.getServletContext().getRealPath("/");
+            System.out.println(realPath);
+            excelService.generateSectionReports(file, realPath);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    }
+
     @GetMapping("/get-file")
     @Operation(description = "Returns an excel file containing the information for all the courses")
     public ResponseEntity getFile() throws IOException, InterruptedException, ScriptException {

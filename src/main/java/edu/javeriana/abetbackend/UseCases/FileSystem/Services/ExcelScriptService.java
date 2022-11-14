@@ -36,6 +36,19 @@ public class ExcelScriptService {
         executePyScriptWithExcel(createFile, processBuilder);
     }
 
+    public void generateSectionReports(MultipartFile file, String path) throws IOException, InterruptedException {
+        String fullPath = path.concat(UUID.randomUUID() + ".xlsx");
+        File createFile = new File(fullPath);
+        file.transferTo(createFile);
+
+        String script = "src/scripts/excelFiles/calificaciones.py";
+        String args = " -p " + fullPath + " -ps psw -a localhost -s quality-system";
+        System.out.println("python " + script + args);
+        ProcessBuilder processBuilder = new ProcessBuilder("python ", script, "-p", fullPath, "-ps", "psw", "-a", "localhost", "-s", "quality-system");
+
+        executePyScriptWithExcel(createFile, processBuilder);
+    }
+
     private void executePyScriptWithExcel(File createFile, ProcessBuilder processBuilder) throws IOException, InterruptedException {
         Process process = processBuilder.start();
         int exitCode = process.waitFor();
@@ -67,5 +80,6 @@ public class ExcelScriptService {
 
         }
     }
+
 
 }

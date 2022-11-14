@@ -12,7 +12,7 @@ parser.add_argument('-s', '--schema', type=str, help='The schema of the database
 args = vars(parser.parse_args())
 
 data = pd.read_excel(args['path'])
-asignaturas = pd.DataFrame(data, columns = ['ID CURSO', 'N Clase','Proffesor', 'Students', 'Semester'])
+asignaturas = pd.DataFrame(data, columns = ['ID CURSO', 'N Clase','Professor', 'Students', 'Semester'])
 
 db_cn = "mysql+pymysql://root:" + args['password'] + "@" + args['address'] + "/" + args['schema']
 db_connection  = create_engine(db_cn)
