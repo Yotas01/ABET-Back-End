@@ -48,7 +48,7 @@ public class CourseReportService {
             raeSummaries.add(dto);
         });
 
-        Optional<List<CDIOSummaryForCourse>> cdioSummary = cdioSummaryForCourseView.findAllByCourseId(course.getCourseId());
+        Optional<List<CDIOSummaryForCourse>> cdioSummary = cdioSummaryForCourseView.findAllByCourse(course);
         if (cdioSummary.isEmpty())
             throw new NotFound("There were no cdio summaries found for the course " + courseNumber);
 

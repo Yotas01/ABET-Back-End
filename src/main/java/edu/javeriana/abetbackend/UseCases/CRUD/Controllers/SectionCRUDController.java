@@ -79,11 +79,12 @@ public class SectionCRUDController {
     }
 
     @Operation(summary = "Delete the section that matches the section number")
-    @DeleteMapping("/{courseNumber}/section/{sectionNumber}")
+    @DeleteMapping("/{courseNumber}/section/{sectionNumber}/semester/{semester}")
     @CrossOrigin(origins = Constants.crossOriginLocalhost)
     public ResponseEntity<SectionDTO> deleteCourseByNumber(@PathVariable(value = "courseNumber") Integer courseNumber,
-                                                           @PathVariable(value = "sectionNumber") Integer sectionNumber){
-        Section sectionToDelete = sectionCRUDService.deleteSection(sectionNumber, courseNumber);
+                                                           @PathVariable(value = "sectionNumber") Integer sectionNumber,
+                                                           @PathVariable(value = "semester") Integer semester){
+        Section sectionToDelete = sectionCRUDService.deleteSection(sectionNumber, courseNumber, semester);
         SectionDTO responseCourse = new SectionDTO(sectionToDelete);
         return ResponseEntity.status(HttpStatus.OK).body(responseCourse);
     }

@@ -1,5 +1,8 @@
 package edu.javeriana.abetbackend.Entities.Views;
 
+import edu.javeriana.abetbackend.Entities.CDIO;
+import edu.javeriana.abetbackend.Entities.Course;
+import edu.javeriana.abetbackend.Entities.Ids.Course_has_CdioId;
 import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
@@ -9,12 +12,17 @@ import javax.persistence.*;
 @Table(name = "CDIO_SUMMARY_FOR_COURSE")
 public class CDIOSummaryForCourse {
 
-    @Id
-    @Column(name = "cdio_number")
-    private Float cdioNumber;
-    @Basic
-    @Column(name = "id_course")
-    private Long courseId;
+    @EmbeddedId
+    private Course_has_CdioId id;
+
+    @ManyToOne
+    @MapsId("courseId")
+    @JoinColumn(name = "id_course")
+    private Course course;
+    @ManyToOne
+    @MapsId("cdioNumber")
+    @JoinColumn(name = "cdio_number")
+    private CDIO cdio;
     @Basic
     private Double exemplary;
     @Basic
@@ -22,9 +30,10 @@ public class CDIOSummaryForCourse {
     @Basic
     private Double below;
 
-    public CDIOSummaryForCourse(Float cdioNumber, Long courseId, Double exemplary, Double competent, Double below) {
-        this.cdioNumber = cdioNumber;
-        this.courseId = courseId;
+    public CDIOSummaryForCourse(Course_has_CdioId id, Course course, CDIO cdio, Double exemplary, Double competent, Double below) {
+        this.id = id;
+        this.course = course;
+        this.cdio = cdio;
         this.exemplary = exemplary;
         this.competent = competent;
         this.below = below;
@@ -33,20 +42,28 @@ public class CDIOSummaryForCourse {
     public CDIOSummaryForCourse() {
     }
 
-    public Float getCdioNumber() {
-        return cdioNumber;
+    public Course_has_CdioId getId() {
+        return id;
     }
 
-    public void setCdioNumber(Float cdioNumber) {
-        this.cdioNumber = cdioNumber;
+    public void setId(Course_has_CdioId id) {
+        this.id = id;
     }
 
-    public Long getCourseId() {
-        return courseId;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public CDIO getCdio() {
+        return cdio;
+    }
+
+    public void setCdio(CDIO cdio) {
+        this.cdio = cdio;
     }
 
     public Double getExemplary() {

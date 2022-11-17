@@ -9,7 +9,7 @@ import java.util.List;
 public class CDIOReportDTO {
 
     private CDIOSummary cdioSummary;
-    private List<CDIOSummaryForCourse> cdioSummaryForCourseList;
+    private List<CDIOSummaryForCourseDTO> cdioSummaryForCourseList;
 
     public CDIOReportDTO(CDIOSummary cdioSummary) {
         this.cdioSummary = cdioSummary;
@@ -28,11 +28,19 @@ public class CDIOReportDTO {
         this.cdioSummary = cdioSummary;
     }
 
-    public List<CDIOSummaryForCourse> getCdioSummaryForCourseList() {
+    public List<CDIOSummaryForCourseDTO> getCdioSummaryForCourseList() {
         return cdioSummaryForCourseList;
     }
 
-    public void setCdioSummaryForCourseList(List<CDIOSummaryForCourse> cdioSummaryForCourseList) {
+    public void setCdioSummaryForCourseList(List<CDIOSummaryForCourseDTO> cdioSummaryForCourseList) {
         this.cdioSummaryForCourseList = cdioSummaryForCourseList;
+    }
+
+    public void addCourseSummary(CDIOSummaryForCourse summary){
+        this.cdioSummaryForCourseList.add(new CDIOSummaryForCourseDTO(summary));
+    }
+
+    public void removeCourseSummary(CDIOSummaryForCourse summary){
+        this.cdioSummaryForCourseList.remove(new CDIOSummaryForCourseDTO(summary));
     }
 }

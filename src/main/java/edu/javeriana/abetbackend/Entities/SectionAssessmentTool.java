@@ -31,7 +31,7 @@ public class SectionAssessmentTool {
     private Integer semester;
     @Basic
     private int draft;
-    @OneToMany(mappedBy = "sectionAssessmentTool")
+    @OneToMany(mappedBy = "sectionAssessmentTool", cascade = CascadeType.ALL)
     private List<SectionPerformanceIndicator> sectionPerformanceIndicators;
 
     public SectionAssessmentTool() {

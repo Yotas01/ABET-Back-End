@@ -47,9 +47,9 @@ public class SectionCRUD {
         return sectionToUpdate;
     }
 
-    public Section deleteSection(Integer sectionNumber, Integer courseNumber){
+    public Section deleteSection(Integer sectionNumber, Integer courseNumber, Integer semester){
         Course course = courseFinder.findCourseByNumber(courseNumber);
-        Section sectionToDelete = sectionFinder.findSectionByNumber(courseNumber,sectionNumber);
+        Section sectionToDelete = sectionFinder.findSectionByNumberAndSemester(courseNumber,sectionNumber, semester);
         course.removeSection(sectionToDelete);
         sectionRepository.delete(sectionToDelete);
         courseRepository.save(course);

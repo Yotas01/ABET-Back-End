@@ -26,9 +26,9 @@ public class Section {
     @Basic
     @Column(name = "total_students")
     private Integer totalStudents;
-    @OneToMany(mappedBy = "section")
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
     private List<SectionAssessmentTool> sectionAssessmentTool;
-    @OneToOne(mappedBy = "section")
+    @OneToOne(mappedBy = "section", cascade = CascadeType.ALL)
     private SectionReviewComment comment;
 
     public Section() {
