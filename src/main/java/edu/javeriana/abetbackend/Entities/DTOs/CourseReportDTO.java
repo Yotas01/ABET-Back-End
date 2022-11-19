@@ -1,7 +1,6 @@
 package edu.javeriana.abetbackend.Entities.DTOs;
 
 
-import edu.javeriana.abetbackend.Entities.SectionReviewComment;
 import edu.javeriana.abetbackend.Entities.Views.CDIOSummaryForCourse;
 
 import java.util.ArrayList;
@@ -10,12 +9,13 @@ import java.util.List;
 public class CourseReportDTO {
 
     private List<RAESummaryDTO> raeSummaries;
-    private List<CDIOSummaryForCourse> cdioSummary;
+    private List<CDIOSummaryForCourseDTO> cdioSummary;
     private List<String> comments;
 
     public CourseReportDTO(List<RAESummaryDTO> raeSummaries, List<CDIOSummaryForCourse> cdioSummary) {
         this.raeSummaries = raeSummaries;
-        this.cdioSummary = cdioSummary;
+        this.cdioSummary = new ArrayList<>();
+        cdioSummary.forEach(summary -> this.cdioSummary.add(new CDIOSummaryForCourseDTO(summary)));
         this.comments = new ArrayList<>();
     }
 
@@ -32,11 +32,11 @@ public class CourseReportDTO {
         this.raeSummaries = raeSummaries;
     }
 
-    public List<CDIOSummaryForCourse> getCdioSummary() {
+    public List<CDIOSummaryForCourseDTO> getCdioSummary() {
         return cdioSummary;
     }
 
-    public void setCdioSummary(List<CDIOSummaryForCourse> cdioSummary) {
+    public void setCdioSummary(List<CDIOSummaryForCourseDTO> cdioSummary) {
         this.cdioSummary = cdioSummary;
     }
 
